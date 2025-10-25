@@ -6,7 +6,8 @@ import Cookies from "js-cookie";
 
 // 1️⃣ HttpLink (replaces deprecated createHttpLink)
 const httpLink = new HttpLink({
-  uri: "http://localhost:3000/graphql", // your API endpoint
+  // uri: "http://localhost:3000/graphql", // your API endpoint
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT ,
   // credentials: "include", // optional if your API uses cookies
 });
 
