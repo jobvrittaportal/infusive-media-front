@@ -11,6 +11,6 @@ export const emptyLoginForm: any = {
 };
  
 export const schema = yup.object().shape({
-  email : yup.string().email("Invalid email formate").required("Emaul is required"),
+  email : yup.string().email("Invalid email formate").required("Email is required"),
   password : yup.string().required("Password is required"),
 });
