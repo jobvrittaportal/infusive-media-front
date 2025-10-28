@@ -4,8 +4,10 @@ import { withSuspense } from "./withSuspense";
 
 const Login = lazy(() => import("../pages/login/index"));
 const ForgotPassword = lazy(() => import("../pages/forgotPassowrd/index"));
+const ResetPassword = lazy(() => import("../pages/resetPassword/index"));
 
 export const authRoutes = [
   { path: routes.LOGIN, element: withSuspense(<Login />) },
   { path: routes.FORGOTPASSWORD, element: withSuspense(<ForgotPassword />) },
+  { path: routes.RESETPASSWORD, element: withSuspense(<ResetPassword />) },
 ];
