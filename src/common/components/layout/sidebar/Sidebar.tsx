@@ -53,6 +53,14 @@ const Sidebar = (props: SidebarProps) => {
        
       ],
     },
+    {
+      id: 3,
+      menuName: "Settings",
+      menuLogo: LeadsIcon,
+      subMenu: [
+        { id: 41, label: "Users", link: routesNames.USERS },
+      ],
+    },
    
   ];
 
