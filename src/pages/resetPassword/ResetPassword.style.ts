@@ -117,18 +117,14 @@ const MyDiv = styled.div`
   font-weight: 500;
   margin-top: 8px;
 }
-
-.login-btn:hover {
-  background-color: #0d47a1 !important;
-}
 .grid_container{
   grid-template-columns: repeat(12, 1fr);
 }
-.otp{
- font-family:"Poppins";
- font-size: 12px;
- font-weight: 500;
+.login-btn:hover {
+  background-color: #0d47a1 !important;
 }
+
+
 `;
 
 export default MyDiv;
