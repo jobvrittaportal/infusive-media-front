@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
-import { Box, Flex, Image, Stack } from "@chakra-ui/react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import dashboardIcon from '../../../../assets/images/dashboard-logo.svg'
+import { useEffect, useState } from 'react';
+import { Box, Flex, Image, Stack } from '@chakra-ui/react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import dashboardIcon from '../../../../assets/images/dashboard-logo.svg';
 import LeadsIcon from '../../../../assets/images/lead-Icon.svg';
-import CollapseIcon from "../../../../../public/assets/images/CollapseOn.svg";
-import Logo from "../../../../assets/images/Infusive-Logo.svg";
-import CollapseLogo from "../../../../assets/images/CollapseLogo.svg";
-import * as routesNames from "../../../../routes/RouteConstant";
-import MyDiv from "./sidebar.style";
+import CollapseIcon from '../../../../../public/assets/images/CollapseOn.svg';
+import Logo from '../../../../assets/images/Infusive-Logo.svg';
+import CollapseLogo from '../../../../assets/images/CollapseLogo.svg';
+import * as routesNames from '../../../../routes/RouteConstant';
+import MyDiv from './sidebar.style';
 
 type SubMenuItem = {
   id: number;
@@ -34,34 +34,32 @@ const Sidebar = (props: SidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-
   const Menus: MenuItem[] = [
     {
       id: 1,
-      menuName: "Dashboard",
+      menuName: 'Dashboard',
       menuLogo: dashboardIcon,
       link: routesNames.DASHBOARD,
     },
-   
+
     {
       id: 2,
-      menuName: "Leads",
+      menuName: 'Leads',
       menuLogo: LeadsIcon,
       subMenu: [
-        { id: 31, label: "Lead List", link: routesNames.LEADLIST },
-        { id: 32, label: "Companies", link: routesNames.COMPANIES },
-       
+        { id: 21, label: 'Lead List', link: routesNames.LEADLIST },
+        { id: 22, label: 'Companies', link: routesNames.COMPANIES },
       ],
     },
     {
       id: 3,
-      menuName: "Settings",
+      menuName: 'Settings',
       menuLogo: LeadsIcon,
       subMenu: [
-        { id: 41, label: "Users", link: routesNames.USERS },
+        { id: 31, label: 'Users', link: routesNames.USERS },
+        { id: 32, label: 'Roles', link: routesNames.ROLES },
       ],
     },
-   
   ];
 
   const [menuId, setMenuId] = useState<number | null>(null);
@@ -98,7 +96,7 @@ const Sidebar = (props: SidebarProps) => {
 
   return (
     <MyDiv>
-      <Box className={props.toggleSidebar ? "sidebar_collapse" : "sidebar_wrapper"}>
+      <Box className={props.toggleSidebar ? 'sidebar_collapse' : 'sidebar_wrapper'}>
         {/* <Box className="collapse-button">
           <IconButton
             className={props.toggleSidebar ? "" : "collpase_icon"}
@@ -109,15 +107,15 @@ const Sidebar = (props: SidebarProps) => {
         </Box> */}
 
         <Box>
-          <Flex className="top_header" justify={props.toggleSidebar ? "center" : "flex-start"} >
+          <Flex className="top_header" justify={props.toggleSidebar ? 'center' : 'flex-start'}>
             <Image
               src={props.toggleSidebar ? CollapseLogo : Logo}
               cursor="pointer"
-              className={props.toggleSidebar ? "col" : "logo"}
+              className={props.toggleSidebar ? 'col' : 'logo'}
             />
           </Flex>
 
-          <Box className={props.toggleSidebar ? "sidebar_box_toggle" : "sidebar_box"}>
+          <Box className={props.toggleSidebar ? 'sidebar_box_toggle' : 'sidebar_box'}>
             <Stack spacing="3" className="menu_box">
               {ActiveMenu.map((item) => {
                 const isActiveMenu = item.id === menuId;
@@ -126,21 +124,24 @@ const Sidebar = (props: SidebarProps) => {
 
                 return (
                   <Box key={item.id}>
-                    <Flex gap={2}
-                      className={`menu_item ${isActiveMenu ? "active_menu" : ""}`}
+                    <Flex
+                      gap={2}
+                      className={`menu_item ${isActiveMenu ? 'active_menu' : ''}`}
                       onClick={() => handleMenu(item.id)}
                     >
-                      <Image src={item.menuLogo} className={`icon_size ${isActiveMenu ? "active_icon" : ""}`} />
+                      <Image
+                        src={item.menuLogo}
+                        className={`icon_size ${isActiveMenu ? 'active_icon' : ''}`}
+                      />
                       {!props.toggleSidebar && (
                         <NavLink
-                          to={item.link ?? "#"}
-                          className={`menu_text ${isActiveMenu ? "active_text" : ""}`}
+                          to={item.link ?? '#'}
+                          className={`menu_text ${isActiveMenu ? 'active_text' : ''}`}
                         >
                           {item.menuName}
                         </NavLink>
                       )}
                     </Flex>
-
 
                     {isExpanded && !props.toggleSidebar && (
                       <Box className="submenu_wrapper">
@@ -150,7 +151,9 @@ const Sidebar = (props: SidebarProps) => {
                             <NavLink
                               key={subItem.id}
                               to={subItem.link}
-                              className={isSubActive ? "active_submenu submenu_item" : "submenu_item"}
+                              className={
+                                isSubActive ? 'active_submenu submenu_item' : 'submenu_item'
+                              }
                             >
                               {subItem.label}
                             </NavLink>
