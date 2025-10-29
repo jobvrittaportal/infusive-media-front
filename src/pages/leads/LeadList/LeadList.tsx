@@ -19,18 +19,9 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   ModalBody,
-  ModalFooter,
   useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
+ 
 } from "@chakra-ui/react";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
 // import MyDiv from "./leadList.style";
@@ -38,6 +29,8 @@ import { AddIcon, Search2Icon } from "@chakra-ui/icons";
 import { useState } from "react";
 import MyDiv from "./leadList.style";
 import { LeadListModal } from "../components";
+
+
 
 const dummyData = [
   { title: "Total Leads", value: "4", className: "totalLeads" },
@@ -219,7 +212,7 @@ const LeadList = () => {
           </Table>
         </TableContainer>
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
         <ModalContent>
           {/* <ModalHeader >Add New Leads</ModalHeader> */}

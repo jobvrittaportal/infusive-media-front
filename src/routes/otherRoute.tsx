@@ -5,7 +5,9 @@ import { elements } from 'chart.js';
 
 const Dashboard = lazy(() => import('../pages/dashboard/index'));
 const LeadList = lazy(() => import('../pages/leads/LeadList/index'));
-const Users = lazy(() => import('../pages/users/index'));
+const Companies = lazy(() => import("../pages/leads/Companies/index"));
+const Users = lazy(() => import("../pages/users/index"))
+const Profile = lazy(() => import("../pages/profile/index"))
 const Roles = lazy(() => import('../pages/role/index'));
 export interface IRouteType {
   path: string;
@@ -15,6 +17,8 @@ export interface IRouteType {
 export const otherRoutes: IRouteType[] = [
   { path: routes.DASHBOARD, element: withLayout(<Dashboard />) },
   { path: routes.LEADLIST, element: withLayout(<LeadList />) },
-  { path: routes.USERS, element: withLayout(<Users />) },
+  { path: routes.COMPANIES, element: withLayout(<Companies />) },
+  { path: routes.USERS, element: withLayout(<Users/>) },
+  { path: routes.PROFILE, element: withLayout(<Profile/>) },
   { path: routes.ROLES, element: withLayout(<Roles />) },
 ];
