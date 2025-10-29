@@ -28,8 +28,8 @@ const ForgotPassowrd = () => {
                                 </Flex>
 
                                 <Box className="welcome-section" >
-                                    <Text className="welcome-title" textAlign='left'>Forgot Password ?</Text>
-                                    <Text className="welcome-subtitle font-poppins text_light text_lg" textAlign='left'>
+                                    <Text className="welcome-title" >Forgot Password ?</Text>
+                                    <Text className="welcome-subtitle font-poppins text_light text_lg">
                                         Create Your New Password
                                     </Text>
                                 </Box>

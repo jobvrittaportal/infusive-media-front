@@ -6,9 +6,13 @@ import ArrowDownIcon from '../../../../assets/images/arrow-downIcon.svg'
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { FullName } from "../../../utils/common";
+import * as routesNames from "../../../../routes/RouteConstant";
+
+
 const Navbar = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
    const {user, logout} = useAuth();
+    const navigate = useNavigate();
 
    const handleLogout = () =>{
     logout();
@@ -34,7 +38,7 @@ const Navbar = () => {
           </MenuButton>
         </Flex>
         <MenuList className="dropdown_list">
-          <MenuItem as={NavLink} className="font-poppins font_dark text_medium text_md">Profile</MenuItem>
+          <MenuItem as={NavLink} to={routesNames.PROFILE} className="font-poppins font_dark text_medium text_md" >Profile</MenuItem>
           <MenuDivider mt={0} mb={0} className="divider" />
           <MenuItem onClick={handleLogout} className="font_poppins font_dark text_md text_medium logout_user">Logout</MenuItem>
         </MenuList>

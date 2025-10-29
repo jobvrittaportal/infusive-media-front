@@ -1,5 +1,6 @@
 import { JSX, Suspense } from "react";
+import Loader from "../common/components/loader";
 
 export const withSuspense = (component: JSX.Element) => (
-  <Suspense fallback={<div>loading..... </div>}>{component}</Suspense>
+  <Suspense fallback={<Loader />}>{component}</Suspense>
 );

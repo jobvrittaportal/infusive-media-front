@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* used css many times in whole app */
+.font-poppins{
+  font-family: "Poppins", sans-serif!important;
+}
+.font_dark{
+color: #000!important;
+}
+.common_color{
+  color: #006838!important;
+}
+.font_light{
+  color: #fff!important;
+}
+.text_sm{
+  font-size: 12px!important;
+}
+.text_xsm{
+  font-size: 10px!important;
+}
+.text_md{
+  font-size: 14px!important;
+}
+.text_lg{
+  font-size: 16px!important;
+}
+.text_xl{
+  font-size: 18px!important;
+}
+.text_xxl{
+  font-size: 20px!important;
+}
+.text_3xl{
+  font-size: 22px!important;
+}
+.text_4xl{
+  font-size: 24px!important;
+}
+.text_5xl{
+  font-size: 32px!important;
+}
+.text_black {
+  font-weight: 900!important;
+}
+.text_extrabold {
+  font-weight: 800!important;
+}
+.text_bold {
+  font-weight: 700!important;
+}
+.text_semibold {
+  font-weight: 600!important;
+}
+.text_medium {
+  font-weight: 500!important;
+}
+.text_regular {
+  font-weight: 400!important;
+}
+.text_light {
+  font-weight: 300!important;
+}
+.text_extralight {
+  font-weight: 200!important;
+}
+.text_thin {
+  font-weight: 100!important;
+}
+.grid_container{
+  grid-template-columns: repeat(12, 1fr);
+}
+.grid_gap_sm{
+  grid-gap: 1rem;
+}
+.btn_theme {
+  background-color: #006838!important;
+  border-radius: 4px!important;
+  color: #fff!important;
+  border: 1px solid #006838;
+}
+.btn_theme:hover {
+  background-color: transparent!important;
+  color: #006838!important;
+  border: 1px solid #006838;
+}
+.common_bg{
+  background-color: #F0F5F1;
+}
+.chakra-alert__title {
+  font-size: 16px;
+  font-weight: 500 !important;
+  color: #fff!important;
+  font-family: "Poppins", sans-serif;
+}

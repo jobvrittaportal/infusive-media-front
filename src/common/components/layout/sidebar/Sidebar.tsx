@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
-import { Box, Flex, Image, Stack } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Image, Stack } from '@chakra-ui/react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import dashboardIcon from '../../../../assets/images/dashboard-logo.svg';
 import LeadsIcon from '../../../../assets/images/lead-Icon.svg';
@@ -9,6 +9,7 @@ import Logo from '../../../../assets/images/Infusive-Logo.svg';
 import CollapseLogo from '../../../../assets/images/CollapseLogo.svg';
 import * as routesNames from '../../../../routes/RouteConstant';
 import MyDiv from './sidebar.style';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
 type SubMenuItem = {
   id: number;
@@ -97,14 +98,14 @@ const Sidebar = (props: SidebarProps) => {
   return (
     <MyDiv>
       <Box className={props.toggleSidebar ? 'sidebar_collapse' : 'sidebar_wrapper'}>
-        {/* <Box className="collapse-button">
+        <Box className="collapse-button">
           <IconButton
             className={props.toggleSidebar ? "" : "collpase_icon"}
             onClick={props.handleSidePanel}
-            icon={<Image src={CollapseIcon} w={"30px"} />}
+            icon={<ChevronRightIcon boxSize={5} />}
             aria-label="Collapse sidebar"
           />
-        </Box> */}
+        </Box>
 
         <Box>
           <Flex className="top_header" justify={props.toggleSidebar ? 'center' : 'flex-start'}>

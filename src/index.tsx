@@ -6,6 +6,7 @@ import { ApolloProvider } from "@apollo/client/react";
 import App from "./App";
 import theme from "./common/config/theme";
 import client from "./common/config/client";
+import './index.css';
 import { AuthProvider } from "./common/context/AuthContext";
 
 const root = createRoot(document.getElementById("root") as HTMLElement);

@@ -6,3 +6,4 @@ export const COMPANIES = '/companies';
 export const RESETPASSWORD = '/reset-password';
 export const USERS = '/users';
 export const ROLES = '/roles';
+export const PROFILE = '/profile'

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Box, Button, Flex, Grid, GridItem, Image, Link, Text, useToast, } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Image,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import MyDiv from "./login.style";
 import LoginImage from "../../assets/images/Login-Image.svg";
 import InfusiveLogo from "../../assets/images/Infusive-Logo.svg";
@@ -11,121 +20,145 @@ import { FormInput } from "../../common/components/formElements";
 import { useForm } from "react-hook-form";
 import { ILogin, emptyLoginForm, schema } from "./model";
 import { yupResolver } from "@hookform/resolvers/yup";
+import CustomToast from "../../common/components/customToast";
 
 const Login = () => {
-    const [rememberMe, setRememberMe] = useState(true);
-    const { login: loginMutation, loading, error } = useLogin();
-    const { login: setAuth } = useAuth();
-    const navigate = useNavigate();
-    const toast = useToast();
-    const { handleSubmit, control, formState: { errors } } = useForm<ILogin>({
-        resolver: yupResolver(schema),
-        defaultValues: emptyLoginForm,
-        mode: "onBlur",
-    });
+  const [rememberMe, setRememberMe] = useState(true);
+  const { login: loginMutation, loading } = useLogin();
+  const { login: setAuth } = useAuth();
+  const navigate = useNavigate();
+  const { addToast } = CustomToast();
 
-    const handleForgotPassword = () => {
-        navigate(routesNames.FORGOTPASSWORD);
-    };
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<ILogin>({
+    resolver: yupResolver(schema),
+    defaultValues: emptyLoginForm,
+    mode: "onBlur",
+  });
 
-    const onSubmit = async (datas : ILogin) => {
-        try {
-            const response: any = await loginMutation(datas.email, datas.password);
-            const data = response?.data?.login;
+  const handleForgotPassword = () => {
+    navigate(routesNames.FORGOTPASSWORD);
+  };
 
-            if (data?.access_token) {
-                setAuth(data.access_token, data.user);
+  const onSubmit = async (datas: ILogin) => {
+    try {
+      const response: any = await loginMutation(datas.email, datas.password);
+      const data = response?.data?.login;
 
-                toast({
-                    title: "Login Successful",
-                    description: `Welcome back, ${data.user.firstName || "User"}!`,
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                });
+      if (data?.access_token) {
+        setAuth(data.access_token, data.user);
 
-                navigate(routesNames.DASHBOARD);
-            } else {
-                toast({
-                    title: "Login Failed",
-                    description: "Invalid credentials, please try again.",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                });
-            }
-        } catch (err: any) {
-            toast({
-                title: "Error Logging In",
-                description: err?.message || "Something went wrong.",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            });
-            console.error("Login error:", err);
-        }
-    };
+        addToast({
+          message: `Login Successful! Welcome back, ${data.user.firstName || "User"} 👋`,
+          status: "success",
+        });
 
-    return (
-        <MyDiv>
-            <Box>
-                <Grid className="grid_container">
-                    <GridItem colSpan={6}>
-                        <Image
-                            src={LoginImage}
-                            alt="Login Illustration"
-                            className="login-image"
-                            cursor="pointer"
-                        />
-                    </GridItem>
+        navigate(routesNames.DASHBOARD);
+      } else {
+        addToast({
+          message: "Invalid credentials, please try again.",
+          status: "error",
+        });
+      }
+    } catch (err: any) {
+      addToast({
+        message: err?.message || "Something went wrong .",
+        status: "error",
+      });
+      console.error("Login error:", err);
+    }
+  };
 
-                    <GridItem colSpan={6}>
-                        <Box pt={10}>
-                            <Flex className="login-container">
-                                <Flex className="logo-wrapper">
-                                    <Image
-                                        src={InfusiveLogo}
-                                        alt="Infusive Media"
-                                        className="login-logo"
-                                    />
-                                </Flex>
+  return (
+    <MyDiv>
+      <Box>
+        <Grid className="grid_container">
+          <GridItem colSpan={6}>
+            <Image
+              src={LoginImage}
+              alt="Login Illustration"
+              className="login-image"
+              cursor="pointer"
+            />
+          </GridItem>
 
-                                <Box className="welcome-section" textAlign="left">
-                                    <Text className="welcome-title">Welcome back 👋</Text>
-                                    <Text className="welcome-subtitle font-poppins text_light text_lg">
-                                        Sign in to your Infusive Media CRM account to
-                                        <Text as="span"> continue</Text>
-                                    </Text>
-                                </Box>
+          <GridItem colSpan={6}>
+            <Box pt={10}>
+              <Flex className="login-container">
+                <Flex className="logo-wrapper">
+                  <Image
+                    src={InfusiveLogo}
+                    alt="Infusive Media"
+                    className="login-logo"
+                  />
+                </Flex>
 
-                                <Box className="form-container">
-                                    <form onSubmit={handleSubmit(onSubmit)}>
-                                        <Flex className="form-stack">
+                <Box className="welcome-section" ml={12}>
+                  <Text className="welcome-title">Welcome back 👋</Text>
+                  <Text className="welcome-subtitle font-poppins text_light text_lg">
+                    Sign in to your Infusive Media CRM account to
+                    <Text as="span"> continue</Text>
+                  </Text>
+                </Box>
 
-                                            <FormInput isRequired name="email" type="string" control={control} label="Email" placeholder="Enter your email" errors={errors} />
-                                            <FormInput isRequired name="password" type="string" control={control} label="Password" placeholder="Enter password" errors={errors} />
+                <Box className="form-container">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <Flex className="form-stack">
+                      <FormInput
+                        isRequired
+                        name="email"
+                        type="string"
+                        control={control}
+                        label="Email"
+                        placeholder="Enter your email"
+                        errors={errors}
+                      />
+                      <FormInput
+                        isRequired
+                        name="password"
+                        type="string"
+                        control={control}
+                        label="Password"
+                        placeholder="Enter password"
+                        errors={errors}
+                      />
 
-                                            <Flex className="form-options" align="center" justify="space-between" w="100%" >
-                                                {/* <Box className="remember-wrapper">
-                                                        <Checkbox colorScheme="blue" defaultChecked> Remember me</Checkbox>
-                                                    </Box> */}
-
-                                                <Box className="forgot-wrapper">
-                                                    <Link onClick={handleForgotPassword} className="forgot-link"> Forgot Password?</Link>
-                                                </Box>
-                                            </Flex>
-
-                                            <Button type="submit" className="login-btn" >Login </Button>
-                                        </Flex>
-                                    </form>
-                                </Box>
-                            </Flex>
+                      <Flex
+                        className="form-options"
+                        align="center"
+                        justify="space-between"
+                        w="100%"
+                      >
+                        <Box className="forgot-wrapper">
+                          <Link
+                            onClick={handleForgotPassword}
+                            className="forgot-link"
+                          >
+                            Forgot Password?
+                          </Link>
                         </Box>
-                    </GridItem>
-                </Grid>
+                      </Flex>
+
+                      <Button
+                        type="submit"
+                        className="login-btn"
+                        isLoading={loading}
+                      >
+                        Login
+                      </Button>
+                    </Flex>
+                  </form>
+                </Box>
+              </Flex>
             </Box>
-        </MyDiv>
-    );
+          </GridItem>
+        </Grid>
+      </Box>
+    </MyDiv>
+  );
 };
 
 export default Login;
