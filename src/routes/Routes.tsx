@@ -5,7 +5,12 @@ import { authRoutes } from "./authRoute";
 import { useAuth } from "../common/context/AuthContext";
 
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if(loading){
+    return <div>Loading...</div>
+  }
+  
   const allRoutes = isAuthenticated ? [...otherRoutes] : [...authRoutes];
   return (
     <Routes>
