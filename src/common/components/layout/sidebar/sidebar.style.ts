@@ -1,28 +1,9 @@
 import styled from 'styled-components'
 
 const MyDiv = styled.div`
-// .sidebar_wrapper{
-//     background-color: #f0f5f1;
-//     height: 100%;
-//     position: fixed;
-//     width: 250px;
-//     overflow-x: hidden;
-//     scrollbar-width: thin;
-//     z-index: 1;
-//     display: block;
-//     transition: 0.5s;
-//     overflow-y: scroll;
-    
-//     padding-bottom: 20px;
-//     @media(max-width:767px){
-//         display: none;
-//     }
-//     @media(min-width:768px) and (max-width:1023px){
-//         display: none;
-//     }
-// }
 
   .sidebar_wrapper {
+    background-color: #E6EEFA;
     height: 100%;
     position: fixed;
     width: 250px;
@@ -50,32 +31,21 @@ const MyDiv = styled.div`
       }
       
       &::-webkit-scrollbar-thumb {
-        background-color: #006838;
+        background-color: #0052CC;
         border-radius: 6px;
       }
     }
     
-  //   @media(max-width:767px) {
-  //     display: none;
-  //   }
-  //   @media(min-width:768px) and (max-width:1023px) {
-  //     display: none;
-  //   }
-  // }
-@media(max-width:1023px) {
-  position: fixed;
-  // width: 220px;
-  z-index: 1000;
-  background-color: #fff;
-  
-  transition: transform 0.3s ease;
-}
-
-.sidebar_wrapper.open {
-  transform: translateX(0);
-}
+    @media(max-width:767px) {
+      display: none;
+    }
+    @media(min-width:768px) and (max-width:1023px) {
+      display: none;
+    }
+  }
 
   .sidebar_collapse {
+    background-color: #E6EEFA;
     height: 100%;
     position: fixed;
     width: 100px;
@@ -98,36 +68,24 @@ const MyDiv = styled.div`
       }
       
       &::-webkit-scrollbar-track {
-        background: #f0f5f1;
+        background: #E6EEFA;
       }
       
       &::-webkit-scrollbar-thumb {
-        background-color: #006838;
+        background-color: #0052CC;
         border-radius: 6px;
       }
     }
   }
 
 
-
-// .sidebar_collapse{
-//     background-color: #f0f5f1;
-//     height: 100%;
-//     position: fixed;
-//     width: 100px;
-//     // overflow: hidden;
-//     z-index: 1;
-//     display: block;
-//     transition: 0.5s;
-//     // overflow-y: scroll;
-//     padding-bottom: 20px;
-// }
-
 .collapse-button{
     position: absolute;
-    right: -1px;
-    top: 50px;
+    right: 3px;
+    top: 85px;
     z-index: 11;
+    margin-left:2px;
+    margin-botton:2px;
 }
 .collapse-button button {
     border-radius: 8px;
@@ -136,13 +94,14 @@ const MyDiv = styled.div`
     
 }
 
+
 .top_header{
     align-items: center;
     margin-top: 20px;
-    
 }
 .col{
-    padding: 20px 0px 0px 5px;
+    width:65px;
+    padding: 0px 10px 0px 0px;
     mix-blend-mode: multiply;
     margin-left: 5px; 
     }
@@ -152,14 +111,14 @@ const MyDiv = styled.div`
     mix-blend-mode: multiply;
 }
 .logo{
-    width: 100%;
+    width: 200px;
     mix-blend-mode: multiply;
-    padding: 0px 34px 0px 34px;
+    padding: 0px 10px 0px 34px;
    
 }
 .sidebar_box{
     padding: 0px 0px;
-    margin-top: 24px;
+    margin-top: 53px;
     @media(max-width:767px){
         padding: 0px;
         margin-top: 0px;
@@ -167,7 +126,7 @@ const MyDiv = styled.div`
 }
 .sidebar_box_toggle{
     padding: 0px 0px;
-    margin-top: 44px;
+    margin-top: 40px;
 }
 .icon_size{
     width: 24px;
@@ -192,137 +151,58 @@ const MyDiv = styled.div`
     cursor: pointer;
 }
 .menu_item svg path{
-    
-  fill: #EEEEEE; 
-}
+    fill: #E6EEFA
 }
 .menu_item a{
     display: flex;
     align-items: center;
     column-gap: 12px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 24px;
     height: 30px;
     width: 100%;
-    font-family: 'REM';
     font-weight: 400;
 }
-// .active_menu .icon_size {
-//     /* Approximate CSS filter for #EEEEEE */
-//     filter: invert(27%) sepia(98%) saturate(1208%) hue-rotate(81deg) brightness(95%) contrast(102%);
-
-// }
-.active_menu{
-    background-color: #0052CC;
-    transition: 0.2s;
-    border-left: 4px solid #EEEEEE;
-     color: #EEEEEE
+.active_menu .icon_size {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(100%) saturate(7499%) hue-rotate(207deg) brightness(91%) contrast(101%);
 }
-.active_menu {
-    color: #EEEEEE
+
+.active_menu{
+    background-color: #fff;
+    transition: 0.2s;
+    border-left: 4px solid #0052CC;
+}
+.active_menu a{
+    color: #0052CC!important;
     font-weight: 500;
 }
 
 .collpase_icon{
     transform: rotate(180deg);
     transition: 0.5s;
-    height: 5px
 }
 
 .submenu_wrapper {
-  padding-left: 40px;
+  padding-left: 48px;
   padding-top: 14px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  font-size: 15px;
-  font-weight: 400;
-   font-family: 'REM';
 }
-
-// .submenu_item {
-//   font-size: 12px;
-//   color: #000;
-//   text-decoration: none;
-//   font-family: 'REM';
-//   font-weight: 500;
-//   padding-left: 2px;
-// }
-
 
 .submenu_item {
-  display: block;
-  padding: 8px 16px;
-  // border-radius: 6px;
-  font-family: 'REM';
+  font-size: 12px;
   color: #000;
   text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.submenu_item:hover {
-  background-color: #f5f8ff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  padding-left: 2px;
 }
 
 .active_submenu {
-  background-color: #E6EEFA;
-  font-weight: 600;
-  color: #EEEEEE;
-}
-
-
-
-
-
-.active_submenu {
   font-weight: 500;
-  color: #000 
+  color: #0052CC !important;
 }
-.icon_size {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-  color: #000000; 
-}
-
-.active_icon {
-  fill: #EEEEEE; 
-}
-
-
-.menu_text {
-  color: #000000; 
-  font-size: 16px;
-  font-weight: 400;
-  font-family: 'REM';
-}
-
-.active_text {
-  color: #EEEEEE; /* active text */
-  font-weight: 500;
-}
-
-.active_menu {
-  background-color: #0052CC;
-  border-left: 4px solid #EEEEEE;
-  transition: 0.2s;
-}
-// .logo {
-//   width: 180px;
-//   height: auto;
-//   mix-blend-mode: multiply;
-//   padding: 0px 24px;
-//   transition: 0.3s;
-// }
-
-// .col {
-//   width: 50px;
-//   height: auto;
-//   padding: 10px 0px 0px 10px;
-//   mix-blend-mode: multiply;
-//   margin-left: 5px;
-//   transition: 0.3s;
-// }
 
 `
 export default MyDiv
