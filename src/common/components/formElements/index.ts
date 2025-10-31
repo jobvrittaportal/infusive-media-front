@@ -1,7 +1,8 @@
-import  FormInput  from "./Input/Input";
-import Dropdown from "./Dropdown/Dropdown";
-import { MultiSelectMenu } from "./MultiSelectMenu/MultiSelectMenu";
-import MultiSelectTypeahead from "./MultiSelectTypeahead/MultiSelectTypeahead";
+import  FormInput  from "./input/Input";
+import Dropdown from "./dropdown/Dropdown";
+import { MultiSelectMenu } from "./multiSelectMenu/MultiSelectMenu";
+import MultiSelectTypeahead from "./multiSelectTypeahead/MultiSelectTypeahead";
+
 export {
     FormInput,
     Dropdown,

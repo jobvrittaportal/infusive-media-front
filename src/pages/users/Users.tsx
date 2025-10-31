@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import UserDiv from './users.style';
 import { IUser, defaultUser, schema, GetAllUsersData } from './model';
-import FormInput from '../../common/components/formElements/Input/Input';
+import FormInput from '../../common/components/formElements/input/Input';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client/react';
-import MultiSelectTypeahead from '../../common/components/formElements/multiselecttypeahead/MultiSelectTypeahead';
+
 import { IRole } from '../role/helpers';
 import { GET_ALL_USERS, GET_ROLES } from './graphql/query';
 import { CREATE_USER_MUTATION } from './graphql/mutation';
+import { MultiSelectTypeahead } from '../../common/components/formElements';
 
 const Users = () => {
   const { data, loading, refetch } = useQuery<GetAllUsersData>(GET_ALL_USERS);
