@@ -20,10 +20,12 @@ const MyDiv = styled.div`
   }
 
   .children_grid {
+   background-color: #E6EEFA; 
     padding: 16px 0px 0px 0px;
   }
 
   .children_grid_toggle {
+   background-color: #E6EEFA; 
     padding: 16px 0px 0px 0px;
   }
 

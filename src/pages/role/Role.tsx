@@ -18,6 +18,7 @@ import { useFetch } from "../../common/hooks";
 import { IRole } from "./helpers";
 import { GET_ROLES } from "./graphql/query";
 import RoleModal from "./RoleModal";
+import { AddIcon } from "@chakra-ui/icons";
 
 const RoleList: React.FC = () => {
   const {
@@ -34,13 +35,14 @@ const RoleList: React.FC = () => {
     <Box p={6}>
       <Flex justify="space-between" align="center" mb={4}>
         <Heading size="lg">Roles</Heading>
-        <Button
-          colorScheme="teal"
+        <Button gap={2}
+          bg="#0052CC" color="white"
           onClick={() => {
             setSelectedRole(null);
             onOpen();
           }}
         >
+          <AddIcon/>
           Add Role
         </Button>
       </Flex>

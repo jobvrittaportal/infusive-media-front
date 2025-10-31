@@ -21,6 +21,7 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure,
+  ModalCloseButton,
  
 } from "@chakra-ui/react";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
@@ -216,6 +217,7 @@ const LeadList = () => {
         <ModalOverlay />
         <ModalContent>
           {/* <ModalHeader >Add New Leads</ModalHeader> */}
+          <ModalCloseButton />
           {/* <ModalCloseButton /> */}
           <ModalBody>
             <LeadListModal />

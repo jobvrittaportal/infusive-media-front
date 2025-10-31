@@ -14,6 +14,7 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  Flex,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client/react";
 
@@ -57,14 +58,15 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{role ? "Edit Role" : "Add Role"}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody overflowY='scroll' h="200px">
           <VStack spacing={4} align="stretch">
             {/* Role Name Input */}
+            <Flex justify="space-between" align="center" gap={5}>
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input value={name} onChange={(e) => setName(e.target.value)} />
@@ -78,7 +80,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
                 onChange={(e) => setActive(e.target.checked)}
               />
             </FormControl>
-
+             </Flex>
             {/* Permissions Tree */}
             <PermissionTree value={permissions} onChange={setPermissions} />
           </VStack>
@@ -89,7 +91,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
           <Button onClick={onClose} mr={3}>
             Cancel
           </Button>
-          <Button colorScheme="teal" isLoading={loading} onClick={handleSave}>
+          <Button bg="#0052CC" color="white" isLoading={loading} onClick={handleSave}>
             Save
           </Button>
         </ModalFooter>

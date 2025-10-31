@@ -19,10 +19,10 @@ const Navbar = () => {
    }
    
   return (
-    <Flex h="50px" align="center" bg="white" px={4} justifyContent='space-between'>
-      <InputGroup width="240px" bg="#ECECEC" borderRadius="6px">
+    <Flex h="50px" align="center" bg="#E6EEFA" px={4} justifyContent="right">
+      {/* <InputGroup width="240px" bg="white" borderRadius="6px">
         <InputLeftElement pointerEvents="none">
-          <Search2Icon color="rgba(102, 112, 133, 1)" />
+          <Search2Icon  />
         </InputLeftElement>
         <Input
           type="text"
@@ -30,7 +30,7 @@ const Navbar = () => {
           border="none"
           _focus={{ outline: "none" }}
         />
-      </InputGroup>
+      </InputGroup> */}
       <Menu>
       <Flex className="profile_menu">
           <MenuButton as={Button} leftIcon={<Avatar size='xs' src={avatarUrl || DummyPerson} />} rightIcon={<Image src={ArrowDownIcon} />}>
@@ -40,7 +40,7 @@ const Navbar = () => {
         <MenuList className="dropdown_list">
           <MenuItem as={NavLink} to={routesNames.PROFILE} className="font-poppins font_dark text_medium text_md" >Profile</MenuItem>
           <MenuDivider mt={0} mb={0} className="divider" />
-          <MenuItem onClick={handleLogout} className="font_poppins font_dark text_md text_medium logout_user">Logout</MenuItem>
+          <MenuItem onClick={handleLogout} className="font-poppins font_dark text_medium text_md logout_user">Logout</MenuItem>
         </MenuList>
       </Menu>
     </Flex>

@@ -15,7 +15,7 @@ body {
 color: #000!important;
 }
 .common_color{
-  color: #006838!important;
+  color: #0052CC!important;
 }
 .font_light{
   color: #fff!important;
@@ -81,15 +81,15 @@ color: #000!important;
   grid-gap: 1rem;
 }
 .btn_theme {
-  background-color: #006838!important;
+  background-color: #0052CC!important;
   border-radius: 4px!important;
   color: #fff!important;
-  border: 1px solid #006838;
+  border: 1px solid #0052CC;
 }
 .btn_theme:hover {
   background-color: transparent!important;
-  color: #006838!important;
-  border: 1px solid #006838;
+  color: #0052CC!important;
+  border: 1px solid #0052CC;
 }
 .common_bg{
   background-color: #F0F5F1;
