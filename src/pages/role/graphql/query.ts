@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_ROLES = gql`
   query GetRoles {
@@ -7,8 +7,10 @@ export const GET_ROLES = gql`
       name
       active
       permissions {
+        id
         feature
         permissions {
+          # ✅ This is correct - permissions field contains the PermissionObject
           read
           upsert
           delete
