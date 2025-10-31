@@ -126,7 +126,7 @@ const Sidebar = (props: SidebarProps) => {
                 return (
                   <Box key={item.id} >
                     <Flex className={isActiveMenu ? "active_menu menu_item" : "menu_item"} onClick={() => handleMenu(item.id)}>
-                      <NavLink to={item.link ?? ""} className="font-poppins font_dark" style={{ justifyContent: props.toggleSidebar ? "center" : "" }}>
+                      <NavLink to={item.link ?? ""} className="font-poppins text_lg font_dark" style={{ justifyContent: props.toggleSidebar ? "center" : "" }}>
                         <Image src={item.menuLogo} className="icon_size" />
                         {!props.toggleSidebar && item.menuName}
                       </NavLink>

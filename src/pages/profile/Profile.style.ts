@@ -68,6 +68,33 @@ const MyDiv = styled.div`
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 2;
   }
+.edit-icon {
+    position: absolute !important;
+    top: 5px;
+    right: 0;
+    transform: translate(25%, 25%);
+    border-radius: 50% !important;
+    background-color: #0052cc !important;
+    color: white !important;
+    transition: background-color 0.2s ease;
+  }
+ 
+  .edit-icon:hover {
+    background-color: #003c99 !important;
+  }
+.edit-bg-icon {
+    position: absolute !important;
+    top: 12px; /* Chakra’s top={3} → 3 * 4px = 12px */
+    right: 12px;
+    background-color: #0052cc !important;
+    color: white !important;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 8px !important; /* optional: match Chakra default */
+  }
+ 
+  .edit-bg-icon:hover {
+    background-color: #003c99 !important;
+  }
 `;
 
 export default MyDiv;

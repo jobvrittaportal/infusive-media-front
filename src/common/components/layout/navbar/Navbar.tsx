@@ -33,8 +33,8 @@ const Navbar = () => {
       </InputGroup> */}
       <Menu>
       <Flex className="profile_menu">
-          <MenuButton as={Button} leftIcon={<Avatar size='xs' src={avatarUrl || DummyPerson} />} rightIcon={<Image src={ArrowDownIcon} />}>
-            <Text>{FullName(user)}</Text>
+          <MenuButton as={Button} leftIcon={<Avatar size='sm' src={avatarUrl || DummyPerson} bg="transparent"/>} rightIcon={<Image src={ArrowDownIcon} />} h={"12"}  bg="transparent"  _hover={{ bg: "transparent" }}>
+            <Heading  as="h1" className="font-poppins font_dark text_semibold text_lg">{FullName(user)}</Heading>
           </MenuButton>
         </Flex>
         <MenuList className="dropdown_list">

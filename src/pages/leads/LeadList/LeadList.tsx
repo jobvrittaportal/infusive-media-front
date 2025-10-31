@@ -1,15 +1,19 @@
-import { Box, Button, Flex, Grid, GridItem, Input, InputGroup, InputLeftElement, Text, Badge, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, ModalCloseButton,} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Input, InputGroup, InputLeftElement, Text, Badge, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, ModalCloseButton, Image,} from "@chakra-ui/react";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
 import MyDiv from "./leadList.style";
 import { LeadListModal } from "../components";
 import CustomTable from "../../../common/components/customTable";
 import { Column } from "../../../common/components/customTable/CustomTable";
+import TotalLeadsIcon from "../../../assets/images/TotalLeads-Icon.svg"
+import NewLeadIcon from "../../../assets/images/NewLeads-Icon.svg"
+import AssignedIcon from "../../../assets/images/Assigned-Icon.svg"
+import QuotedIcon from "../../../assets/images/Quotation-Icon.svg"
 
 const dummyData = [
-  { title: "Total Leads", value: "4", className: "totalLeads" },
-  { title: "New", value: "1", className: "newLeads" },
-  { title: "Assigned", value: "1", className: "assignedLeads" },
-  { title: "Quoted", value: "1", className: "quotedLeads" },
+  { title: "Total Leads", value: "4", className: "totalLeads",icon: TotalLeadsIcon },
+  { title: "New", value: "1", className: "newLeads", icon: NewLeadIcon,},
+  { title: "Assigned", value: "1", className: "assignedLeads", icon: AssignedIcon,},
+  { title: "Quoted", value: "1", className: "quotedLeads", icon: QuotedIcon, },
 ];
 
 const dummyList = [
@@ -114,16 +118,19 @@ const LeadList = () => {
         </Box>
       </Flex>
 
-      <Grid templateColumns="repeat(4, 1fr)" gap={5}>
+       <Grid templateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }} gap={4}  mt={3}>
         {dummyData.map((item, index) => (
-          <GridItem key={index} className="stats-grid" textAlign="left">
-            <Text className="text_xl text_medium" mb={2} color="#0052CC">
+          <Box key={index} className="stats-grid" >
+             <Flex align="center" gap={3} mb={2}>
+            <Image src={item.icon} className="card_icon" alt={item.title} boxSize={10}/>
+            <Text className="card_label font-poppins text_xl text_medium" mb={2} >
               {item.title}
             </Text>
-            <Text className="text_3xl text_medium" color="#0052CC">
+            </Flex>
+             <Text className="card_value font-poppins text_bold" color="#0052CC">
               {item.value}
             </Text>
-          </GridItem>
+          </Box>
         ))}
       </Grid>
       <Flex justifyContent="space-between" mt={5}>
