@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Image,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Image, Link, Text, } from "@chakra-ui/react";
 import MyDiv from "./login.style";
 import LoginImage from "../../assets/images/Login-Image.svg";
 import InfusiveLogo from "../../assets/images/Infusive-Logo.svg";
@@ -23,17 +14,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CustomToast from "../../common/components/customToast";
 
 const Login = () => {
-  const [rememberMe, setRememberMe] = useState(true);
   const { login: loginMutation, loading } = useLogin();
   const { login: setAuth } = useAuth();
   const navigate = useNavigate();
   const { addToast } = CustomToast();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<ILogin>({
+  const { handleSubmit, control, formState: { errors } } = useForm<ILogin>({
     resolver: yupResolver(schema),
     defaultValues: emptyLoginForm,
     mode: "onBlur",
@@ -77,23 +63,14 @@ const Login = () => {
       <Box>
         <Grid className="grid_container">
           <GridItem colSpan={6}>
-            <Image
-              src={LoginImage}
-              alt="Login Illustration"
-              className="login-image"
-              cursor="pointer"
-            />
+            <Image src={LoginImage} alt="Login Illustration" className="login-image" cursor="pointer" />
           </GridItem>
 
           <GridItem colSpan={6}>
             <Box pt={10}>
               <Flex className="login-container">
                 <Flex className="logo-wrapper">
-                  <Image
-                    src={InfusiveLogo}
-                    alt="Infusive Media"
-                    className="login-logo"
-                  />
+                  <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
                 </Flex>
 
                 <Box className="welcome-section" ml={12}>
@@ -107,31 +84,10 @@ const Login = () => {
                 <Box className="form-container">
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <Flex className="form-stack">
-                      <FormInput
-                        isRequired
-                        name="email"
-                        type="string"
-                        control={control}
-                        label="Email"
-                        placeholder="Enter your email"
-                        errors={errors}
-                      />
-                      <FormInput
-                        isRequired
-                        name="password"
-                        type="string"
-                        control={control}
-                        label="Password"
-                        placeholder="Enter password"
-                        errors={errors}
-                      />
+                      <FormInput isRequired name="email" type="string" control={control} label="Email" placeholder="Enter your email" errors={errors} />
+                      <FormInput isRequired name="password" type="password" control={control} label="Password" placeholder="Enter password" errors={errors}/>
 
-                      <Flex
-                        className="form-options"
-                        align="center"
-                        justify="space-between"
-                        w="100%"
-                      >
+                      <Flex className="form-options" align="center" justify="space-between" w="100%">
                         <Box className="forgot-wrapper">
                           <Link
                             onClick={handleForgotPassword}
@@ -142,11 +98,7 @@ const Login = () => {
                         </Box>
                       </Flex>
 
-                      <Button
-                        type="submit"
-                        className="login-btn"
-                        isLoading={loading}
-                      >
+                      <Button type="submit" className="login-btn" isLoading={loading} >
                         Login
                       </Button>
                     </Flex>
