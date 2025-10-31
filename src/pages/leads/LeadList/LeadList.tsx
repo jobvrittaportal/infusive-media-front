@@ -1,54 +1,15 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  Badge,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  useDisclosure,
-  ModalCloseButton,
- 
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Input, InputGroup, InputLeftElement, Text, Badge, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, ModalCloseButton,} from "@chakra-ui/react";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
-// import MyDiv from "./leadList.style";
-
-import { useState } from "react";
 import MyDiv from "./leadList.style";
 import { LeadListModal } from "../components";
-
-
+import CustomTable from "../../../common/components/customTable";
+import { Column } from "../../../common/components/customTable/CustomTable";
 
 const dummyData = [
   { title: "Total Leads", value: "4", className: "totalLeads" },
   { title: "New", value: "1", className: "newLeads" },
   { title: "Assigned", value: "1", className: "assignedLeads" },
   { title: "Quoted", value: "1", className: "quotedLeads" },
-];
-
-const header = [
-  "S No",
-  "Company",
-  "Contact",
-  "Email",
-  "Status",
-  "Source",
-  "Assigned To",
-  "Action",
 ];
 
 const dummyList = [
@@ -86,6 +47,24 @@ const dummyList = [
     status: "Assigned",
     source: "CRM Entry",
     assignedTo: "Lisa B.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
     value: "View",
   },
   {
@@ -162,57 +141,47 @@ const LeadList = () => {
         </InputGroup>
       </Flex>
 
-      <Box bg="white" borderRadius="12px" boxShadow="sm" mt={5}>
-        <TableContainer>
-          <Table variant="simple">
-            <Thead bg="#F8FAFC">
-              <Tr>
-                {header.map((head, idx) => (
-                  <Th key={idx} fontSize="14px" color="#667085">
-                    {head}
-                  </Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {dummyList.map((item, index) => {
-                const color = getStatusColor(item.status);
-                return (
-                  <Tr key={index} _hover={{ bg: "#F4F7FB" }}>
-                    <Td>{index + 1}</Td>
-                    <Td>{item.company}</Td>
-                    <Td>{item.contact}</Td>
-                    <Td>{item.email}</Td>
-                    <Td>
-                      <Badge
-                        px={3}
-                        py={1}
-                        borderRadius="md"
-                        bg={color.bg}
-                        color={color.color}
-                        fontSize="13px"
-                        fontWeight="500"
-                      >
-                        {item.status}
-                      </Badge>
-                    </Td>
-                    <Td>{item.source}</Td>
-                    <Td>{item.assignedTo}</Td>
-                    <Td
-                      color="#0052CC"
-                      cursor="pointer"
-                      fontWeight="500"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      {item.value}
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <CustomTable value={dummyList}>
+        <Column header="S.No" body={(_, index) => index + 1} />
+        <Column header="Company" field="company" />
+        <Column header="Contact" field="contact" />
+        <Column header="Email" field="email" />
+        <Column
+          header="Status"
+          body={(row: any) => {
+            const color = getStatusColor(row.status);
+            return (
+              <Badge
+                px={3}
+                py={1}
+                borderRadius="md"
+                bg={color.bg}
+                color={color.color}
+                fontSize="13px"
+                fontWeight="500"
+              >
+                {row.status}
+              </Badge>
+            );
+          }}
+        />
+        <Column header="Source" field="source" />
+        <Column header="Assigned To" field="assignedTo" />
+        <Column
+          header="Action"
+          body={(row: any) => (
+            <Text
+              color="#0052CC"
+              cursor="pointer"
+              fontWeight="500"
+              _hover={{ textDecoration: "underline" }}
+            >
+              {row.value}
+            </Text>
+          )}
+        />
+      </CustomTable>
+
       <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
         <ModalContent>

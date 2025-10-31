@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
 const MyDiv = styled.div`
-.greeting{
-font-family:REM;
-
-}
 .card_box {
   background: white;
   padding: 15px 10px;
@@ -21,18 +17,22 @@ font-family:REM;
 .stat-card {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
+filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+  padding: 15px 15px 15px 15px;
 }
 
-// .stat-card:hover {
-//   transform: translateY(-4px);
-//   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-// }
+.card_label {
+  color: #23272E;
+}
+
+.card_value {
+font-size: 30px;
+  color: #0052CC;
+}
+    .icon_btn {
+   min-width: 40px;
+    cursor: pointer;  
+  }
 
 .stat-title {
   font-family:Metropolis;
