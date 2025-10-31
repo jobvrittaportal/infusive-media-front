@@ -1,5 +1,5 @@
-import { useMutation } from "@apollo/client/react";
-import { gql } from "@apollo/client";
+import { useMutation } from '@apollo/client/react';
+import { gql } from '@apollo/client';
 
 const LOGIN_MUTATION = gql`
   mutation Login($input: LoginInput!) {
@@ -10,6 +10,20 @@ const LOGIN_MUTATION = gql`
         firstName
         lastName
         email
+        roles {
+          id
+          name
+          active
+          permissions {
+            id
+            feature
+            permissions {
+              read
+              upsert
+              delete
+            }
+          }
+        }
       }
     }
   }

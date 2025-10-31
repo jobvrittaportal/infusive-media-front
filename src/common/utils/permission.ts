@@ -1,4 +1,3 @@
-// Define the standard permission actions
 export const PermissionNames = ['read', 'upsert', 'delete'] as const;
 export type PermissionAction = (typeof PermissionNames)[number];
 
@@ -12,13 +11,13 @@ export interface IFeatureNode {
 
 export const FeatureTree: IFeatureNode[] = [
   {
-    label: 'Documents',
-    name: 'docs',
+    label: 'DashBoard',
+    name: 'dashboard',
     permissions: ['read', 'upsert', 'delete'],
     features: [
       {
         label: 'feature1',
-        name: 'docs.features1',
+        name: 'dashboard.features1',
         permissions: ['read', 'upsert', 'delete'],
       },
     ],
