@@ -23,16 +23,16 @@ import BackgroundImage from "../../assets/images/backgroundImage.jpg";
 import { EditIcon } from "@chakra-ui/icons";
 import { EditProfileCard } from "./components";
 import { useRef, useState } from "react";
-
+ 
 const Profile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const bgInputRef = useRef<HTMLInputElement | null>(null);
   const profileInputRef = useRef<HTMLInputElement | null>(null);
-
+ 
   // ✅ Store image state
   const [backgroundImage, setBackgroundImage] = useState(BackgroundImage);
   const [profileImage, setProfileImage] = useState(ProfileImage);
-
+ 
   // ✅ Handle uploads and preview instantly
   const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -45,7 +45,7 @@ const Profile = () => {
       else setProfileImage(imageUrl);
     }
   };
-
+ 
   return (
     <MyDiv>
       <Box className="container">
@@ -54,26 +54,8 @@ const Profile = () => {
         </Heading>
         <Box className="profile-container">
           <Box className="cover-wrapper" position="relative">
-            <Image
-              src={backgroundImage} 
-              alt="cover"
-              className="cover-image"
-              w="100%"
-              h="200px"
-              objectFit="cover"
-            />
-            <IconButton
-              aria-label="Edit background"
-              icon={<EditIcon />}
-              size="sm"
-              bg="#0052CC"
-              color="white"
-              position="absolute"
-              top={3}
-              right={3}
-              _hover={{ bg: "#003c99" }}
-              onClick={() => bgInputRef.current?.click()}
-            />
+            <Image src={backgroundImage}  alt="cover" className="cover-image" w="100%" h="200px" objectFit="cover" />
+            <IconButton aria-label="Edit background" icon={<EditIcon />} size="sm" className="edit-bg-icon" onClick={() => bgInputRef.current?.click()} />
             <input
               type="file"
               ref={bgInputRef}
@@ -82,27 +64,23 @@ const Profile = () => {
               onChange={(e) => handleImageUpload(e, "background")}
             />
           </Box>
-
+ 
           <Box className="content-section" position="relative">
             <Grid className="grid_gap_sm grid_container" gap={4}>
-              <GridItem colSpan={2} >
-                <Avatar size="2xl" src={profileImage}  className="avatar" border="4px solid white"/>
-                <IconButton
-                  aria-label="Edit profile"
-                  icon={<EditIcon />}
-                  size="xs"
-                  bg="#0052CC"
-                  color="white"
-                  position="absolute"
-                  bottom={6}
-                  right={1230}
-                  borderRadius="full"
-                  _hover={{ bg: "#003c99" }}
-                  onClick={() => profileInputRef.current?.click()}
-                />
-                <input type="file" ref={profileInputRef} accept="image/*" hidden onChange={(e) => handleImageUpload(e, "profile")} />
-              </GridItem>
-
+              <GridItem colSpan={2}>
+                  <Box position="relative" display="inline-block" w="fit-content">
+                    <Avatar size="2xl" src={profileImage} border="4px solid white" top="-14" />
+                    <IconButton aria-label="Edit profile" icon={<EditIcon />} size="sm" className="edit-icon" onClick={() => profileInputRef.current?.click()} />
+                    <input
+                      type="file"
+                      ref={profileInputRef}
+                      accept="image/*"
+                      hidden
+                      onChange={(e) => handleImageUpload(e, "profile")}
+                    />
+                  </Box>
+                </GridItem>
+ 
               <GridItem colSpan={10}>
                 <Flex justify="space-between" align="center">
                   <Box>
@@ -130,7 +108,7 @@ const Profile = () => {
             </Grid>
           </Box>
         </Box>
-
+ 
         <Box className="section" mt={4}>
           <Flex justify="space-between" align="center" mb={4}>
             <Heading as="h4" size="sm" color="#002795">
@@ -141,7 +119,7 @@ const Profile = () => {
               Edit
             </Button>
           </Flex>
-
+ 
           <Grid className="grid_gap_sm grid_container" gap={4}>
             <GridItem colSpan={2}>
               <Text className="label">Full Name</Text>
@@ -165,7 +143,7 @@ const Profile = () => {
             </GridItem>
           </Grid>
         </Box>
-
+ 
         <Box className="section">
           <Flex justify="space-between" align="center" mb={4}>
             <Heading as="h4" size="sm" color="#002795">
@@ -176,7 +154,7 @@ const Profile = () => {
               Edit
             </Button>
           </Flex>
-
+ 
           <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4}>
             <Box>
               <Text className="label">Country</Text>
@@ -193,7 +171,7 @@ const Profile = () => {
           </Grid>
         </Box>
       </Box>
-
+ 
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
@@ -206,5 +184,5 @@ const Profile = () => {
     </MyDiv>
   );
 };
-
+ 
 export default Profile;

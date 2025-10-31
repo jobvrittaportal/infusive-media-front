@@ -191,7 +191,7 @@ const MyDiv = styled.div`
 }
 
 .submenu_item {
-  font-size: 12px;
+  font-size: 14px;
   color: #000;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
