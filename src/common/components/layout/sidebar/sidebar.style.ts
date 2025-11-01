@@ -93,15 +93,14 @@ const MyDiv = styled.div`
     min-width: 28px;
     
 }
-
-
+    
 .top_header{
     align-items: center;
     margin-top: 20px;
 }
 .col{
-    width:65px;
-    padding: 0px 10px 0px 0px;
+    width:55px;
+    padding: 15px 10px 0px 0px;
     mix-blend-mode: multiply;
     margin-left: 5px; 
     }
@@ -111,9 +110,9 @@ const MyDiv = styled.div`
     mix-blend-mode: multiply;
 }
 .logo{
-    width: 200px;
+    width: 175px;
     mix-blend-mode: multiply;
-    padding: 0px 10px 0px 34px;
+    padding: 3px 10px 0px 34px;
    
 }
 .sidebar_box{

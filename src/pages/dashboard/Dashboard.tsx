@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Grid, GridItem, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Image, Text } from '@chakra-ui/react';
 import MyDiv from './dashboard.style';
-import TotalLeadIcon from "../../assets/images/conversionIcon.svg"
 import { LeadByMonthCard, LeadsSourceCard } from './component';
 import { useAuth } from '../../common/context/AuthContext';
 import { FullName } from '../../common/utils/common';

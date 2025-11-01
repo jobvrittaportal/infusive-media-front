@@ -9,7 +9,6 @@ import Logo from '../../../../assets/images/Infusive-Logo.svg';
 import CollapseLogo from '../../../../assets/images/CollapseLogo.svg';
 import * as routesNames from '../../../../routes/RouteConstant';
 import MyDiv from './sidebar.style';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 
 type SubMenuItem = {
   id: number;
