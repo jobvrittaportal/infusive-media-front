@@ -1,18 +1,5 @@
 import React, { ReactNode } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Box,
-  Center,
-  Spinner,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import {Table,Thead,Tbody,Tr,Th,Td,TableContainer,Box,Center,Spinner,Text,Flex,} from "@chakra-ui/react";
 import MyDiv from "./CustomTable.style";
 
 // --- Type for Column Props ---

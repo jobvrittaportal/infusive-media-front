@@ -189,7 +189,7 @@ const LeadList = () => {
         />
       </CustomTable>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="4xl">
         <ModalOverlay />
         <ModalContent>
           {/* <ModalHeader >Add New Leads</ModalHeader> */}
