@@ -11,8 +11,8 @@ const MyDiv = styled.div`
   padding: 24px;
 }
  .login-logo {
-    width: 160px;
-    margin-bottom: 40px;
+    width: 120px;
+    margin-bottom: 30px;
     background-color: #ffffff;
   }
  .login-image {
@@ -136,28 +136,20 @@ const MyDiv = styled.div`
   align-items: center;
   padding: 16px;
 }
-.login-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
+  .login-card {
+    width: 420px;
+    background: #fff;
+    padding: 20px 42px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+  }
 
 .logo-wrapper {
   display: flex;
   justify-content: center;  
   align-items: center;
   width: 100%;
-}
-
-.login-logo {
-  width: 160px;
-  margin-bottom: 24px;
 }
 `;
 
