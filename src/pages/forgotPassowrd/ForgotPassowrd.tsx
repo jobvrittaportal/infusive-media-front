@@ -91,22 +91,15 @@ const ForgotPassword = () => {
             <Image src={LoginImage} alt="Login Illustration" className="login-image" />
           </GridItem>
 
-          <GridItem colSpan={6}>
-            <Box pt={10}>
+          <GridItem colSpan={6} justifyContent="center" alignContent="center">
+            <Box className="login-right">
+            <Box className="login-card">
+               <Box className="logo-wrapper">
               <Flex className="login-container">
                 <Flex className="logo-wrapper">
                   <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
                 </Flex>
-
-                <Box className="welcome-section">
-                  <Text className="welcome-title" textAlign="left">
-                    Forgot Password
-                  </Text>
-                  <Text className="welcome-subtitle">
-                    We will send you an OTP to create a new one
-                  </Text>
-                </Box>
-
+                
                 <Box className="form-container">
                   <VStack className="form-stack">
                     <FormControl id="email">
@@ -153,6 +146,8 @@ const ForgotPassword = () => {
                   </VStack>
                 </Box>
               </Flex>
+            </Box>
+            </Box>
             </Box>
           </GridItem>
         </Grid>

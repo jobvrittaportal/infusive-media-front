@@ -129,6 +129,36 @@ const MyDiv = styled.div`
  font-size: 12px;
  font-weight: 500;
 }
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+.login-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  width: 100%;
+}
+
+.login-logo {
+  width: 160px;
+  margin-bottom: 24px;
+}
 `;
 
 export default MyDiv;
