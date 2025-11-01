@@ -9,9 +9,9 @@ const LeadListModal = () => {
  
   return (
     <MyDiv>
-      <Box p={2} maxH="70vh" overflowY='scroll'>
-      <Text className="font-poppins font_dark text_semibold text_3xl"> Add New Lead</Text>
-      <Text className="font-poppins  text_regular text_md"> Enter the lead and company information below</Text>
+      <Text className="font-poppins font_dark text_semibold text_3xl" textAlign={"center"} mb={3} mt={3}> Add New Lead</Text>
+      {/* <Text className="font-poppins  text_regular text_md"> Enter the lead and company information below</Text> */}
+      <Box p={2} maxH="75vh" overflowY='scroll'>
       <Text className="font-poppins  text_medium text_xl" mt={3}>  company Information </Text>
      
      <Divider mt={1}/>
@@ -123,7 +123,9 @@ const LeadListModal = () => {
       </Box>                 
       </Box>
       <Box>
-        <Flex justify='center' gap={4}>
+      </Box>
+      </Box>
+        <Flex justify='center' gap={4} mb={4}>
            <Button variant="ghost" mr={3} >
               Cancel
             </Button>
@@ -132,8 +134,8 @@ const LeadListModal = () => {
            Add
           </Button>
           </Flex>        
-      </Box>
-      </Box>
+      
+ 
     </MyDiv>
   )
 }
