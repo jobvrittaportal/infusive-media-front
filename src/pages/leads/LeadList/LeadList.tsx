@@ -8,6 +8,7 @@ import TotalLeadsIcon from "../../../assets/images/TotalLeads-Icon.svg"
 import NewLeadIcon from "../../../assets/images/NewLeads-Icon.svg"
 import AssignedIcon from "../../../assets/images/Assigned-Icon.svg"
 import QuotedIcon from "../../../assets/images/Quotation-Icon.svg"
+import CustomButton from "../../../common/components/customButton";
 
 const dummyData = [
   { title: "Total Leads", value: "4", className: "totalLeads",icon: TotalLeadsIcon },
@@ -107,14 +108,9 @@ const LeadList = () => {
         <Text className="font-poppins font_dark text_semibold text_xxl">
           Leads
         </Text>
-        <Box>
-          <Button bg="#E6EEFA" color="#0052CC" mr={3}>
-            Import
-          </Button>
-          <Button bg="#E6EEFA" color="#0052CC" onClick={onOpen}>
-            <AddIcon color="#0052CC" mr={2} />
-            Add New Lead
-          </Button>
+        <Box display="flex" gap="10px">
+           <CustomButton label="Import" />
+           <CustomButton label="Add New Lead" leftIcon={<AddIcon />} onClick={onOpen} />
         </Box>
       </Flex>
 
@@ -192,32 +188,12 @@ const LeadList = () => {
       <Modal isOpen={isOpen} onClose={onClose} size="4xl">
         <ModalOverlay />
         <ModalContent>
-          {/* <ModalHeader >Add New Leads</ModalHeader> */}
           <ModalCloseButton />
-          {/* <ModalCloseButton /> */}
           <ModalBody>
             <LeadListModal />
           </ModalBody>
         </ModalContent>
       </Modal>
-      {/* <Drawer  isOpen={isOpen} onClose={onClose} size='sm'>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
-
-          <DrawerBody>
-            <LeadListModal/>
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme='blue'>Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer> */}
     </MyDiv>
   );
 };
