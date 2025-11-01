@@ -1,6 +1,4 @@
-import React from 'react'
 import MyDiv from './Loader.style'
-import { Spinner } from '@chakra-ui/react'
 
 export default function Loader() {
   return (

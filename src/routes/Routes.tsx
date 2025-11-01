@@ -4,12 +4,13 @@ import { otherRoutes } from './otherRoute';
 import { authRoutes } from './authRoute';
 import { useAuth } from '../common/context/AuthContext';
 import { PermissionProvider } from '../common/context/PermissionContext';
+import Loader from '../common/components/loader';
 
 const AppRoutes = () => {
   const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const allRoutes = isAuthenticated ? [...otherRoutes] : [...authRoutes];

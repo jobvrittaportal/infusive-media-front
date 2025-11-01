@@ -1,31 +1,14 @@
 import React, { useMemo, useState } from 'react';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Box,
-  Center,
-  Spinner,
-  Text,
-  Flex,
-  IconButton,
-  Badge,
-  Image,
-} from '@chakra-ui/react';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from '@chakra-ui/icons';
+import {Table,Thead,Tbody,Tr,Th,Td,TableContainer,Box,Center,Spinner,Text,Flex,Image,Select,InputGroup,InputLeftElement,Input,} from '@chakra-ui/react';
+import { TriangleDownIcon, TriangleUpIcon, Search2Icon } from '@chakra-ui/icons';
+import ReactPaginate from 'react-paginate';
 import MyDiv from './CustomTable.style';
+import RightArrowIcon from '../../../assets/images/arrow-right.svg';
+import LeftArrowIcon from '../../../assets/images/arrow-left.svg';
+import FilterIcon from '../../../assets/images/Filter.svg';
+import SortIcon from '../../../assets/images/SortIcon.svg';
 
 // ---------------- Column Definition ----------------
-
 export interface ColumnProps<T> {
   field?: keyof T | string;
   header?: React.ReactNode;
@@ -33,13 +16,11 @@ export interface ColumnProps<T> {
   sortable?: boolean;
 }
 
-// JSX-based column component
 export function Column<T>(_props: ColumnProps<T>) {
   return null;
 }
 
 // ---------------- Table Props ----------------
-
 interface CustomTableProps<T> {
   value: T[];
   columns?: ColumnProps<T>[];
@@ -51,10 +32,16 @@ interface CustomTableProps<T> {
   headerTextColor?: string;
   striped?: boolean;
   rowsPerPage?: number;
+  rowsPerPageOptions?: number[];
+  title?: string;
+  showSearch?: boolean;
+  showFilter?: boolean;
+  showSort?: boolean;
+  searchPlaceholder?: string;
+  onSearchChange?: (value: string) => void;
 }
 
 // ---------------- Main Component ----------------
-
 export function CustomTable<T extends Record<string, any>>({
   value,
   columns,
@@ -66,8 +53,17 @@ export function CustomTable<T extends Record<string, any>>({
   headerTextColor = '#667085',
   striped = true,
   rowsPerPage = 10,
+  rowsPerPageOptions = [10, 20, 50, 100],
+  title,
+  showSearch = false,
+  showFilter = false,
+  showSort = false,
+  searchPlaceholder = 'Search',
+  onSearchChange,
 }: CustomTableProps<T>) {
-  // Infer columns (either from props or JSX children)
+  const [searchValue, setSearchValue] = useState('');
+
+  // Columns resolve
   const resolvedColumns: ColumnProps<T>[] = useMemo(() => {
     if (columns && columns.length) return columns;
     return React.Children.toArray(children)
@@ -78,7 +74,7 @@ export function CustomTable<T extends Record<string, any>>({
       .map((col) => col.props);
   }, [columns, children]);
 
-  // ---------------- Sorting ----------------
+  // Sorting
   const [sortField, setSortField] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
 
@@ -97,7 +93,6 @@ export function CustomTable<T extends Record<string, any>>({
   const handleSort = (field?: string) => {
     if (!field) return;
     if (sortField === field) {
-      // toggle or clear
       setSortOrder(sortOrder === 'asc' ? 'desc' : sortOrder === 'desc' ? null : 'asc');
     } else {
       setSortField(field);
@@ -105,19 +100,81 @@ export function CustomTable<T extends Record<string, any>>({
     }
   };
 
-  // ---------------- Pagination ----------------
-  const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const paginatedData = sortedData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentRowsPerPage, setCurrentRowsPerPage] = useState(rowsPerPage);
 
-  console.log('paginatedData', totalPages);
+  const pageCount = Math.ceil(sortedData.length / currentRowsPerPage);
+  const start = sortedData.length === 0 ? 0 : currentPage * currentRowsPerPage + 1;
+  const end = Math.min((currentPage + 1) * currentRowsPerPage, sortedData.length);
 
-  const nextPage = () => setPage((p) => Math.min(p + 1, totalPages));
-  const prevPage = () => setPage((p) => Math.max(p - 1, 1));
+  const handlePageClick = (event: { selected: number }) => {
+    setCurrentPage(event.selected);
+  };
+
+  const handleRowsChange = (val: number) => {
+    setCurrentRowsPerPage(val);
+    setCurrentPage(0);
+  };
+
+  const paginatedData = sortedData.slice(
+    currentPage * currentRowsPerPage,
+    (currentPage + 1) * currentRowsPerPage
+  );
 
   // ---------------- Rendering ----------------
   return (
     <MyDiv>
+      {/* Table Header Section  */}
+      {(title || showSearch || showFilter || showSort) && (
+        <Flex justify="space-between" align="center" mt={5} mb={3}>
+          {title && <Text className="font-poppins text_medium text_lg">{title}</Text>}
+            <Flex align="center" gap={3}>
+            {showSearch && (
+              <InputGroup width="240px" bg="white" borderRadius="6px" boxShadow="sm">
+                <InputLeftElement pointerEvents="none">
+                  <Search2Icon color="rgba(102, 112, 133, 1)" />
+                </InputLeftElement>
+                <Input
+                  type="text"
+                  value={searchValue}
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                    onSearchChange?.(e.target.value);
+                  }}
+                  placeholder={searchPlaceholder}
+                  border="none"
+                  _focus={{ outline: 'none' }}
+                />
+              </InputGroup>
+              )}
+            
+              <Flex align="center" gap={3}>
+                {showFilter && (
+                <Image
+                  src={FilterIcon}
+                  alt="Filter"
+                  cursor="pointer"
+                  className='icon_btn'
+                  onClick={() => console.log('Filter clicked')}
+                />
+              )}
+
+              {showSort && (
+                <Image
+                  src={SortIcon}
+                  alt="Sort"
+                  className='icon_btn'
+                  cursor="pointer"
+                  onClick={() => console.log('Sort clicked')}
+                />
+                )}
+              </Flex>
+            </Flex>
+        </Flex>
+      )}
+
+      {/*  Table Section */}
       <Box position="relative" minH="300px" bg="white" borderRadius="12px" boxShadow="sm" mt={3}>
         {loading ? (
           <Center position="absolute" inset={0}>
@@ -138,7 +195,6 @@ export function CustomTable<T extends Record<string, any>>({
                       <Th
                         key={idx}
                         fontSize="14px"
-                        className="font-poppins"
                         color={headerTextColor}
                         cursor={col.sortable ? 'pointer' : 'default'}
                         onClick={() => col.sortable && handleSort(col.field as string)}
@@ -161,7 +217,7 @@ export function CustomTable<T extends Record<string, any>>({
                   {paginatedData.map((row, rowIndex) => (
                     <Tr key={rowIndex} _hover={{ bg: striped ? '#F4F7FB' : 'transparent' }}>
                       {resolvedColumns.map((col, colIndex) => (
-                        <Td key={colIndex} fontSize="14px" className="font-poppins" color="#1D2939">
+                        <Td key={colIndex} fontSize="14px" color="#1D2939">
                           {col.body ? col.body(row, rowIndex) : (row as any)[col.field as string]}
                         </Td>
                       ))}
@@ -170,34 +226,51 @@ export function CustomTable<T extends Record<string, any>>({
                 </Tbody>
               </Table>
             </TableContainer>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <Flex justify="flex-end" align="center" p={3} gap={2}>
-                <IconButton
-                  aria-label="Previous"
-                  icon={<ChevronLeftIcon />}
-                  onClick={prevPage}
-                  isDisabled={page === 1}
-                  size="sm"
-                  variant="ghost"
-                />
-                <Text fontSize="13px">
-                  Page {page} of {totalPages}
-                </Text>
-                <IconButton
-                  aria-label="Next"
-                  icon={<ChevronRightIcon />}
-                  onClick={nextPage}
-                  isDisabled={page === totalPages}
-                  size="sm"
-                  variant="ghost"
-                />
-              </Flex>
-            )}
           </>
         )}
       </Box>
+
+      {/* Pagination Section */}
+      <Flex justify="center" align="center" mt={4} gap={4}>
+        <ReactPaginate
+          previousLabel={
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Image src={LeftArrowIcon} alt="Prev" width={15} height={15} />
+              Prev
+            </span>
+          }
+          nextLabel={
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              Next
+              <Image src={RightArrowIcon} alt="Next" width={15} height={15} />
+            </span>
+          }
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          forcePage={currentPage}
+        />
+
+        <Select
+          value={currentRowsPerPage}
+          onChange={(e) => handleRowsChange(Number(e.target.value))}
+          width="70px"
+          size="sm"
+        >
+          {rowsPerPageOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </Select>
+
+        <Text fontSize="sm" fontWeight="500">
+          {sortedData.length > 0
+            ? `Showing ${start}-${end} of ${sortedData.length} records`
+            : 'No records found'}
+        </Text>
+      </Flex>
     </MyDiv>
   );
 }

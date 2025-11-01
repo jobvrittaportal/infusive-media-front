@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Grid, GridItem, Input, InputGroup, InputLeftElement, Text, Badge, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, ModalCloseButton, Image,} from "@chakra-ui/react";
-import { AddIcon, Search2Icon } from "@chakra-ui/icons";
+import { Box, Flex, Grid,  Text, Badge, Modal, ModalOverlay, ModalContent, ModalBody, useDisclosure, ModalCloseButton, Image,} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import MyDiv from "./leadList.style";
 import { LeadListModal } from "../components";
 import CustomTable from "../../../common/components/customTable";
@@ -81,6 +81,393 @@ const dummyList = [
     assignedTo: "John D.",
     value: "View",
   },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
+  {
+    company: "SEO Masters",
+    contact: "David Lee",
+    email: "(david@seo.com)",
+    status: "Closed",
+    source: "LinkedIn",
+    assignedTo: "John D.",
+    value: "View",
+  },
 ];
 
 const LeadList = () => {
@@ -105,9 +492,7 @@ const LeadList = () => {
   return (
     <MyDiv>
       <Flex justifyContent="space-between" alignItems="center" mb={6}>
-        <Text className="font-poppins font_dark text_semibold text_xxl">
-          Leads
-        </Text>
+        <Text className="font-poppins font_dark text_semibold text_xxl">Leads</Text>
         <Box display="flex" gap="10px">
            <CustomButton label="Import" />
            <CustomButton label="Add New Lead" leftIcon={<AddIcon />} onClick={onOpen} />
@@ -119,32 +504,14 @@ const LeadList = () => {
           <Box key={index} className="stats-grid" >
              <Flex align="center" gap={3} mb={2}>
             <Image src={item.icon} className="card_icon" alt={item.title} boxSize={10}/>
-            <Text className="card_label font-poppins text_xl text_medium" mb={2} >
-              {item.title}
-            </Text>
+            <Text className="card_label font-poppins text_xl text_medium" mb={2} >{item.title}</Text>
             </Flex>
-             <Text className="card_value font-poppins text_bold" color="#0052CC">
-              {item.value}
-            </Text>
+             <Text className="card_value font-poppins text_bold" color="#0052CC">{item.value}</Text>
           </Box>
         ))}
       </Grid>
-      <Flex justifyContent="space-between" mt={5}>
-        <Text className="text_xl text_medium">Lead List</Text>
-        <InputGroup width="240px" bg="white" borderRadius="6px">
-          <InputLeftElement pointerEvents="none">
-            <Search2Icon color="rgba(102, 112, 133, 1)" />
-          </InputLeftElement>
-          <Input
-            type="text"
-            placeholder="Search"
-            border="none"
-            _focus={{ outline: "none" }}
-          />
-        </InputGroup>
-      </Flex>
-
-      <CustomTable value={dummyList}>
+    
+      <CustomTable title="Lead List" showSearch showFilter showSort onSearchChange={(val) => console.log("Search:", val)} value={dummyList}>
         <Column header="S.No" body={(_, index) => index + 1} />
         <Column header="Company" field="company" />
         <Column header="Contact" field="contact" />
