@@ -36,12 +36,12 @@ interface InputProps {
       control={control}
       render={({ field }) => (
         <FormControl isRequired={isRequired} isInvalid={!!errors?.[name]}>
-          <FormLabel>
+          <FormLabel className='font-poppins'>
             {label}
           </FormLabel>
           <Input {...field} type={type} placeholder={placeholder} min={min} max={max} maxLength={maxLength} disabled={disable} readOnly={readOnly} />
           {errors?.[name] && (
-            <Text color="red.500">{errors[name].message}</Text>
+            <Text color="red.500" textAlign="left">{errors[name].message}</Text>
           )}
         </FormControl>
       )}

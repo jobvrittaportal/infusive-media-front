@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Flex, Grid, GridItem, Image, Input, InputGroup, InputRightElement, Link, Text, } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, IconButton, Image, Input, InputGroup, InputRightElement, Link, Text, } from "@chakra-ui/react";
 import MyDiv from "./login.style";
 import LoginImage from "../../assets/images/Login-Image.svg";
 import InfusiveLogo from "../../assets/images/Infusive-Logo.svg";
@@ -12,13 +12,14 @@ import { useForm } from "react-hook-form";
 import { ILogin, emptyLoginForm, schema } from "./model";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomToast from "../../common/components/customToast";
-import { ViewIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const Login = () => {
   const { login: loginMutation, loading } = useLogin();
   const { login: setAuth } = useAuth();
   const navigate = useNavigate();
   const { addToast } = CustomToast();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { handleSubmit, control, formState: { errors } } = useForm<ILogin>({
     resolver: yupResolver(schema),
@@ -74,18 +75,33 @@ const Login = () => {
               <Box className="logo-wrapper">
                 <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
               </Box>
-              <Text className='font-poppins text_semibold text_xl font_dark' mb={4} textAlign="center">Please enter your Login Details</Text>
+              <Text className='font-poppins text_semibold text_xl font_dark' textAlign="left" mb={3}>Please enter your Login Details</Text>
               <Box className="form-container">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Flex className="form-stack">
                     <FormInput isRequired name="email" type="string" control={control} label="Email" placeholder="Enter your email" errors={errors} />
-                     <InputGroup>
-                    <FormInput isRequired name="password" type="password" control={control} label="Password" placeholder="Enter password" errors={errors} />
-                    {/* <Input></Input> */}
-                     <InputRightElement className='eye-icon'>
-                      <ViewIcon/>
-                    </InputRightElement>
-                    </InputGroup>
+                    <Box position="relative">
+                      <InputGroup>
+                        <FormInput
+                          isRequired
+                          name="password"
+                          type={showPassword ? "text" : "password"}
+                          control={control}
+                          label="Password"
+                          placeholder="Enter password"
+                          errors={errors}
+                        />
+                        <InputRightElement top="31px" right="10px">
+                          <IconButton
+                            aria-label={showPassword ? "Hide password" : "Show password"}
+                            icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                            variant="unstyled"
+                            size="sm"
+                            onClick={() => setShowPassword(!showPassword)}
+                          />
+                        </InputRightElement>
+                        </InputGroup>
+                      </Box>
                     <Flex className="form-options" justifyContent="right">  
                       <Link onClick={handleForgotPassword} className="forgot-link" >
                         Forgot Password?
@@ -99,45 +115,6 @@ const Login = () => {
               </Box>
             </Box>
             </Box>
-            {/* <Box pt={10} className="login-card">
-              <Flex className="login-container">
-                <Flex className="logo-wrapper">
-                  <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
-                </Flex>
-
-                <Box className="welcome-section" ml={12}>
-                  <Text className="welcome-title">Welcome back 👋</Text>
-                  <Text className="welcome-subtitle font-poppins text_light text_lg">
-                    Sign in to your Infusive Media CRM account to
-                    <Text as="span"> continue</Text>
-                  </Text>
-                </Box>
-
-                <Box className="form-container">
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <Flex className="form-stack">
-                      <FormInput isRequired name="email" type="string" control={control} label="Email" placeholder="Enter your email" errors={errors} />
-                      <FormInput isRequired name="password" type="password" control={control} label="Password" placeholder="Enter password" errors={errors}/>
-
-                      <Flex className="form-options" align="center" justify="space-between" w="100%">
-                        <Box className="forgot-wrapper">
-                          <Link
-                            onClick={handleForgotPassword}
-                            className="forgot-link"
-                          >
-                            Forgot Password?
-                          </Link>
-                        </Box>
-                      </Flex>
-
-                      <Button type="submit" className="login-btn" isLoading={loading} >
-                        Login
-                      </Button>
-                    </Flex>
-                  </form>
-                </Box>
-              </Flex>
-            </Box> */}
           </GridItem>
         </Grid>
       </Box>

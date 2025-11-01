@@ -101,9 +101,10 @@ const ForgotPassword = () => {
                 </Flex>
                 
                 <Box className="form-container">
+                  <Text className='font-poppins text_semibold text_xl font_dark' textAlign="left" mb={3}>Please enter your Email to Reset Password.</Text>
                   <VStack className="form-stack">
                     <FormControl id="email">
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className='font-poppins'>Email</FormLabel>
                       <InputGroup>
                         <Input
                           type="email"
@@ -126,7 +127,7 @@ const ForgotPassword = () => {
                     </FormControl>
 
                     <FormControl>
-                      <FormLabel>OTP</FormLabel>
+                      <FormLabel className='font-poppins'>OTP</FormLabel>
                       <Flex justifyContent="left" gap={5}>
                         <PinInput otp type="number" onChange={(value) => setOtp(value)}>
                           {[...Array(6)].map((_, i) => (

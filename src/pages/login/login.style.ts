@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MyDiv = styled.div`
  .login-logo {
-    width: 160px;
+    width: 120px;
     margin-bottom: 40px;
     background-color: #ffffff;
   }
@@ -12,13 +12,6 @@ const MyDiv = styled.div`
     object-fit: cover; 
     overflow: hidden;
   }
-.logo-wrapper {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width:119px;
-}
 
 .logo-image {
   width: 40px;
@@ -82,25 +75,14 @@ const MyDiv = styled.div`
   box-shadow: 0 0 0 1px #1565d8;
 }
 
-// .form-options {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
-
 .forgot-link {
   color: #6c63ff;
   font-size: 13px;
-  text-decoration: none;
-}
-
-.forgot-link:hover {
   text-decoration: underline;
 }
 
 .login-btn {
   background-color: #1565d8 !important;
- 
   border-radius: 9999px;
   width: 100%;
   height: 44px;
@@ -122,31 +104,21 @@ const MyDiv = styled.div`
   align-items: center;
   padding: 16px;
 }
-.login-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-}
+  .login-card {
+    width: 420px;
+    background: #fff;
+    padding: 48px 42px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+  }
 
-.logo-wrapper {
-  display: flex;
-  justify-content: center;  
-  align-items: center;
-  width: 100%;
-}
-
-.login-logo {
-  width: 160px;
-  margin-bottom: 24px;
-}
-
-
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 export default MyDiv;
