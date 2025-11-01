@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Flex, Grid, GridItem, Image, Link, Text, } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, GridItem, Image, Input, InputGroup, InputRightElement, Link, Text, } from "@chakra-ui/react";
 import MyDiv from "./login.style";
 import LoginImage from "../../assets/images/Login-Image.svg";
 import InfusiveLogo from "../../assets/images/Infusive-Logo.svg";
@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { ILogin, emptyLoginForm, schema } from "./model";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomToast from "../../common/components/customToast";
+import { ViewIcon } from "@chakra-ui/icons";
 
 const Login = () => {
   const { login: loginMutation, loading } = useLogin();
@@ -30,6 +31,7 @@ const Login = () => {
   };
 
   const onSubmit = async (datas: ILogin) => {
+    
     try {
       const response: any = await loginMutation(datas.email, datas.password);
       const data = response?.data?.login;
@@ -61,13 +63,43 @@ const Login = () => {
   return (
     <MyDiv>
       <Box>
-        <Grid className="grid_container">
+        <Grid className="grid_container" >
           <GridItem colSpan={6}>
             <Image src={LoginImage} alt="Login Illustration" className="login-image" cursor="pointer" />
           </GridItem>
 
-          <GridItem colSpan={6}>
-            <Box pt={10}>
+          <GridItem colSpan={6} justifyContent="center" alignContent="center">
+            <Box className="login-right">
+            <Box className="login-card">
+              <Box className="logo-wrapper">
+                <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
+              </Box>
+              <Text className='font-poppins text_semibold text_xl font_dark' mb={4} textAlign="center">Please enter your Login Details</Text>
+              <Box className="form-container">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Flex className="form-stack">
+                    <FormInput isRequired name="email" type="string" control={control} label="Email" placeholder="Enter your email" errors={errors} />
+                     <InputGroup>
+                    <FormInput isRequired name="password" type="password" control={control} label="Password" placeholder="Enter password" errors={errors} />
+                    {/* <Input></Input> */}
+                     <InputRightElement className='eye-icon'>
+                      <ViewIcon/>
+                    </InputRightElement>
+                    </InputGroup>
+                    <Flex className="form-options" justifyContent="right">  
+                      <Link onClick={handleForgotPassword} className="forgot-link" >
+                        Forgot Password?
+                      </Link>
+                    </Flex>
+                    <Button type="submit" className="login-btn" isLoading={loading} color="white">
+                      Login
+                    </Button>
+                  </Flex>
+                </form>
+              </Box>
+            </Box>
+            </Box>
+            {/* <Box pt={10} className="login-card">
               <Flex className="login-container">
                 <Flex className="logo-wrapper">
                   <Image src={InfusiveLogo} alt="Infusive Media" className="login-logo" />
@@ -105,7 +137,7 @@ const Login = () => {
                   </form>
                 </Box>
               </Flex>
-            </Box>
+            </Box> */}
           </GridItem>
         </Grid>
       </Box>
