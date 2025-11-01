@@ -27,7 +27,7 @@ const Dashboard = () => {
             <Box>
                 <Flex justifyContent="space-between">
                     <Box>
-                        <Text className="font-poppins text_lg text_3xl text_bold" textAlign='left'>
+                        <Text className="font-poppins text_lg text_3xl text_bold" textAlign='left' color="#0052CC">
                             Hi, {FullName(user)}
                         </Text>
                         <Text className='font-poppins text_md text_regular' mt={2}>Take a look your overview, 
