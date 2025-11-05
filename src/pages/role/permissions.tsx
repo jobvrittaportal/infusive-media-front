@@ -11,13 +11,13 @@ import { IRolePermission, PermissionAction } from "./helpers";
 import { FeatureTree } from "../../common/utils/permission";
 
 interface Props {
-  value: IRolePermission[];
+  value: IRolePermission[] | undefined;
   onChange: (value: IRolePermission[]) => void;
 }
 
 const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
   const toggle = (feature: string, action: PermissionAction) => {
-    const existing = value.find((p) => p.feature === feature);
+    const existing = value?.find((p) => p.feature === feature);
     if (existing) {
       const updated = {
         ...existing,
@@ -26,14 +26,14 @@ const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
           [action]: !existing.permissions[action],
         },
       };
-      onChange(value.map((p) => (p.feature === feature ? updated : p)));
+     value && onChange(value.map((p) => (p.feature === feature ? updated : p)));
     } else {
-      onChange([...value, { feature, permissions: { [action]: true } }]);
+     value && onChange([...value, { feature, permissions: { [action]: true } }]);
     }
   };
 
   const isChecked = (feature: string, action: PermissionAction) =>
-    !!value.find((p) => p.feature === feature)?.permissions[action];
+    !!value?.find((p) => p.feature === feature)?.permissions[action];
 
   return (
     <Box >

@@ -9,3 +9,13 @@ export const UPSERT_ROLE = gql`
     }
   }
 `;
+
+export const UPDATE_ROLE = gql`
+  mutation UpdateRole($id: ID!, $input: UpdateRoleInput!){
+    updateRole(id: $id, input: $input){
+      id
+      name
+      active
+    }
+  }
+`;

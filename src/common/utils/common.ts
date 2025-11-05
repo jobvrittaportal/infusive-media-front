@@ -17,3 +17,12 @@ export const RemoveSpace = (str?: string) =>
     .map(m => m.trim())
     .filter(Boolean)
     .join(' ');
+
+export function removeTypeNameFromformData(data:any){
+  const newData = { ...data };
+  if (newData?.__typename) {
+    delete newData.__typename;
+  }
+  return newData;
+
+}

@@ -68,19 +68,14 @@ export const GET_ALL_USERS = gql`
       firstName
       lastName
       email
+      mobile
+      altMobile
+      altEmail
       roles {
         id
         name
         active
-        permissions {
-          id
-          feature
-          permissions {
-            read
-            upsert
-            delete
-          }
-        }
+        
       }
     }
   }

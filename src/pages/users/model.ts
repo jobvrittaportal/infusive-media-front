@@ -1,14 +1,15 @@
 import * as yup from 'yup';
 
 export interface IUser {
+  id?:string;
   firstName: string;
   lastName: string;
   email: string;
   mobile: string;
   altEmail?: string;
   altMobile?: string;
-  password: string;
-  roles?: any[];
+  password?: string;
+  roles?: any;
   roleIds?: string[];
 }
 
@@ -20,19 +21,11 @@ export const defaultUser: IUser = {
   password: '',
   altEmail: '',
   altMobile: '',
+  roles: undefined,
 };
 
 export interface GetAllUsersData {
   users: IUser[];
 }
 
-export const schema = yup.object().shape({
-  firstName: yup.string().required('First Name is required'),
-  lastName: yup.string().required('Last Nmae is requird'),
-  email: yup.string().email('Inavlid email formate').required('Email is required'),
-  mobile: yup.string().required('Moblie number is required'),
-  password: yup
-    .string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-});
+
