@@ -1,24 +1,12 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Switch,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  useDisclosure,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Switch, useDisclosure, Spinner, } from "@chakra-ui/react";
 import { useFetch } from "../../common/hooks";
 import { IRole } from "./helpers";
 import { GET_ROLES } from "./graphql/query";
 import RoleModal from "./RoleModal";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, EditIcon } from "@chakra-ui/icons";
+import CustomTable from "../../common/components/customTable";
+import { Column } from "../../common/components/customTable/CustomTable";
 
 const RoleList: React.FC = () => {
   const {
@@ -30,6 +18,13 @@ const RoleList: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<IRole | null>(null);
 
   if (loading) return <Spinner size="xl" />;
+
+  function callOpenFunction(role: IRole) {
+    setSelectedRole(role);
+    if (role) {
+      onOpen();
+    }
+  }
 
   return (
     <Box p={6}>
@@ -47,36 +42,16 @@ const RoleList: React.FC = () => {
         </Button>
       </Flex>
 
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Active</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data?.roles?.map((role: any) => (
-            <Tr key={role.id}>
-              <Td>{role.name}</Td>
-              <Td>
-                <Switch isChecked={role.active} isReadOnly />
-              </Td>
-              <Td>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    setSelectedRole(role);
-                    onOpen();
-                  }}
-                >
-                  Edit
-                </Button>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
+      <CustomTable value={data?.roles || []}>
+        <Column header="S.No" body={(_, index) => index + 1} />
+        <Column header="Name" field="name" />
+        <Column
+          header="Active" body={(row: IRole) => <Switch isChecked={row.active} isReadOnly />}
+        />
+        <Column
+          header="Actions" body = {(row: IRole) => (<EditIcon cursor="pointer" color="blue.700" onClick={() => callOpenFunction(row)}/>)}
+        />
+         </CustomTable>
 
       <RoleModal
         isOpen={isOpen}

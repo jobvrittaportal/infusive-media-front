@@ -1,26 +1,15 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Input,
-  VStack,
-  Switch,
-  FormControl,
-  FormLabel,
-  useToast,
-  Flex,
+import React, { useEffect, useState } from "react";
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, VStack, Switch, FormControl, FormLabel, useToast, Flex,
 } from "@chakra-ui/react";
 import { useMutation } from "@apollo/client/react";
-
-import { IRole } from "./helpers";
-import PermissionTree from "./permissions";
-import { UPSERT_ROLE } from "./graphql/mutation";
+import { IRole, defaultIRole, schema } from "./helpers";
+import PermissionTree from "./permissions"; 
+import { UPDATE_ROLE, UPSERT_ROLE } from "./graphql/mutation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInput } from "../../common/components/formElements";
+import { removeTypeNameFromformData } from "../../common/utils/common";
+import CustomButton from "../../common/components/customButton";
 
 interface RoleModalProps {
   isOpen: boolean;
@@ -29,72 +18,111 @@ interface RoleModalProps {
 }
 
 const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
-  const [name, setName] = useState(role?.name || "");
-  const [active, setActive] = useState(role?.active ?? true);
+  const toast = useToast();
+  const [upsertRole, { loading : creating }] = useMutation(UPSERT_ROLE,{
+    onCompleted: () =>{
+      reset(defaultIRole);
+    },
+    onError: (err) => alert(err.message),
+  });
+
+  const [updateRole, {loading : updating}] = useMutation(UPDATE_ROLE, {
+    onCompleted: () =>{
+      reset(defaultIRole)
+    },
+    onError: (err) => alert(err.message),
+  });
+
   const [permissions, setPermissions] = useState(role?.permissions || []);
 
-  // Mutation hook for upserting the role
-  const [upsertRole, { loading }] = useMutation(UPSERT_ROLE);
-  const toast = useToast();
+  const { handleSubmit, control, reset, watch, setValue, formState: { errors },} = useForm<IRole>({
+    resolver: yupResolver(schema),
+    defaultValues: defaultIRole,
+  });
 
-  // Function to handle saving the role
-  const handleSave = async () => {
+  // Watchers for live updates
+  const active = watch("active");
+
+  //  Reset when modal opens or role changes
+  useEffect(() => {
+    if (isOpen) {
+      if (role) {
+        reset(removeTypeNameFromformData(role));
+      } else {
+        reset(defaultIRole);
+      }
+    }
+  }, [isOpen, role, reset]);
+
+  const onSubmit = async (data: IRole) => {
     try {
-      await upsertRole({
-        variables: {
-          input: {
+      if(role?.id){
+        await updateRole({
+          variables:{
             id: role?.id,
-            name,
-            active,
-            permissions,
+            input:{
+                ...removeTypeNameFromformData(role),
+                permissions
+            },
           },
-        },
-      });
-      toast({ title: "Role saved", status: "success" });
+        });
+      }
+      else{
+        await upsertRole({
+          variables: {
+            input: {
+              /* id: role?.id, */
+              ...removeTypeNameFromformData(role),
+              permissions
+            },
+          },
+        });
+      }
+
+      toast({ title: "Role saved successfully", status: "success" });
       onClose();
+      reset(defaultIRole);
     } catch (err: any) {
-      toast({ title: err?.message || "Error saving role", status: "error" });
+      toast({
+        title: err?.message || "Error saving role",
+        status: "error",
+      });
     }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent borderRadius="xl">
         <ModalHeader>{role ? "Edit Role" : "Add Role"}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody overflowY='scroll' h="200px">
-          <VStack spacing={4} align="stretch">
-            {/* Role Name Input */}
-            <Flex justify="space-between" align="center" gap={5}>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input value={name} onChange={(e) => setName(e.target.value)} />
-            </FormControl>
 
-            {/* Active Toggle */}
-            <FormControl display="flex" alignItems="center">
-              <FormLabel mb="0">Active</FormLabel>
-              <Switch
-                isChecked={active}
-                onChange={(e) => setActive(e.target.checked)}
-              />
-            </FormControl>
-             </Flex>
-            {/* Permissions Tree */}
-            <PermissionTree value={permissions} onChange={setPermissions} />
-          </VStack>
-        </ModalBody>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ModalBody overflowY="auto" maxH="400px">
+            <VStack spacing={4} align="stretch">
+              <Flex justify="space-between" align="center" gap={5}>
+                <FormInput name="name" control={control} type="string" label="Name" placeholder="Enter the Role name" errors={errors}/>
 
-        {/* Modal Footer with Buttons */}
-        <ModalFooter>
-          <Button onClick={onClose} mr={3}>
-            Cancel
-          </Button>
-          <Button bg="#0052CC" color="white" isLoading={loading} onClick={handleSave}>
-            Save
-          </Button>
-        </ModalFooter>
+                <FormControl display="flex" alignItems="center" width="fit-content">
+                  <FormLabel mb="0">Active</FormLabel>
+                  <Switch
+                    isChecked={active}
+                    onChange={(e) => setValue("active", e.target.checked)}
+                  />
+                </FormControl>
+              </Flex>
+
+              <PermissionTree value={permissions} onChange={setPermissions} />
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter>
+            <Flex justify="center" gap={4} mb={4}>
+              <CustomButton label="Close" variantType="secondary" onClick={onClose} />
+              <CustomButton type="submit" label={role ? "Update" : "Add"} loading={creating || updating} />
+            </Flex>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );
