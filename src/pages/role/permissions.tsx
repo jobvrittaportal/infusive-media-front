@@ -26,9 +26,9 @@ const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
           [action]: !existing.permissions[action],
         },
       };
-     value && onChange(value.map((p) => (p.feature === feature ? updated : p)));
+      value && onChange(value.map((p) => (p.feature === feature ? updated : p)));
     } else {
-     value && onChange([...value, { feature, permissions: { [action]: true } }]);
+      value && onChange([...value, { feature, permissions: { [action]: true } }]);
     }
   };
 
@@ -61,39 +61,15 @@ const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
         <Box p={4} maxH="380px" overflowY="auto">
           {FeatureTree.map((feature) => (
             <>
-            <Box key={feature.name} mb={3}>
-              <Grid templateColumns="1fr 2fr" alignItems="center" gap={5}>
-                <Text className="font-poppins text_lg text_semibold">{feature.label}</Text>
-                <Flex justify="space-between">
-                  {feature.permissions?.map((perm) => (
-                    <Checkbox
-                      key={perm}
-                      isChecked={isChecked(feature.name, perm)}
-                      onChange={() => toggle(feature.name, perm)}
-                      className="font-poppins text_regular text_lg"
-                    >
-                      {perm}
-                    </Checkbox>
-                  ))}
-                </Flex>
-              </Grid>
-
-           
-              {feature.features?.map((sub) => (
-                <Grid
-                  key={sub.name}
-                  templateColumns="1fr 2fr"
-                  alignItems="center"
-                  mt={2}
-                  pl={6}
-                >
-                  <Text className="font-poppins text_medium text_md">{sub.label}</Text>
+              <Box key={feature.name} mb={3}>
+                <Grid templateColumns="1fr 2fr" alignItems="center" gap={5}>
+                  <Text className="font-poppins text_lg text_semibold">{feature.label}</Text>
                   <Flex justify="space-between">
-                    {sub.permissions?.map((perm) => (
+                    {feature.permissions?.map((perm) => (
                       <Checkbox
                         key={perm}
-                        isChecked={isChecked(sub.name, perm)}
-                        onChange={() => toggle(sub.name, perm)}
+                        isChecked={isChecked(feature.name, perm)}
+                        onChange={() => toggle(feature.name, perm)}
                         className="font-poppins text_regular text_lg"
                       >
                         {perm}
@@ -101,16 +77,36 @@ const PermissionTree: React.FC<Props> = ({ value, onChange }) => {
                     ))}
                   </Flex>
                 </Grid>
-              ))}
-            </Box>
-            <Divider mb={2}/>
+
+                {feature.features?.map((sub) => (
+                  <Grid
+                    key={sub.name}
+                    templateColumns="1fr 2fr"
+                    alignItems="center"
+                    mt={2}
+                    pl={6}
+                  >
+                    <Text className="font-poppins text_medium text_md">{sub.label}</Text>
+                    <Flex justify="space-between">
+                      {sub.permissions?.map((perm) => (
+                        <Checkbox
+                          key={perm}
+                          isChecked={isChecked(sub.name, perm)}
+                          onChange={() => toggle(sub.name, perm)}
+                          className="font-poppins text_regular text_lg"
+                        >
+                          {perm}
+                        </Checkbox>
+                      ))}
+                    </Flex>
+                  </Grid>
+                ))}
+              </Box>
+              <Divider mb={2} />
             </>
           ))}
-          
         </Box>
       </Box>
-    
-      
     </Box>
   );
 };

@@ -54,44 +54,5 @@ export const FeatureTree: IFeatureNode[] = [
     name: 'paperwork',
     permissions: ['read', 'upsert'],
   },
-  {
-    label: 'Tags',
-    name: 'tag',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Leads',
-    name: 'lead',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Queries',
-    name: 'query',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'People',
-    name: 'people',
-    permissions: ['read', 'upsert'],
-  },
-  {
-    label: 'Places',
-    name: 'places',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Partner',
-    name: 'partner',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Blog',
-    name: 'blog',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Society',
-    name: 'society',
-    permissions: ['read', 'upsert', 'delete'],
-  },
+  
 ];
