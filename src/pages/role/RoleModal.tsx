@@ -81,7 +81,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
         });
       }
 
-      toast({ title: "Role saved successfully", status: "success" });
+      toast({ title: "Role saved successfully", status: "success" ,position: 'top-right'});
       onClose();
       reset(defaultIRole);
     } catch (err: any) {
