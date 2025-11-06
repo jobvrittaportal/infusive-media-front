@@ -1,5 +1,3 @@
-import * as yup from 'yup';
-
 export interface IUser {
   id?:string;
   firstName: string;
@@ -26,6 +24,7 @@ export const defaultUser: IUser = {
 
 export interface GetAllUsersData {
   users: IUser[];
+  totalUsersCount?: number;
 }
 
 

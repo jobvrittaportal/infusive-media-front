@@ -72,11 +72,10 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
     useEffect(() => {
         if (isOpen) {
             getRoles({ variables: { query: rolesText } });
-            let roleName = '';
-            if (user){
-            roleName = user.roles?.map((r:any) => r.name).join(', ') || '';
+            if (user) {   
+            console.log('user in detail', user);
             reset(user);
-            }    
+            }
             else
                 reset(defaultUser);
         }
@@ -91,7 +90,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
         delete payload.roles;
 
         if (user?.id) {
-           
+
             await updateUser({
                 variables: {
                     id: user.id,
@@ -108,7 +107,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <Modal isOpen={isOpen} onClose={onClose} size="3xl">
             <ModalOverlay />
             <ModalContent borderRadius="xl" p={2}>
                 <ModalHeader textAlign="center">
@@ -183,6 +182,10 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
                                 errors={errors}
                             />
 
+                        </SimpleGrid>
+                        
+                        <Flex direction="column" mt={4} gap={2}>
+                            <Text >Role</Text>
                             <MultiSelectTypeahead
                                 name="roles"
                                 control={control}
@@ -193,8 +196,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
                                 optionLabel="name"
                                 placeholder="Search Roles..."
                             />
-
-                        </SimpleGrid>
+                        </Flex>
                     </ModalBody>
 
                     <ModalFooter>
