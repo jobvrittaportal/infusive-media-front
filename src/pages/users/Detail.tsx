@@ -10,7 +10,7 @@ import { useMutation, useLazyQuery } from '@apollo/client/react';
 import { CREATE_USER_MUTATION, UPDATE_USER_MUTATION } from './graphql/mutation';
 import { GET_ROLES } from './graphql/query';
 import { IRole } from '../role/helpers';
-import { FormInput, MultiSelectTypeahead } from '../../common/components/formElements';
+import { FormInput, MultiSelectTypeaHeads } from '../../common/components/formElements';
 import { AddIcon } from '@chakra-ui/icons';
 import CustomButton from '../../common/components/customButton';
 import { removeTypeNameFromformData } from '../../common/utils/common';
@@ -186,7 +186,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, refetch, user }) => {
                         
                         <Flex direction="column" mt={4} gap={2}>
                             <Text >Role</Text>
-                            <MultiSelectTypeahead
+                            <MultiSelectTypeaHeads
                                 name="roles"
                                 control={control}
                                 options={roles}

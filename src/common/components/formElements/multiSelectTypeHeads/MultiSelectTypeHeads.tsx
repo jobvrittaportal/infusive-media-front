@@ -1,19 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputRightElement,
-  List,
-  ListItem,
-  Spinner,
-  IconButton,
-  Tag,
-  TagLabel,
-  TagCloseButton,
-  Wrap,
-  useOutsideClick,
-} from '@chakra-ui/react';
+import { Box, Input, InputGroup, InputRightElement, List, ListItem, Spinner, IconButton, Tag, TagLabel, TagCloseButton, Wrap, useOutsideClick,} from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Control, Controller } from 'react-hook-form';
 
@@ -29,7 +15,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const MultiSelectTypeahead: React.FC<Props> = ({
+const MultiSelectTypeaHeads: React.FC<Props> = ({
   name,
   control,
   options,
@@ -160,4 +146,4 @@ const MultiSelectTypeahead: React.FC<Props> = ({
   );
 };
 
-export default MultiSelectTypeahead;
+export default MultiSelectTypeaHeads;
