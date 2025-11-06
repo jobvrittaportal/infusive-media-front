@@ -9,7 +9,7 @@ const Fallback = () => {
      align="center"
      justify="center"
      textAlign="center"
-     minH="100vh"
+     mt={10}
      px={4}
      >
       <Image src={FallbackImage} alt="403 Forbidden"  />

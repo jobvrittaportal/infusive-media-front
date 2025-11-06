@@ -37,7 +37,7 @@ const RoleList: React.FC = () => {
             onOpen();
           }}
         >
-          <AddIcon/>
+          <AddIcon />
           Add Role
         </Button>
       </Flex>
@@ -45,13 +45,9 @@ const RoleList: React.FC = () => {
       <CustomTable value={data?.roles || []}>
         <Column header="S.No" body={(_, index) => index + 1} />
         <Column header="Name" field="name" />
-        <Column
-          header="Active" body={(row: IRole) => <Switch isChecked={row.active} isReadOnly />}
-        />
-        <Column
-          header="Actions" body = {(row: IRole) => (<EditIcon cursor="pointer" color="blue.700" onClick={() => callOpenFunction(row)}/>)}
-        />
-         </CustomTable>
+        <Column header="Active" body={(row: IRole) => <Switch isChecked={row.active} isReadOnly />} />
+        <Column header="Actions" body={(row: IRole) => (<EditIcon cursor="pointer" color="blue.700" onClick={() => callOpenFunction(row)} />)} />
+      </CustomTable>
 
       <RoleModal
         isOpen={isOpen}

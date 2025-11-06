@@ -48,8 +48,10 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
     if (isOpen) {
       if (role) {
         reset(removeTypeNameFromformData(role));
+        setPermissions(role.permissions || []);
       } else {
         reset(defaultIRole);
+        setPermissions([]);
       }
     }
   }, [isOpen, role, reset]);
@@ -61,18 +63,18 @@ const RoleModal: React.FC<RoleModalProps> = ({ isOpen, onClose, role }) => {
           variables:{
             id: role?.id,
             input:{
-                ...removeTypeNameFromformData(role),
+                ...removeTypeNameFromformData(data),
                 permissions
             },
           },
         });
       }
       else{
+        // const {id , ...rest} = removeTypeNameFromformData(data);
         await upsertRole({
           variables: {
             input: {
-              /* id: role?.id, */
-              ...removeTypeNameFromformData(role),
+              ...removeTypeNameFromformData(data),
               permissions
             },
           },

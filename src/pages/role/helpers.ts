@@ -17,7 +17,6 @@ export interface IRole {
 };
 
 export const defaultIRole: IRole ={
-  id: "",
   name: "",
   active: true,
   permissions: [],
