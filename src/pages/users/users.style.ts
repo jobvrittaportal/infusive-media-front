@@ -2,8 +2,8 @@
 import styled from "styled-components";
 
 const UserDiv = styled.div`
-  padding: 20px;
-  background-color: #fff;
+ 
+ 
 
   .top-section {
     display: flex;
@@ -33,27 +33,7 @@ const UserDiv = styled.div`
     background-color: #0d47a1;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-  }
-
-  th {
-    background-color: #f5f5f5;
-    color: #333;
-  }
-
-  tr:hover {
-    background-color: #f9f9f9;
-  }
+ 
 
   .form-container {
     background-color: #fafafa;

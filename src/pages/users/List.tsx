@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text,} from "@chakra-ui/react";
+import { Box, Input, Text,} from "@chakra-ui/react";
 import UserDiv from './users.style';
 import { GetAllUsersData } from './model';
 import { useQuery } from '@apollo/client/react';
@@ -31,20 +31,20 @@ const List = () => {
     return (
         <UserDiv>
             <div className="top-section">
-                <div className="search-box">
-                    <input
+                <Box className="search-box">
+                    <Input bg="#fff"
                         type="text"
                         placeholder="Search users..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
-                </div>
+                </Box>
 
                 <CustomButton label='Add New User' onClick={handleAddNew} />
             </div>
 
-            <Text className="text_xl text_medium">Users List</Text>
-            <CustomTable value={users} >
+              
+            <CustomTable value={users}   title="Users List" >
                 <Column header="S.No" body={(_, index) => index + 1} />
                 <Column header="Full Name" body={(row: any) => `${row.firstName} ${row.lastName}`} />
                 <Column header="Email" field="email" />
