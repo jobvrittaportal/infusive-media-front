@@ -1,12 +1,11 @@
 import  FormInput  from "./input/Input";
 import Dropdown from "./dropdown/Dropdown";
 import { MultiSelectMenu } from "./multiSelectMenu/MultiSelectMenu";
-import MultiSelectTypeahead from "./multiSelectTypeahead/MultiSelectTypeahead";
+import MultiSelectTypeaHeads from "./multiSelectTypeHeads/MultiSelectTypeHeads"
 
 export {
     FormInput,
     Dropdown,
     MultiSelectMenu,
-    MultiSelectTypeahead,
-    
+    MultiSelectTypeaHeads
 }
