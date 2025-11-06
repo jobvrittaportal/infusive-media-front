@@ -39,6 +39,8 @@ interface CustomTableProps<T> {
   showSort?: boolean;
   searchPlaceholder?: string;
   onSearchChange?: (value: string) => void;
+  onPageChange?: (e: { skip: number; limit: number }) => void;
+  totalRecords?: number; 
 }
 
 // ---------------- Main Component ----------------
@@ -60,10 +62,12 @@ export function CustomTable<T extends Record<string, any>>({
   showSort = false,
   searchPlaceholder = 'Search',
   onSearchChange,
+  onPageChange,
+  totalRecords = 0, 
 }: CustomTableProps<T>) {
   const [searchValue, setSearchValue] = useState('');
 
-  // Columns resolve
+  // Resolve columns
   const resolvedColumns: ColumnProps<T>[] = useMemo(() => {
     if (columns && columns.length) return columns;
     return React.Children.toArray(children)
@@ -100,27 +104,27 @@ export function CustomTable<T extends Record<string, any>>({
     }
   };
 
-  // Pagination
+  // Pagination (server-side supported)
   const [currentPage, setCurrentPage] = useState(0);
   const [currentRowsPerPage, setCurrentRowsPerPage] = useState(rowsPerPage);
 
-  const pageCount = Math.ceil(sortedData.length / currentRowsPerPage);
-  const start = sortedData.length === 0 ? 0 : currentPage * currentRowsPerPage + 1;
-  const end = Math.min((currentPage + 1) * currentRowsPerPage, sortedData.length);
+  const pageCount = Math.ceil(totalRecords / currentRowsPerPage);
+  const start = totalRecords === 0 ? 0 : currentPage * currentRowsPerPage + 1;
+  const end = Math.min((currentPage + 1) * currentRowsPerPage, totalRecords);
 
+  //  Handles page change
   const handlePageClick = (event: { selected: number }) => {
+    const newSkip = event.selected * currentRowsPerPage;
     setCurrentPage(event.selected);
+    onPageChange?.({ skip: newSkip, limit: currentRowsPerPage });
   };
 
+  //  Handles rows per page change
   const handleRowsChange = (val: number) => {
     setCurrentRowsPerPage(val);
     setCurrentPage(0);
+    onPageChange?.({ skip: 0, limit: val });
   };
-
-  const paginatedData = sortedData.slice(
-    currentPage * currentRowsPerPage,
-    (currentPage + 1) * currentRowsPerPage
-  );
 
   // ---------------- Rendering ----------------
   return (
@@ -128,8 +132,8 @@ export function CustomTable<T extends Record<string, any>>({
       {/* Table Header Section  */}
       {(title || showSearch || showFilter || showSort) && (
         <Flex justify="space-between" align="center" mt={5} mb={3}>
-          {title && <Text className="font-poppins text_medium text_lg">{title}</Text>}
-            <Flex align="center" gap={3}>
+          {title && <Text fontFamily="Poppins" fontSize="2xl" fontWeight="600">{title}</Text>}
+          <Flex align="center" gap={3}>
             {showSearch && (
               <InputGroup width="240px" bg="white" borderRadius="6px" boxShadow="sm">
                 <InputLeftElement pointerEvents="none">
@@ -147,34 +151,32 @@ export function CustomTable<T extends Record<string, any>>({
                   _focus={{ outline: 'none' }}
                 />
               </InputGroup>
-              )}
-            
-              <Flex align="center" gap={3}>
-                {showFilter && (
+            )}
+            <Flex align="center" gap={3}>
+              {showFilter && (
                 <Image
                   src={FilterIcon}
                   alt="Filter"
                   cursor="pointer"
-                  className='icon_btn'
+                  className="icon_btn"
                   onClick={() => console.log('Filter clicked')}
                 />
               )}
-
               {showSort && (
                 <Image
                   src={SortIcon}
                   alt="Sort"
-                  className='icon_btn'
+                  className="icon_btn"
                   cursor="pointer"
                   onClick={() => console.log('Sort clicked')}
                 />
-                )}
-              </Flex>
+              )}
             </Flex>
+          </Flex>
         </Flex>
       )}
 
-      {/*  Table Section */}
+      {/* Table Section */}
       <Box position="relative" minH="300px" bg="white" borderRadius="12px" boxShadow="sm" mt={3}>
         {loading ? (
           <Center position="absolute" inset={0}>
@@ -186,47 +188,45 @@ export function CustomTable<T extends Record<string, any>>({
             <Text fontSize="15px">{emptyMessage}</Text>
           </Flex>
         ) : (
-          <>
-            <TableContainer borderRadius="12px" overflowX="auto">
-              <Table variant="simple" size="sm">
-                <Thead bg={headerBg}>
-                  <Tr>
-                    {resolvedColumns.map((col, idx) => (
-                      <Th
-                        key={idx}
-                        fontSize="14px"
-                        color={headerTextColor}
-                        cursor={col.sortable ? 'pointer' : 'default'}
-                        onClick={() => col.sortable && handleSort(col.field as string)}
-                      >
-                        <Flex align="center" gap={1}>
-                          {col.header}
-                          {col.sortable &&
-                            sortField === col.field &&
-                            (sortOrder === 'asc' ? (
-                              <TriangleUpIcon boxSize={3} />
-                            ) : sortOrder === 'desc' ? (
-                              <TriangleDownIcon boxSize={3} />
-                            ) : null)}
-                        </Flex>
-                      </Th>
+          <TableContainer borderRadius="12px" overflowX="auto">
+            <Table variant="simple" size="sm">
+              <Thead bg={headerBg}>
+                <Tr>
+                  {resolvedColumns.map((col, idx) => (
+                    <Th
+                      key={idx}
+                      fontSize="14px"
+                      color={headerTextColor}
+                      cursor={col.sortable ? 'pointer' : 'default'}
+                      onClick={() => col.sortable && handleSort(col.field as string)}
+                    >
+                      <Flex align="center" gap={1}>
+                        {col.header}
+                        {col.sortable &&
+                          sortField === col.field &&
+                          (sortOrder === 'asc' ? (
+                            <TriangleUpIcon boxSize={3} />
+                          ) : sortOrder === 'desc' ? (
+                            <TriangleDownIcon boxSize={3} />
+                          ) : null)}
+                      </Flex>
+                    </Th>
+                  ))}
+                </Tr>
+              </Thead>
+              <Tbody>
+                {value.map((row, rowIndex) => (
+                  <Tr key={rowIndex} _hover={{ bg: striped ? '#F4F7FB' : 'transparent' }}>
+                    {resolvedColumns.map((col, colIndex) => (
+                      <Td key={colIndex} fontSize="14px" color="#1D2939">
+                        {col.body ? col.body(row, rowIndex) : (row as any)[col.field as string]}
+                      </Td>
                     ))}
                   </Tr>
-                </Thead>
-                <Tbody>
-                  {paginatedData.map((row, rowIndex) => (
-                    <Tr key={rowIndex} _hover={{ bg: striped ? '#F4F7FB' : 'transparent' }}>
-                      {resolvedColumns.map((col, colIndex) => (
-                        <Td key={colIndex} fontSize="14px" color="#1D2939">
-                          {col.body ? col.body(row, rowIndex) : (row as any)[col.field as string]}
-                        </Td>
-                      ))}
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         )}
       </Box>
 
@@ -266,8 +266,8 @@ export function CustomTable<T extends Record<string, any>>({
         </Select>
 
         <Text fontSize="sm" fontWeight="500">
-          {sortedData.length > 0
-            ? `Showing ${start}-${end} of ${sortedData.length} records`
+          {totalRecords > 0
+            ? `Showing ${start}-${end} of ${totalRecords} records`
             : 'No records found'}
         </Text>
       </Flex>

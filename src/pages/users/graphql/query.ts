@@ -62,8 +62,8 @@ export const GET_USERS = gql`
 `;
 
 export const GET_ALL_USERS = gql`
-  query GetAllUsers {
-    users {
+  query GetAllUsers($skip: Int, $limit: Int, $search: String) {
+    users(skip: $skip, limit: $limit, search: $search) {
       id
       firstName
       lastName
@@ -75,8 +75,9 @@ export const GET_ALL_USERS = gql`
         id
         name
         active
-        
       }
     }
+    totalUsersCount(search: $search)
   }
 `;
+
