@@ -14,45 +14,22 @@ export const FeatureTree: IFeatureNode[] = [
     label: 'DashBoard',
     name: 'dashboard',
     permissions: ['read', 'upsert', 'delete'],
-    features: [
-      {
-        label: 'feature1',
-        name: 'dashboard.features1',
-        permissions: ['read', 'upsert', 'delete'],
-      },
-    ],
   },
   {
-    label: 'Live Status',
-    name: 'liveStatus',
-    permissions: ['read', 'upsert'],
-  },
-  {
-    label: 'Property',
-    name: 'property',
+    label: 'Leads',
+    name: 'leads',
     permissions: ['read', 'upsert', 'delete'],
     features: [
       {
-        label: 'Property Documents',
-        name: 'property.documents',
+        label: 'Lead List',
+        name: 'leadList',
         permissions: ['read', 'upsert', 'delete'],
       },
       {
-        label: 'Property Images',
-        name: 'property.images',
+        label: 'Companies',
+        name: 'companies',
         permissions: ['read', 'delete'],
       },
     ],
   },
-  {
-    label: 'Schedule',
-    name: 'schedule',
-    permissions: ['read', 'upsert', 'delete'],
-  },
-  {
-    label: 'Paperwork',
-    name: 'paperwork',
-    permissions: ['read', 'upsert'],
-  },
-  
 ];
