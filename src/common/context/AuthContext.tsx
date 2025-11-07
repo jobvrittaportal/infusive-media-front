@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { User } from "./PermissionContext";
 
 interface AuthContextType {
-  user: any;
-  token: string | null;
+  user: User;
+  token: string | null ;
   login: (token: string, user: any) => void;
   logout: () => void;
   isAuthenticated: boolean;
@@ -26,8 +27,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = (token: string, user: any) => {
-    Cookies.set("authToken", token, { expires: 7 });
-    Cookies.set("authUser", JSON.stringify(user), { expires: 7 });
+    Cookies.set("authToken", token, { expires: 12/24 });
+    Cookies.set("authUser", JSON.stringify(user), { expires: 12/24 });
     setToken(token);
     setUser(user);
   };

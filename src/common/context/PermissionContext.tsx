@@ -2,31 +2,31 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { PermissionAction } from '../utils/permission';
 
-interface PermissionObject {
+export interface PermissionObject {
   read: boolean | null;
   upsert: boolean | null;
   delete: boolean | null;
 }
 
-interface RolePermission {
+export interface RolePermission {
   id: string;
   feature: string;
   permissions: PermissionObject;
 }
 
-interface Role {
+export interface Role {
   id: string;
   name: string;
   active: boolean;
   permissions: RolePermission[];
 }
 
-interface User {
-  id: string;
+export interface User {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
-  roles: Role[];
+  roles?: Role[];
 }
 
 interface PermissionContextType {
