@@ -11,6 +11,7 @@ export function FullName(u?: {
   return [fn, ln].join(' ');
 }
 
+
 export const RemoveSpace = (str?: string) =>
   (str || '')
     .split(' ')
@@ -18,11 +19,12 @@ export const RemoveSpace = (str?: string) =>
     .filter(Boolean)
     .join(' ');
 
+    
+// used to remove the __typename field from the form data before sending to the backend Apis
 export function removeTypeNameFromformData(data:any){
   const newData = { ...data };
   if (newData?.__typename) {
     delete newData.__typename;
   }
   return newData;
-
 }

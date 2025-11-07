@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 const httpLink = new HttpLink({
   // uri: "http://localhost:3000/graphql", // your API endpoint
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT ,
-/*   useGETForQueries: true, */
+  // useGETForQueries: true,
   // credentials: "include", // optional if your API uses cookies
 });
 

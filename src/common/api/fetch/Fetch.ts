@@ -1,6 +1,6 @@
 import { useState } from "react";
-
 import { useAuth } from "../../context/AuthContext";
+import { User } from "../../context/PermissionContext";
 
 export interface ILazyParams {
   first: number;
@@ -44,10 +44,13 @@ if (hostname.includes("localhost")) {
 export const websiteUrl = config.websiteUrl;
 export const baseUrl = config.baseUrl;
 
+interface IUserToken extends User {
+  token?: string;
+}
 export const useFetch = (
   toast?: ({ message, status }: any) => void
 ) => {
-  const { user } = useAuth();
+  const { user }: {user:IUserToken } = useAuth();
   const [loading, setLoading] = useState(false);
 
   async function fetchApi(
@@ -137,5 +140,3 @@ export const useFetch = (
 
   return { fetchApi, loading };
 };
-
-export {};
