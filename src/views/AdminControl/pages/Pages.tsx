@@ -9,7 +9,6 @@ import * as routesNames from '../../../constant/routes';
 import AlertCard from '../../../components/AlertCard/alertCard'
 import { useFetch } from '../../../hooks/useFetch';
 import { Header, IPage } from './model';
-// import CustomPagination from '../../../../components/CustomPagination/customPagination';
 
 
 const Pages = () => {
@@ -21,8 +20,6 @@ const Pages = () => {
     const { addToast } = CustomToast();
     const { fetchApi, loading } = useFetch(addToast);
     const [lazyParams, setLazyParams] = useState({ first: 0, rows: 20, page: 0, sortField: '', sortOrder: 1, });
-    const [totalCount, setTotalCount] = useState<number>(0);
-    const pageCount = Math.ceil(totalCount / lazyParams.rows);
 
 
     const loadPages = async (filterValue = '') => {
@@ -62,16 +59,6 @@ const Pages = () => {
             }
         });
     };
-
-    const handlePageClick = ({ selected }: { selected: number }) => {
-        const updatedParams = {
-            ...lazyParams,
-            page: selected,
-            first: selected * lazyParams.rows,
-        };
-        setLazyParams(updatedParams);
-    };
-
 
     return (
         <MyDiv>
@@ -134,19 +121,6 @@ const Pages = () => {
                     </Grid>
                 </Box>
                 <AlertCard onClose={() => setDeleteAlert(false)} onConfirm={confirmDelete} isOpen={deleteAlert} title="Confirm Delete" description="Are you sure you want to delete this role?" confirmLabel="Delete" cancelLabel="Cancel" colorScheme="red" />
-
-                {/* <CustomPagination
-                    pageCount={pageCount}
-                    handlePageClick={handlePageClick}
-                    rowsPerPage={lazyParams.rows}
-                    rowsPerPageOptions={[20, 50, 100, 200]}
-                    setRowsPerPage={(value: number) =>
-                        setLazyParams((prev) => ({ ...prev, rows: value, page: 0, first: 0 }))
-                    }
-                    totalRecords={totalCount}
-                    currentPage={lazyParams.page}
-
-                /> */}
             </Box>
         </MyDiv>
     )

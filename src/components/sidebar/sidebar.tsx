@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Flex, IconButton, Image, Stack } from "@chakra-ui/react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import dashboardIcon from '../../assets/Images/dashboard.svg';
 import LeadsIcon from '../../assets/Images/lead-Icon.svg';
 import AdminControllIcon from '../../assets/Images/admin-control-icon.svg';
@@ -10,7 +10,7 @@ import Logo from "../../assets/Images/Infusive-Logo.svg";
 import CollapseLogo from "../../assets/Images/CollapseLogo.svg";
 import * as routesNames from "../../constant/routes";
 import MyDiv from "./sidebar.style";
-import { Label } from "recharts";
+import { useAuth } from "../../hooks/useAuth";
 
 type SubMenuItem = {
   id: number;
@@ -35,46 +35,40 @@ interface SidebarProps {
 const Sidebar = (props: SidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { hasPermission } = useAuth();
+  const Menus: MenuItem[] = [];
 
+  if (hasPermission('Dashboard')){
+    Menus.push({ id: 1, menuName: "Dashboard", menuLogo: dashboardIcon, link: routesNames.DASHBOARD });
+  }
+  
+  if (hasPermission('LeadLists')) {
+    const subMenu: SubMenuItem[] = [];
+    if (hasPermission('LeadLists'))
+      subMenu.push({ id: 41, label: "Lead Lists", link: routesNames.LEADLIST })
 
-  const Menus: MenuItem[] = [
-    {
-      id: 1,
-      menuName: "Dashboard",
-      menuLogo: dashboardIcon,
-      link: routesNames.DASHBOARD,
-    },
-   
-    {
-      id: 2,
-      menuName: "Leads",
-      menuLogo: LeadsIcon,
-      subMenu: [
-        { id: 21, label: "Lead List", link: routesNames.LEADLIST },
-        { id: 22, label: "Companies", link: routesNames.COMPANIES },
-       
-      ],
-    },
-    {
-      id: 3,
-      menuName: "Admin Controll",
-      menuLogo: AdminControllIcon,
-      subMenu: [
-        { id: 31, label: "Roles",link: routesNames.ROLES},
-        { id: 32, label: "Pages",link: routesNames.PAGES},
-        { id: 33, label: "Users", link: routesNames.USERS},
-      ]
-    },
-    {
-      id: 4,
-      menuName: "Support",
-      menuLogo: SupportIcon,
-      subMenu: [
-        { id: 41, label: "Raise Ticket", link: routesNames.SUPPORT},
-      ]
-    },
-   
-  ];
+    Menus.push({ id: 4, menuName: "Lead", menuLogo: LeadsIcon, subMenu: subMenu });
+  }
+
+  if (hasPermission('Roles') || hasPermission('Users') || hasPermission('Pages')) {
+    const subMenu: SubMenuItem[] = [];
+    if (hasPermission('Roles'))
+      subMenu.push({ id: 31, label: "Roles", link: routesNames.ROLES })
+    if (hasPermission('Pages'))
+      subMenu.push({ id: 32, label: "Pages", link: routesNames.PAGES })
+    if (hasPermission('Users'))
+      subMenu.push({ id: 33, label: "Users", link: routesNames.USERS })
+    
+    Menus.push({ id: 3, menuName: "Admin Controller", menuLogo: AdminControllIcon, subMenu: subMenu });
+  }
+
+  if (hasPermission('RaiseTickets')) {
+    const subMenu: SubMenuItem[] = [];
+    if (hasPermission('RaiseTickets'))
+      subMenu.push({ id: 21, label: "Raise Ticket", link: routesNames.SUPPORT });
+
+    Menus.push({ id: 2, menuName: "Support", menuLogo: SupportIcon, subMenu: subMenu });
+  }
 
   const [menuId, setMenuId] = useState<number | null>(null);
   const ActiveMenu = Menus;
@@ -136,7 +130,7 @@ const Sidebar = (props: SidebarProps) => {
                 const isActiveMenu = item.id === menuId;
                 const hasSubMenu = item.subMenu?.length;
                 const isExpanded = isActiveMenu && hasSubMenu;
- 
+
                 return (
                   <Box key={item.id}>
                     <Flex
@@ -152,7 +146,7 @@ const Sidebar = (props: SidebarProps) => {
                         {!props.toggleSidebar && item.menuName}
                       </NavLink>
                     </Flex>
- 
+
                     {isExpanded && !props.toggleSidebar && (
                       <Box className="submenu_wrapper">
                         {item.subMenu?.map((subItem) => {
@@ -165,7 +159,7 @@ const Sidebar = (props: SidebarProps) => {
                                 isSubActive ? 'active_submenu submenu_item' : 'submenu_item'
                               }
                             >
-                              • {subItem.label}
+                               {subItem.label}
                             </NavLink>
                           );
                         })}

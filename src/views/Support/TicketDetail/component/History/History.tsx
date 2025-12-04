@@ -1,11 +1,10 @@
-import { Box, Flex, Text, Divider, Badge, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Box, Flex, Text, Divider, Badge, Image, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { baseUrl, useFetch } from "../../../../../hooks/useFetch";
 import MyDiv from "./History.style";
 import DummyPerson from "../../../../../assets/Images/DummyPerson.svg";
 import { ViewIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../../../../hooks/useAuth";
-import { hrlenseFetch } from "../../../../../services/hrlenseApi";
 
 
 interface IHistoryProps {
@@ -14,6 +13,7 @@ interface IHistoryProps {
 }
 
 export default function History({ ticketId, activeTab }: IHistoryProps) {
+    const { fetchApi } = useFetch();
     const { loginObj } = useAuth();
     const [history, setHistory] = useState<any[]>([]);
 
@@ -25,7 +25,7 @@ export default function History({ ticketId, activeTab }: IHistoryProps) {
 
     const loadHistory = async () => {
         if (!ticketId) return;
-        const res = await hrlenseFetch(`Support/getTicketHistory?ticket_Id=${ticketId}`, "GET");
+        const res = await fetchApi(`Support/getTicketHistory?ticket_Id=${ticketId}`, "GET");
         if (res) setHistory(res);
     };
 
@@ -63,6 +63,8 @@ export default function History({ ticketId, activeTab }: IHistoryProps) {
         setOpenPreview(true);
     };
 
+const stripHtml = (html: string = "") =>
+    html.replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").trim();
 
     useEffect(() => {
         if (activeTab) loadHistory();
@@ -100,9 +102,34 @@ export default function History({ ticketId, activeTab }: IHistoryProps) {
                                             <Button variant="ghost" leftIcon={<ViewIcon />} size="sm" colorScheme="blue" onClick={() => handleViewAttachment(change.newValue)} > </Button>
                                         ) : (
                                             <Flex gap={2} alignItems="center">
-                                                <Badge colorScheme="red">{change.oldValue}</Badge>
-                                                <Text>→</Text>
-                                                <Badge colorScheme="green">{change.newValue}</Badge>
+                                               <Tooltip label={stripHtml(change.oldValue)} hasArrow>
+                                                <Badge
+                                                    colorScheme="red"
+                                                    maxW="200px"
+                                                    whiteSpace="nowrap"
+                                                    overflow="hidden"
+                                                    cursor="pointer"
+                                                    isTruncated
+                                                >
+                                                    {stripHtml(change.oldValue)}
+                                                </Badge>
+                                            </Tooltip>
+                                            
+                                            <Text>→</Text>
+                                            
+                                            <Tooltip label={stripHtml(change.newValue)} hasArrow>
+                                                <Badge
+                                                    colorScheme="green"
+                                                    maxW="200px"
+                                                    whiteSpace="nowrap"
+                                                    overflow="hidden"
+                                                    cursor="pointer"
+                                                    isTruncated
+                                                >
+                                                    {stripHtml(change.newValue)}
+                                                </Badge>
+                                            </Tooltip>
+
                                             </Flex>
                                         )}
                                     </Flex>

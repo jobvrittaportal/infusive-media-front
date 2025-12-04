@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { impactOptions, ISupportForm, priorityOptions, schema } from './modal';
-import { hrlenseFetch } from '../../../services/hrlenseApi';
+
 
 interface ISupportFormProps {
     drawerOpen: boolean,
@@ -37,12 +37,12 @@ export default function Form({ drawerOpen, close, reload, setReload }: ISupportF
     });
 
     const loadApplicationGroup = async () => {
-        const response = await hrlenseFetch("DropDown/ApplicationGroup", "GET");
+        const response = await fetchApi("Support/ApplicationGroup", "GET");
         if (response) setApplicationGroup(response);
     };
 
     const loadAssignGroups = async () => {
-        const response = await hrlenseFetch("DropDown/supportAssignGroup", "GET");
+        const response = await fetchApi("Support/supportAssignGroup", "GET");
         if (response) setAssignGroups(response);
     };
 
@@ -72,7 +72,7 @@ export default function Form({ drawerOpen, close, reload, setReload }: ISupportF
         formData.append("desc", data.desc || "");
 
         if (file) formData.append("screenshot", file);
-        const response = await hrlenseFetch("Support/CreateTicket", "POST", formData, "", "", true);
+        const response = await fetchApi("Support/CreateTicket", "POST", formData, "", "", true);
         if (response) {
             addToast({ message: "Ticket created successfully!", status: "success" });
             reset();

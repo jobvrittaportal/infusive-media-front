@@ -8,7 +8,7 @@ import { CustomButton, CustomToast } from '../../../components';
 import Form from './Form';
 import Table from './Table';
 import { ILazyParams, useFetch } from '../../../hooks/useFetch';
-import { hrlenseFetch } from '../../../services/hrlenseApi';
+
 
 export default function Support() {
   const { addToast } = CustomToast();
@@ -30,7 +30,7 @@ export default function Support() {
       lazyParams: JSON.stringify(query.lazyParams),
       filter: JSON.stringify(query.filter),
     }).toString();
-    const response = await hrlenseFetch("Support/getTicket", "GET", "", _query);
+    const response = await fetchApi("Support/getTicket", "GET", "", _query);
     if (response) {
       setTableData(response.result);
       setTotalCount(response.totalCount);

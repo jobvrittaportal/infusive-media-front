@@ -182,7 +182,7 @@ const MyDiv = styled.div`
 }
 
 .submenu_wrapper {
-  padding-left: 48px;
+  // padding-left: 28px;
   padding-top: 14px;
   display: flex;
   flex-direction: column;

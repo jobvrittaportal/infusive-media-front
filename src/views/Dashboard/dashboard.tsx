@@ -14,11 +14,11 @@ const dummyData = [
   { title: "Revenue (MTD)", value: "$347", change: "+12.5% from last month" },
 ];
 
-
 const today = new Date();
 const formattedDate = today.toLocaleDateString('en-GB');
+
 const Dashboard = () => {
-  const { userName } = useAuth();
+  const { userName, hasPermission } = useAuth();
 
   return (
     <MyDiv>
@@ -46,10 +46,12 @@ const Dashboard = () => {
               </Text>
             </Text>
           </Box>
-          <Button bg='#E6EEFA' color='#0052CC'>
-            <Search2Icon color="#0052CC" mr={3} />
-            Add New Lead
-          </Button>
+          {hasPermission('Dashboard', 'AddNewLead') && (
+            <Button bg='#E6EEFA' color='#0052CC'>
+              <Search2Icon color="#0052CC" mr={3} />
+              Add New Lead
+            </Button>
+          )}
         </Flex>
 
         <Grid templateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }} gap={4} className="stats-grid" mt={3}>
