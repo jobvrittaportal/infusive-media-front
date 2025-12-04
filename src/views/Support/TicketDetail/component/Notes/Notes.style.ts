@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const MyDiv = styled.div`
   width: 100%;
-  padding: 5px;
+  padding: 20px;
 
   .notes-box {
     border: 1px solid #dcdcdc;
@@ -49,11 +49,6 @@ const MyDiv = styled.div`
     font-size: 12px;
     color: gray;
   }
-    .change-item:hover {
-    background: #f1f5f9;
-    transition: 0.2s;
-}
-
 `;
 
 export default MyDiv;
