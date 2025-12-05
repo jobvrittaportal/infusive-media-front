@@ -1,5 +1,5 @@
 export interface IUser{
-  userId?: string;
+  userId: string;
   name: string
   email: string;
   mobile: string;
@@ -8,6 +8,7 @@ export interface IUser{
 }
 
 export const defaultUser: IUser  = {
+  userId: '',
   name: '',
   email: '',
   mobile: '',

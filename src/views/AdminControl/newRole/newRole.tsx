@@ -119,7 +119,7 @@ const NewRole = () => {
           navigate(routesNames.ROLES);
         }
       } else {
-        const response = await fetchApi('role/permission', 'POST', payload, null, 'Role created successfully');
+        const response = await fetchApi('role', 'POST', payload, null, 'Role created successfully');
         if (response) {
           navigate(routesNames.ROLES);
         }
