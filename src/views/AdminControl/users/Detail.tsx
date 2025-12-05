@@ -44,13 +44,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
 
     type FormSchema = yup.InferType<typeof schema>;
 
-    const {
-        handleSubmit,
-        control,
-        reset,
-        watch,
-        formState: { errors }
-    } = useForm<FormSchema>({
+    const { handleSubmit, control, reset, watch, formState: { errors } } = useForm<FormSchema>({
         defaultValues: defaultUser as Partial<FormSchema>,
         resolver: yupResolver(schema) as any,
     });
@@ -65,8 +59,10 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
         const res = await fetchApi(`Support/CheckUser?userId=${userIdValue}`, "GET", null, null, "");
 
         if (res?.success) {
+            addToast({ message: "User ID found", status: "success" });
             setShowForm(true);
         } else {
+            addToast({ message: "User ID not found", status: "error" });
             setShowForm(false);
         }
     };
@@ -95,20 +91,15 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
         getRoles();
     }, []);
 
-    // useEffect(() => {
-    //     reset(defaultUser);
-    //     setShowForm(false);
-    // }, [isOpen]);
     useEffect(() => {
-  if (user) {
-    reset(user);
-    setShowForm(true);   // <-- auto show remaining form
-  } else {
-    reset(defaultUser);
-    setShowForm(false);
-  }
-}, [isOpen, user]);
-
+        if (user) {
+            reset(user);
+            setShowForm(true);
+        } else {
+            reset(defaultUser);
+            setShowForm(false);
+        }
+    }, [isOpen, user]);
 
 
     return (
@@ -125,24 +116,13 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
                 <form id="user-form" onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
                     <ModalBody>
 
-                        {/* FIRST SECTION - UserId CHECK (Show only when adding new user) */}
                         {!user && (
-                            <>
-                                <FormInput
-                                    isRequired
-                                    control={control}
-                                    name='userId'
-                                    type='string'
-                                    label='User Id'
-                                    placeholder='Enter User Id'
-                                    errors={errors}
-                                />
+                            <Flex align="end" gap={4} mt={2}>
+                                <FormInput disable={!!user} isRequired control={control} name='userId' type='string' label='User Id' placeholder='Enter User Id' errors={errors} />
                                 <CustomButton title='Submit' onClick={checkUserId} />
-                            </>
+                            </Flex>
                         )}
 
-
-                        {/* OTHER FIELDS WILL SHOW ONLY IF USER ID VERIFIED */}
                         {showForm && (
                             <>
                                 <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mt={5}>
