@@ -179,7 +179,7 @@ const NewRole = () => {
         </FormControl>
 
 
-        <Text mt={4} className="font_poppins text_md text_medium" textAlign="left">Permissions:</Text>
+        { isEditing && ( <Text mt={4} className="font_poppins text_md text_medium" textAlign="left">Permissions:</Text> ) }
 
         <Accordion allowToggle mt={2}>
           {pagePermission.map((page) => (

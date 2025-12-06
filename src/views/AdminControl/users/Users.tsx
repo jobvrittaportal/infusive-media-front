@@ -8,25 +8,19 @@ import { Column } from '../../../components/customTable/CustomTable';
 import CustomButton from '../../../components/CustomButton';
 import { CustomToast } from '../../../components';
 import { useFetch } from '../../../hooks/useFetch';
-
-const roleColors = [
-  "#3182CE", // Blue
-  "#38A169", // Green
-  "#D69E2E", // Yellow
-  "#E53E3E", // Red
-  "#805AD5", // Purple
-  "#DD6B20", // Orange
-];
+import { roleColors , IUsersTable} from './model';
+import useDebounce from '../../../hooks/useDebounce'
 
 
 const Users = () => {
-    const [users, setUsers] = useState<any[]>([]);
+    const [usersData, setUsersData] = useState<IUsersTable>({ users: [], totalCount: 0});
     const [search, setSearch] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [selectedUser, setSelectedUser] = useState<any | null>(null)
     const [pagination, setPagination] = useState({ skip: 0, limit: 10 });
     const { addToast } = CustomToast();
     const { fetchApi } = useFetch(addToast);
+    const debounceSearch = useDebounce(search, 700);
 
     const handleEdit = (row: any) => {
         setSelectedUser(row);
@@ -41,28 +35,23 @@ const Users = () => {
     function pageChangeFunction(e: { skip: number; limit: number }) {
         setPagination(e);
     }
-
+    
     const loadUser = async () => {
-        const res = await fetchApi("User", "GET", null, null, "");
+        const res = await fetchApi("User", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
         if (res) {
-            setUsers(res);
+            setUsersData(res);
         }
     }
 
     useEffect(() => {
         loadUser();
-    }, []);
+    }, [pagination, debounceSearch]);
 
     return (
         <UserDiv>
             <div className="top-section">
                 <Box className="search-box">
-                    <Input bg="#fff"
-                        type="text"
-                        placeholder="Search users..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <Input bg="#fff" type="text" placeholder="Search users..." value={search} onChange={(e) => setSearch(e.target.value)}/>
                 </Box>
                 <CustomButton title='Add New User' onClick={handleAddNew} leftIcon={<AddIcon />} />
             </div>
@@ -70,10 +59,10 @@ const Users = () => {
             <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
 
-            <CustomTable value={users}
+            <CustomTable value={usersData.users}
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
-                totalRecords={10}
+                totalRecords={usersData.totalCount}
                 title='Users'
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'

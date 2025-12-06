@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
-    ModalCloseButton, ModalFooter, Text, SimpleGrid, Flex
+    ModalCloseButton, ModalFooter, Text, SimpleGrid, Flex,
+    Box
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -103,7 +104,8 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
 
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+        <Box alignContent="center" justifyContent="center">
+        <Modal isOpen={isOpen} onClose={onClose} size="3xl" isCentered>
             <ModalOverlay />
             <ModalContent borderRadius="xl" p={2}>
                 <ModalHeader textAlign="center">
@@ -162,6 +164,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
                 </form>
             </ModalContent>
         </Modal>
+       </Box>
     );
 };
 
