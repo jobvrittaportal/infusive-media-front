@@ -1,10 +1,10 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
-export interface IPageFeature extends IPagePermission {
+export interface IPageFeature extends IPagePermission {   // used for page with its features
     features: IPagePermission[];
 }
 
-export interface IPagePermission {
+export interface IPagePermission {        // used for a single page 
     id: number,
     name: string,
     label?: string,
@@ -64,30 +64,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const parentPages = loginObj.permissions?.filter(p => !p.isFeature);
 
         parentPages?.forEach(pp => {
-            const pageFeature: IPageFeature = {
+            const pageFeature: IPageFeature = {     // pageFeature with IPagePermission(parent page) + empty features[](feature of parent page)
                 ...pp,
                 features: []
             };
 
             loginObj.permissions?.forEach(p => {
                 if (pp.id === p.parentId) {
-                    pageFeature.features.push(p);
+                    pageFeature.features.push(p);   // pageFeature with IPagePermission(parent page) + features[](features of parent page)
                 }
             });
 
-            features.push(pageFeature);
+            features.push(pageFeature);            // pageFeature with IPagePermission + features[IPagePermission]
         });
 
         return features;
     }, [loginObj]);
 
     const hasPermission = (pageName: string, featureName?: string): boolean => {
-        const page = pageFeatures.find(page => page.name === pageName);
+        const page = pageFeatures.find(page => page.name === pageName);   // get the page with IPagePermission + features[IPagePermission]
         if (!page) return false;
-        if (!featureName) {
-            return page.permission;
+        if (!featureName) {                  // used to check page permission only, when featureNameis not provided
+            return page.permission;          // return page permission (true/false)
         }
-        return page.features.some(f => f.name === featureName && f.permission);
+        return page.features.some(f => f.name === featureName && f.permission);       // check feature permission under the page
     };
 
     const userName = loginObj?.userName ?? '';

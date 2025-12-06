@@ -81,7 +81,7 @@ const Pages = () => {
                             <Box position="relative" minH="300px">
                                 {loading ? (
                                     <Center position="absolute" top={0} left={0} right={0} bottom={0}>
-                                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="#006838" size="xl" />
+                                        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="#2E90FA" size="xl" />
                                     </Center>) : (
                                     <>
                                         <TableContainer>

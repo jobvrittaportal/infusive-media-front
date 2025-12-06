@@ -3,6 +3,7 @@ import { Routes, Route, Navigate,} from 'react-router-dom'
 import * as routesNames from '../../constant/routes'
 import Layout from '../../default/Layout'
 import { useAuth } from '../../hooks/useAuth'
+import Loader from '../../components/Loader'
 
 
 const Login = lazy(() => import('../Login'));
@@ -20,7 +21,7 @@ const TicketDetails = lazy(() => import('../Support/TicketDetail'));
 
 
 const AppRoutes = () => {
-  const { loggedin } = useAuth();
+  const { loggedin, hasPermission } = useAuth();
 
   return (
     <Routes>
@@ -33,16 +34,16 @@ const AppRoutes = () => {
           </> 
           ): ( 
           <>
-            <Route path={routesNames.DASHBOARD} element={<Suspense><Layout><Dashboard /></Layout></Suspense>} />
-            <Route path={routesNames.LEADLIST} element={<Suspense><Layout><LeadList /></Layout></Suspense>} />
-            <Route path={routesNames.COMPANIES} element={<Suspense><Layout><Companies /></Layout></Suspense>} />
-            <Route path={routesNames.ROLES} element={<Suspense><Layout><Roles /></Layout></Suspense>} />
-            <Route path={routesNames.PAGES} element={<Suspense><Layout><Pages /></Layout></Suspense>} />
-            <Route path={routesNames.NEWPAGE} element={<Suspense><Layout><NewPage /></Layout></Suspense>} />
-            <Route path={routesNames.USERS} element={<Suspense><Layout><Users /></Layout></Suspense>} />
-            <Route path={routesNames.NEWROLE} element={<Suspense><Layout><NewRole /></Layout></Suspense>} />
-            <Route path={routesNames.SUPPORT} element={<Suspense><Layout><Support /></Layout></Suspense>} />
-            <Route path={routesNames.TICKETDETAIL} element={<Suspense><Layout><TicketDetails /></Layout></Suspense>} />
+            { hasPermission('Dashboard') && (<Route path={routesNames.DASHBOARD} element={<Suspense fallback={<Loader/>}><Layout><Dashboard /></Layout></Suspense>} /> )}
+            { hasPermission('LeadLists') && (<Route path={routesNames.LEADLIST} element={<Suspense fallback={<Loader/>}><Layout><LeadList /></Layout></Suspense>} />)}
+            <Route path={routesNames.COMPANIES} element={<Suspense fallback={<Loader/>}><Layout><Companies /></Layout></Suspense>} />
+            { hasPermission('Roles') && (<Route path={routesNames.ROLES} element={<Suspense fallback={<Loader/>}><Layout><Roles /></Layout></Suspense>} /> )}
+            <Route path={routesNames.PAGES} element={<Suspense fallback={<Loader/>}><Layout><Pages /></Layout></Suspense>} />
+            <Route path={routesNames.NEWPAGE} element={<Suspense fallback={<Loader/>}><Layout><NewPage /></Layout></Suspense>} />
+            <Route path={routesNames.USERS} element={<Suspense fallback={<Loader/>}><Layout><Users /></Layout></Suspense>} />
+            <Route path={routesNames.NEWROLE} element={<Suspense fallback={<Loader/>}><Layout><NewRole /></Layout></Suspense>} />
+            <Route path={routesNames.SUPPORT} element={<Suspense fallback={<Loader/>}><Layout><Support /></Layout></Suspense>} />
+            <Route path={routesNames.TICKETDETAIL} element={<Suspense fallback={<Loader/>}><Layout><TicketDetails /></Layout></Suspense>} />
 
             {/* Default Route */}
             <Route path="*" element={<Navigate to={routesNames.DASHBOARD} />} />
