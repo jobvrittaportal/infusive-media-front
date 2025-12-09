@@ -40,7 +40,7 @@ const AppRoutes = () => {
           <>
             { hasPermission('Dashboard') && (<Route path={routesNames.DASHBOARD} element={<Suspense fallback={<Loader/>}><Layout><Dashboard /></Layout></Suspense>} /> )}
             { hasPermission('LeadLists') && (<Route path={routesNames.LEADLIST} element={<Suspense fallback={<Loader/>}><Layout><LeadList /></Layout></Suspense>} />)}
-            <Route path={routesNames.COMPANIES} element={<Suspense fallback={<Loader/>}><Layout><Companies /></Layout></Suspense>} />
+            <Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} />
             { hasPermission('Roles') && (<Route path={routesNames.ROLES} element={<Suspense fallback={<Loader/>}><Layout><Roles /></Layout></Suspense>} /> )}
             <Route path={routesNames.PAGES} element={<Suspense fallback={<Loader/>}><Layout><Pages /></Layout></Suspense>} />
             <Route path={routesNames.NEWPAGE} element={<Suspense fallback={<Loader/>}><Layout><NewPage /></Layout></Suspense>} />

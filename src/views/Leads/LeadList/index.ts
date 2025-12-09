@@ -1,2 +1,3 @@
 import LeadList from "./leadList";
-export default LeadList;
+import Company from "../company";
+export default { LeadList, Company };
