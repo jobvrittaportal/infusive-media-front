@@ -9,8 +9,8 @@ import Loader from '../../components/Loader'
 const Login = lazy(() => import('../Login'));
 const ForgotPassword = lazy(() => import('../ForgotPassword'));
 const Dashboard = lazy(() => import('../Dashboard'));
-const LeadList = lazy(() => import('../Leads/LeadList'));
-const Companies = lazy(() => import('../Leads/Companies'));
+const LeadList = lazy(() => import('../Leads/LeadList/leadList'));
+const Company = lazy(() => import('../Leads/company/Company'));
 const Roles = lazy(() => import('../AdminControl/roles'));
 const Pages = lazy(() => import('../AdminControl/pages'));
 const Users = lazy(() => import('../AdminControl/users'));
@@ -18,6 +18,10 @@ const NewRole = lazy(() => import('../AdminControl/newRole'));
 const NewPage = lazy(() => import('../AdminControl/newPage'));
 const Support = lazy(() => import('../Support/RaiseTicket'));
 const TicketDetails = lazy(() => import('../Support/TicketDetail'));
+ 
+
+// MASTERS
+const IndustryType = lazy(() => import('..//Masters/industryTypes'));
 
 
 const AppRoutes = () => {
@@ -44,7 +48,9 @@ const AppRoutes = () => {
             <Route path={routesNames.NEWROLE} element={<Suspense fallback={<Loader/>}><Layout><NewRole /></Layout></Suspense>} />
             <Route path={routesNames.SUPPORT} element={<Suspense fallback={<Loader/>}><Layout><Support /></Layout></Suspense>} />
             <Route path={routesNames.TICKETDETAIL} element={<Suspense fallback={<Loader/>}><Layout><TicketDetails /></Layout></Suspense>} />
-
+            <Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} />
+            <Route path={routesNames.INDUSTRYTYPES} element={<Suspense fallback={<Loader/>}><Layout><IndustryType/></Layout></Suspense>} />
+            
             {/* Default Route */}
             <Route path="*" element={<Navigate to={routesNames.DASHBOARD} />} />
           </>

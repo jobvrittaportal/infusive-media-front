@@ -105,66 +105,66 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
 
     return (
         <Box alignContent="center" justifyContent="center">
-        <Modal isOpen={isOpen} onClose={onClose} size="3xl" isCentered>
-            <ModalOverlay />
-            <ModalContent borderRadius="xl" p={2}>
-                <ModalHeader textAlign="center">
-                    <Text className="font-poppins font_dark text_semibold text_2xl">
-                        Add New User
-                    </Text>
-                </ModalHeader>
-                <ModalCloseButton />
+            <Modal isOpen={isOpen} onClose={onClose} size="3xl" isCentered>
+                <ModalOverlay />
+                <ModalContent borderRadius="xl" p={2}>
+                    <ModalHeader textAlign="center">
+                        <Text className="font-poppins font_dark text_semibold text_2xl">
+                            Add New User
+                        </Text>
+                    </ModalHeader>
+                    <ModalCloseButton />
 
-                <form id="user-form" onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
-                    <ModalBody>
+                    <form id="user-form" onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
+                        <ModalBody>
 
-                        {!user && (
                             <Flex align="end" gap={4} mt={2}>
                                 <FormInput disable={!!user} isRequired control={control} name='userId' type='string' label='User Id' placeholder='Enter User Id' errors={errors} />
-                                <CustomButton title='Submit' onClick={checkUserId} />
+                                {!user && (
+                                    <CustomButton title='Submit' onClick={checkUserId} />
+                                )}
                             </Flex>
-                        )}
 
-                        {showForm && (
-                            <>
-                                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mt={5}>
-                                    <FormInput isRequired control={control} name="name" type="string" label="Name" placeholder="Enter Name" errors={errors} />
-                                    <FormInput isRequired control={control} name="email" type="string" label="Email" placeholder="Enter Email" errors={errors} />
-                                    {!user && (
-                                        <FormInput isRequired control={control} name="password" type="string" label="Password" placeholder="Enter Password" errors={errors} />
-                                    )}
-                                    <FormInput isRequired control={control} name="mobile" type="string" label="Mobile" placeholder="Enter Mobile Number" errors={errors} />
-                                </SimpleGrid>
-
-                                <Flex direction="column" mt={4} gap={2}>
-                                    <Text>Role</Text>
-                                    <MultiSelectTypeaHeads
-                                        name="roles"
-                                        control={control}
-                                        options={roles}
-                                        onCompletion={(query) => setRolesText(query || '')}
-                                        loading={loading}
-                                        optionValue="id"
-                                        optionLabel="name"
-                                        placeholder="Search Roles..."
-                                    />
-                                </Flex>
-                            </>
-                        )}
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Flex justify="center" gap={4} mb={4}>
-                            <CustomButton title='Cancel' variant="secondary" onClick={onClose} />
                             {showForm && (
-                                <CustomButton type='submit' title='Add' leftIcon={<AddIcon />} />
+                                <>
+                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mt={5}>
+                                        <FormInput isRequired control={control} name="name" type="string" label="Name" placeholder="Enter Name" errors={errors} />
+                                        <FormInput isRequired control={control} name="email" type="string" label="Email" placeholder="Enter Email" errors={errors} />
+                                        {!user && (
+                                            <FormInput isRequired control={control} name="password" type="string" label="Password" placeholder="Enter Password" errors={errors} />
+                                        )}
+                                        <FormInput isRequired control={control} name="mobile" type="string" label="Mobile" placeholder="Enter Mobile Number" errors={errors} />
+                                    </SimpleGrid>
+
+                                    <Flex direction="column" mt={4} gap={2}>
+                                        <Text>Role</Text>
+                                        <MultiSelectTypeaHeads
+                                            name="roles"
+                                            control={control}
+                                            options={roles}
+                                            onCompletion={(query) => setRolesText(query || '')}
+                                            loading={loading}
+                                            optionValue="id"
+                                            optionLabel="name"
+                                            placeholder="Search Roles..."
+                                        />
+                                    </Flex>
+                                </>
                             )}
-                        </Flex>
-                    </ModalFooter>
-                </form>
-            </ModalContent>
-        </Modal>
-       </Box>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Flex justify="center" gap={4} mb={4}>
+                                <CustomButton title='Cancel' variant="secondary" onClick={onClose} />
+                                {showForm && (
+                                    <CustomButton type='submit' title='Add' leftIcon={<AddIcon />} />
+                                )}
+                            </Flex>
+                        </ModalFooter>
+                    </form>
+                </ModalContent>
+            </Modal>
+        </Box>
     );
 };
 
