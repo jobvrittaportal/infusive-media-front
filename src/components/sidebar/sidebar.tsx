@@ -46,7 +46,8 @@ const Sidebar = (props: SidebarProps) => {
     const subMenu: SubMenuItem[] = [];
     if (hasPermission('LeadLists'))
       subMenu.push({ id: 41, label: "Lead Lists", link: routesNames.LEADLIST })
-
+    if (hasPermission('Company'))
+      subMenu.push({ id: 42, label: "Company", link: routesNames.COMPANY })
     Menus.push({ id: 4, menuName: "Lead", menuLogo: LeadsIcon, subMenu: subMenu });
   }
 
@@ -68,6 +69,14 @@ const Sidebar = (props: SidebarProps) => {
       subMenu.push({ id: 21, label: "Raise Ticket", link: routesNames.SUPPORT });
 
     Menus.push({ id: 2, menuName: "Support", menuLogo: SupportIcon, subMenu: subMenu });
+  }
+
+  if (hasPermission('IndustryType')) {
+    const subMenu: SubMenuItem[] = [];
+    if (hasPermission('IndustryType'))
+      subMenu.push({ id: 51, label: "Industy Type", link: routesNames.INDUSTRYTYPES });
+
+    Menus.push({ id: 5, menuName: "Masters", menuLogo: SupportIcon, subMenu: subMenu });
   }
 
   const [menuId, setMenuId] = useState<number | null>(null);

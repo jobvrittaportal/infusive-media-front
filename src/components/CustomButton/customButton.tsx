@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
+
 type Props = {
   variant?: string
   className?: string
@@ -11,25 +12,30 @@ type Props = {
   type?: any
   isLoading?: boolean
   title?: any
-  ref?:any
+  colorScheme?: string   
+  bg?: string    
+  color?: string  
+  ref?: any
 }
+
 export default function CustomButton(props: Props) {
   return (
-    <div>
-      <Button
-        variant={props.variant}
-        className={props.className}
-        leftIcon={props.leftIcon}
-        rightIcon={props.rightIcon}
-        size={props.size}
-        onClick={props.onClick}
-        isDisabled={props.isDisabled}
-        type={props.type}
-        isLoading={props.isLoading}
-        ref={props.ref}
-      >
-        {props.title}
-      </Button>
-    </div>
+    <Button
+      variant={props.variant}
+      className={props.className}
+      leftIcon={props.leftIcon}
+      rightIcon={props.rightIcon}
+      size={props.size}
+      onClick={props.onClick}
+      isDisabled={props.isDisabled}
+      type={props.type}
+      isLoading={props.isLoading}
+      ref={props.ref}
+      colorScheme={props.colorScheme} 
+      bg={props.bg}                
+      color={props.color}         
+    >
+      {props.title}
+    </Button>
   )
 }

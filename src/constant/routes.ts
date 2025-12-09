@@ -11,3 +11,6 @@ export const NEWPAGE = '/new-page'
 export const PROFILE = '/profile'
 export const SUPPORT = '/support'
 export const TICKETDETAIL = '/ticket-detail'
+export const COMPANY = '/company'
+
+export const INDUSTRYTYPES = '/master/industry-types'
