@@ -22,6 +22,7 @@ const TicketDetails = lazy(() => import('../Support/TicketDetail'));
 
 // MASTERS
 const IndustryType = lazy(() => import('..//Masters/industryTypes'));
+const Designation = lazy(() => import('../Masters/designation'));
 
 
 const AppRoutes = () => {
@@ -40,16 +41,17 @@ const AppRoutes = () => {
           <>
             { hasPermission('Dashboard') && (<Route path={routesNames.DASHBOARD} element={<Suspense fallback={<Loader/>}><Layout><Dashboard /></Layout></Suspense>} /> )}
             { hasPermission('LeadLists') && (<Route path={routesNames.LEADLIST} element={<Suspense fallback={<Loader/>}><Layout><LeadList /></Layout></Suspense>} />)}
-            <Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} />
+            { hasPermission('Company') && (<Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} /> )}
             { hasPermission('Roles') && (<Route path={routesNames.ROLES} element={<Suspense fallback={<Loader/>}><Layout><Roles /></Layout></Suspense>} /> )}
-            <Route path={routesNames.PAGES} element={<Suspense fallback={<Loader/>}><Layout><Pages /></Layout></Suspense>} />
-            <Route path={routesNames.NEWPAGE} element={<Suspense fallback={<Loader/>}><Layout><NewPage /></Layout></Suspense>} />
-            <Route path={routesNames.USERS} element={<Suspense fallback={<Loader/>}><Layout><Users /></Layout></Suspense>} />
-            <Route path={routesNames.NEWROLE} element={<Suspense fallback={<Loader/>}><Layout><NewRole /></Layout></Suspense>} />
-            <Route path={routesNames.SUPPORT} element={<Suspense fallback={<Loader/>}><Layout><Support /></Layout></Suspense>} />
-            <Route path={routesNames.TICKETDETAIL} element={<Suspense fallback={<Loader/>}><Layout><TicketDetails /></Layout></Suspense>} />
-            <Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} />
-            <Route path={routesNames.INDUSTRYTYPES} element={<Suspense fallback={<Loader/>}><Layout><IndustryType/></Layout></Suspense>} />
+            { hasPermission('Pages') && (<Route path={routesNames.PAGES} element={<Suspense fallback={<Loader/>}><Layout><Pages /></Layout></Suspense>} /> )}
+            { hasPermission('Pages') && (<Route path={routesNames.NEWPAGE} element={<Suspense fallback={<Loader/>}><Layout><NewPage /></Layout></Suspense>} /> )}
+            { hasPermission('Users') && (<Route path={routesNames.USERS} element={<Suspense fallback={<Loader/>}><Layout><Users /></Layout></Suspense>} /> )}
+            { hasPermission('Roles') && (<Route path={routesNames.NEWROLE} element={<Suspense fallback={<Loader/>}><Layout><NewRole /></Layout></Suspense>} /> )}
+            { hasPermission('RaiseTickets') && (<Route path={routesNames.SUPPORT} element={<Suspense fallback={<Loader/>}><Layout><Support /></Layout></Suspense>} /> )}
+            { hasPermission('RaiseTickets') && (<Route path={routesNames.TICKETDETAIL} element={<Suspense fallback={<Loader/>}><Layout><TicketDetails /></Layout></Suspense>} /> )}
+            { hasPermission('Company') && (<Route path={routesNames.COMPANY} element={<Suspense fallback={<Loader/>}><Layout><Company /></Layout></Suspense>} />)}
+            { hasPermission('IndustryType') && (<Route path={routesNames.INDUSTRYTYPES} element={<Suspense fallback={<Loader/>}><Layout><IndustryType/></Layout></Suspense>} /> )}
+            { hasPermission('Designation') && (<Route path={routesNames.DESIGNATION} element={<Suspense fallback={<Loader/>}><Layout><Designation/></Layout></Suspense>} /> )}
             
             {/* Default Route */}
             <Route path="*" element={<Navigate to={routesNames.DASHBOARD} />} />
