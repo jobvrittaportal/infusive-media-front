@@ -14,3 +14,4 @@ export const TICKETDETAIL = '/ticket-detail'
 export const COMPANY = '/company'
 
 export const INDUSTRYTYPES = '/master/industry-types'
+export const DESIGNATION = '/master/designation'

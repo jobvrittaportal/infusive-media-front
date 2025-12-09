@@ -67,14 +67,16 @@ const Sidebar = (props: SidebarProps) => {
     const subMenu: SubMenuItem[] = [];
     if (hasPermission('RaiseTickets'))
       subMenu.push({ id: 21, label: "Raise Ticket", link: routesNames.SUPPORT });
-
+    
     Menus.push({ id: 2, menuName: "Support", menuLogo: SupportIcon, subMenu: subMenu });
   }
 
-  if (hasPermission('IndustryType')) {
+  if (hasPermission('IndustryType') || hasPermission('Designation')) {
     const subMenu: SubMenuItem[] = [];
     if (hasPermission('IndustryType'))
       subMenu.push({ id: 51, label: "Industy Type", link: routesNames.INDUSTRYTYPES });
+    if (hasPermission('Designation'))
+      subMenu.push({ id: 52, label: "Designation", link: routesNames.DESIGNATION });
 
     Menus.push({ id: 5, menuName: "Masters", menuLogo: SupportIcon, subMenu: subMenu });
   }
