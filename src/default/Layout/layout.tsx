@@ -21,9 +21,9 @@ const AppLayout = (props: any) => {
 
   return (
     <MyDiv>
-      <Grid className={toggleSidebar ? 'parent_grid_toggle' : 'parent_grid'}>
+      <Grid  gap={0} className={toggleSidebar ? 'parent_grid_toggle' : 'parent_grid'}>
 
-        <GridItem className="sidebar_grid">
+        <GridItem >
           <Sidebar toggleSidebar={toggleSidebar} handleSidePanel={handleSidePanel} activePortal={isActive} />
         </GridItem>
 

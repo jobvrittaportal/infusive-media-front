@@ -11,6 +11,8 @@ import CollapseLogo from "../../assets/Images/CollapseLogo.svg";
 import * as routesNames from "../../constant/routes";
 import MyDiv from "./sidebar.style";
 import { useAuth } from "../../hooks/useAuth";
+import InfusiveLogo from "../../assets/Images/Infusive-logo (2).svg"
+import InfusiveMedia from "../../assets/Images/Infusive Media.svg"
 
 type SubMenuItem = {
   id: number;
@@ -95,46 +97,52 @@ const Sidebar = (props: SidebarProps) => {
     }
   }, [location.pathname]);
 
-  const handleMenu = (itemId: number) => {
-    const selectedItem = ActiveMenu.find((item) => item.id === itemId);
-
+ const handleMenu = (itemId: number) => {
+    const selectedItem = Menus.find(item => item.id === itemId);
     if (!selectedItem) return;
-
-    // If it's a direct menu link (no submenu)
+ 
     if (selectedItem.link) {
       navigate(selectedItem.link);
       setMenuId(itemId);
       return;
     }
-
-    // If it has a submenu
+ 
     if (selectedItem.subMenu?.length) {
       setMenuId(itemId);
+      const firstSub = selectedItem.subMenu[0];
+      if (firstSub) navigate(firstSub.link);
     }
   };
 
   return (
     <MyDiv>
-      <Box className={props.toggleSidebar ? 'sidebar_collapse' : 'sidebar_wrapper'}>
-        <Box className="collapse-button" mb={10}>
+       <Box className={props.toggleSidebar ? "sidebar_collapse" : "sidebar_wrapper"}>
+ 
+        {/* COLLAPSE BUTTON */}
+        <Box className="collapse-button">
           <IconButton
-            className={props.toggleSidebar ? '' : 'collpase_icon'}
+            className={props.toggleSidebar ? "" : "collpase_icon"}
             onClick={props.handleSidePanel}
             icon={<Image src={CollapseIcon} />}
-            aria-label={''}
+            aria-label=""
+            bg="white"
+           
           />
         </Box>
-        <Box>
-          <Flex
-            className="top_header"
-            style={{ justifyContent: props.toggleSidebar ? 'center' : '' }}
-          >
-            {props.toggleSidebar ? (
-              <Image src={CollapseLogo} className="col" cursor={'pointer'} />
-            ) : (
-              <Image src={Logo} className="logo" cursor={'pointer'} />
-            )}
-          </Flex>
+ 
+       
+        {/* LOGO */}
+           <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"}>
+            
+             {/* Always show icon */}
+             <Image src={InfusiveLogo} className="logo_icon" />
+            
+             {/* Show text ONLY when expanded */}
+             {!props.toggleSidebar && (
+               <Image src={InfusiveMedia} className="logo_text" />
+             )}
+            
+           </Flex>
           <Box className={props.toggleSidebar ? 'sidebar_box_toggle' : 'sidebar_box'}>
             <Stack spacing="3" className="menu_box">
               {ActiveMenu.map((item) => {
@@ -170,7 +178,7 @@ const Sidebar = (props: SidebarProps) => {
                                 isSubActive ? 'active_submenu submenu_item' : 'submenu_item'
                               }
                             >
-                               {subItem.label}
+                              • {subItem.label}
                             </NavLink>
                           );
                         })}
@@ -182,7 +190,7 @@ const Sidebar = (props: SidebarProps) => {
             </Stack>
           </Box>
         </Box>
-      </Box>
+ 
     </MyDiv>
   );
 };

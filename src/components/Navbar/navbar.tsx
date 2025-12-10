@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <Flex h="50px" align="center" bg="#E6EEFA" px={4} justifyContent="right">
+    <Flex h="50px" align="center" px={4} justifyContent="right">
       <Menu>
       <Flex className="profile_menu">
           <MenuButton as={Button} leftIcon={<Avatar size='sm' src={avatarUrl || DummyProfile} bg="transparent"/>} rightIcon={<Image src={ArrowDownIcon} />} h={"12"}  bg="transparent"  _hover={{ bg: "transparent" }}>
