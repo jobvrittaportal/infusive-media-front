@@ -23,6 +23,7 @@ interface DetailProps {
 const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndustries }) => {
   const { addToast } = CustomToast();
   const { fetchApi } = useFetch(addToast);
+  const [loading, setLoading] = useState(false);
 
   const schema = yup.object({
     industryName: yup.string().required("Industry Type is required"),
@@ -34,7 +35,9 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
   });
 
   const onSubmit = async (formData: IIndustrtyType) => {
+    setLoading(true);
     const res = await fetchApi("IndustryType", industries?.id ? "PUT" : "POST", formData, null, "Submitted");
+    setLoading(false);
     if (res) {
       onClose();
       loadIndustries();
@@ -66,9 +69,9 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
           </DrawerBody>
 
           <DrawerFooter >
-            <Flex justify="center"  gap={4} w="100%">
+            <Flex justify="end"  gap={4} w="100%">
               <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'/>
-              <CustomButton type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />}  bg='green' color='white'/>
+              <CustomButton type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} isLoading={loading} bg='green' color='white'/>
             </Flex>
           </DrawerFooter>
         </form>
