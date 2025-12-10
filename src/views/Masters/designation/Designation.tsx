@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, Input } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import DesignationDiv from './designation.style';
 import Detail from './Details';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
@@ -43,9 +43,9 @@ const Designation = () => {
         }
     }
 
-    const handelEditStatus = async(row: any) =>{
-        const res = await fetchApi(`Designation/toggleStatus/${row.id}`, "PUT", {id: row.id, status: !row.status} , null, "Status Changed");
-        if(res){
+    const handelEditStatus = async (row: any) => {
+        const res = await fetchApi(`Designation/toggleStatus/${row.id}`, "PUT", { id: row.id, status: !row.status }, null, "Status Changed");
+        if (res) {
             loadDesignation();
         }
     }
@@ -56,12 +56,21 @@ const Designation = () => {
 
     return (
         <DesignationDiv>
-            <div className="top-section">
-                <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search designations..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Flex justify="space-between">
+                <Box className="top-section">
+                    <Text className='font-poppins text_xxl text_semibold'>Designation List</Text>
+
                 </Box>
-                <CustomButton title='Add New Designation' onClick={handleAddNew} leftIcon={<AddIcon />} />
-            </div>
+                <Box display="flex" gap={3}>
+
+                    <Box className="search-box">
+
+                        <Input bg="#fff" type="text" placeholder="Search Designation..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    </Box>
+                    <CustomButton title="Add New Designation " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme' />
+
+                </Box>
+            </Flex>
 
             <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
@@ -70,7 +79,7 @@ const Designation = () => {
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={designationsData.totalCount}
-                title='Designation List'
+
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'

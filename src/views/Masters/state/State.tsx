@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, Input } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
 import Detail from './Details';
 import { CustomButton, CustomTable, CustomToast } from '../../../components';
@@ -54,12 +54,21 @@ const State = () => {
 
     return (
         <StateDiv>
-            <div className="top-section">
+             <Flex justify="space-between">
+                 <Box className="top-section">
+                        <Text className='font-poppins text_xxl text_semibold'>State</Text>
+                       
+                      </Box>
+                <Box display="flex" gap={3}>
+                    
                 <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search States..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    
+                    <Input bg="#fff" type="text" placeholder="Search State..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <CustomButton title='Add New State' onClick={handleAddNew} leftIcon={<AddIcon />} />
-            </div>
+                <CustomButton title="Add New State " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
+                
+                </Box>
+                </Flex>
             <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
 
@@ -67,7 +76,6 @@ const State = () => {
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={statesData.totalCount}
-                title='State'
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'

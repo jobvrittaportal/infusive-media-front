@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
     Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
     DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex,
-    GridItem
+    GridItem,
+    Box
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -72,25 +73,25 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, states, loadstates }) 
                     </Text>
                 </DrawerHeader>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <DrawerBody>
+              
+                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
                         <GridItem>
                             <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
                         </GridItem>
-                        <SimpleGrid columns={{ base: 1 }} spacing={6} mt={3}>
+                       <Box>
                             <FormInput isRequired control={control} name="name" type="string" label="State Name" placeholder="Enter Name" errors={errors} />
-                        </SimpleGrid>
+                        </Box>
 
 
                     </DrawerBody>
 
                     <DrawerFooter >
-                        <Flex justify="center" gap={4} w="100%">
+                        <Flex justify="right" gap={4} w="100%">
                             <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
                             <CustomButton type="submit" title={states?.id ? "Update" : "Add"} leftIcon={<AddIcon />} bg='green' color='white' />
                         </Flex>
                     </DrawerFooter>
-                </form>
+              
             </DrawerContent>
         </Drawer>
     );

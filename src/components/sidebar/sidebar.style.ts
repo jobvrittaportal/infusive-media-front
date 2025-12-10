@@ -77,7 +77,7 @@ const MyDiv = styled.div`
 .collapse-button {
   position: absolute;
   top: 30px;
-  right: -1px;
+  right: -10px;
   z-index: 11;
   margin-left: 2px;
   margin-bottom: 3px;
@@ -135,7 +135,7 @@ const MyDiv = styled.div`
    4. SIDEBAR BOXES
 ======================================= */
 .sidebar_box {
-  margin-top: 53px;
+  margin-top: 30px;
   padding: 0;
 
   @media(max-width:767px) {
@@ -213,23 +213,32 @@ const MyDiv = styled.div`
    7. SUBMENU
 ======================================= */
 .submenu_wrapper {
- 
-  margin-left: -50px;
-  margin-top: 10px;       /* 🔥 make spacing constant */
-  margin-bottom: 10px;    /* 🔥 add consistent bottom spacing */
+  padding-left: 60px;       /* consistent indent */
+  margin-top: 8px;
+  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .submenu_item {
-  padding-left: 2px;
   font-size: 14px;
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
   color: #000;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;                  /* bullet → text spacing */
 }
+
+// .submenu_item::before {
+//   content: "•";              /* bullet */
+//   font-size: 18px;
+//   color: #000;
+//   margin-right: 6px;
+// }
+
 
 .active_submenu {
   color: #0052CC !important;

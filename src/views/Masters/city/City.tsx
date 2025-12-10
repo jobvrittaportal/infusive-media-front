@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, Input } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, InputGroup, Text } from "@chakra-ui/react";
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
 import Detail from './Details';
 import { CustomButton, CustomTable, CustomToast } from '../../../components';
@@ -54,13 +54,25 @@ const City = () => {
 
     return (
         <CityDiv>
-            <div className="top-section">
-                <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search Cities..." value={search} onChange={(e) => setSearch(e.target.value)} />
-                </Box>
-                <CustomButton title='Add New City' onClick={handleAddNew} leftIcon={<AddIcon />} />
-            </div>
+           
+               <Flex justify="space-between">
+                                <Box className="top-section">
+                                       <Text className='font-poppins text_xxl text_semibold'>City</Text>
+                                      
+                                     </Box>
+                               <Box display="flex" gap={3}>
+                                   
+                               <Box className="search-box">
+                                   
+                                   <Input bg="#fff" type="text" placeholder="Search City..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                               </Box>
+                               <CustomButton title="Add New City " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
+                               
+                               </Box>
+                               </Flex>
+           
 
+            
             <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
 
@@ -68,7 +80,6 @@ const City = () => {
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={citiesData.totalCount}
-                title='City'
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'
