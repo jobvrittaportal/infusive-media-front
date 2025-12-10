@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, Input } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import { ICountryTable } from './model';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
 import Detail from './Details';
@@ -54,21 +54,27 @@ const Country = () => {
 
     return (
         <CountryDiv>
-            <div className="top-section">
+           <Flex justify="space-between">
+                 <Box className="top-section">
+                        <Text className='font-poppins text_xxl text_semibold'>Country</Text>
+                       
+                      </Box>
+                <Box display="flex" gap={3}>
+                    
                 <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search Countries..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    
+                    <Input bg="#fff" type="text" placeholder="Search Country..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <CustomButton title='Add New Country' onClick={handleAddNew} leftIcon={<AddIcon />} />
-            </div>
-
-            <Flex justify="flex-end" align="center" mr={4}>
-            </Flex>
+                <CustomButton title="Add New Country " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
+                
+                </Box>
+                </Flex>
 
             <CustomTable value={countriesData.countries}
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={countriesData.totalCount}
-                title='Country'
+               
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'

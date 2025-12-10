@@ -88,8 +88,8 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, cities, loadcities }) 
                         {cities?.id ? "Edit City" : "Add New City"}
                     </Text>
                 </DrawerHeader>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <DrawerBody>
+                
+                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
                         <GridItem>
                             <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
                         </GridItem>
@@ -103,12 +103,12 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, cities, loadcities }) 
                     </DrawerBody>
 
                     <DrawerFooter >
-                        <Flex justify="center" gap={4} w="100%">
+                        <Flex justify="right" gap={4} w="100%">
                             <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
                             <CustomButton type="submit" title={cities?.id ? "Update" : "Add"} leftIcon={<AddIcon />} bg='green' color='white' />
                         </Flex>
                     </DrawerFooter>
-                </form>
+              
             </DrawerContent>
         </Drawer>
     );

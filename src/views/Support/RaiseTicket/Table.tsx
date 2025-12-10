@@ -37,8 +37,9 @@ export default function Table({ tableData, query, setQuery, totalCount, }: ITabl
 
     return (
         <div>
+              {/* <Text className='font-poppins text_xxl text_semibold' textAlign="left">Ticket</Text> */}
             <CustomTable value={tableData}
-                title='Tickets'
+               
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No data found'

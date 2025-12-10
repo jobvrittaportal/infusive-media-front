@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import {
     Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
-    DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex
+    DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex,
+    Box
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -61,24 +62,24 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, countries, loadCountri
                     </Text>
                 </DrawerHeader>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <DrawerBody>
-                        <SimpleGrid columns={{ base: 1 }} spacing={6} mt={3}>
+               
+                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
+                        <Box py={4}>
                             <FormInput isRequired control={control} name="name" type="string" label="Country Name" placeholder="Enter Name" errors={errors} />
                             <FormInput isRequired control={control} name="code" type="string" label="Country Code" placeholder="Enter Country Code" errors={errors} />
                             <FormInput isRequired control={control} name="dialCode" type="string" label="Dial Code" placeholder="Enter Dial Code" errors={errors} />
                             <FormInput isRequired control={control} name="flagUrl" type="string" label="Flag Url" placeholder="Enter Flag URL" errors={errors} />
 
-                        </SimpleGrid>
+                        </Box>
                     </DrawerBody>
 
                     <DrawerFooter >
-                        <Flex justify="center" gap={4} w="100%">
+                        <Flex justify="right" gap={4} w="100%">
                             <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
                             <CustomButton type="submit" title={countries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} bg='green' color='white' />
                         </Flex>
                     </DrawerFooter>
-                </form>
+               
             </DrawerContent>
         </Drawer>
     );

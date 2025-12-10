@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, Input } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import IndustryDiv from './industry.style';
 import Detail from './Details';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
@@ -56,12 +56,23 @@ const IndustryType = () => {
 
     return (
         <IndustryDiv>
-            <div className="top-section">
+             
+                <Flex justify="space-between">
+                 <Box className="top-section">
+                        <Text className='font-poppins text_xxl text_semibold'>Industry Types</Text>
+                       
+                      </Box>
+                <Box display="flex" gap={3}>
+                    
                 <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search industries..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    
+                    <Input bg="#fff" type="text" placeholder="Search Industry Types..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <CustomButton title='Add New Industry Type' onClick={handleAddNew} leftIcon={<AddIcon />} />
-            </div>
+                <CustomButton title="Add New Industry " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
+                
+                </Box>
+                </Flex>
+              
 
             <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
@@ -70,7 +81,7 @@ const IndustryType = () => {
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={indusrtiesData.totalCount}
-                title='Industry Types'
+              
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'

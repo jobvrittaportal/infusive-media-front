@@ -131,14 +131,14 @@ const Sidebar = (props: SidebarProps) => {
             onClick={props.handleSidePanel}
             icon={<Image src={CollapseIcon} />}
             aria-label=""
-            bg="white"
+            bg="#E6EEFA"
 
           />
         </Box>
 
 
         {/* LOGO */}
-        <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"}>
+        <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"} ml={3}>
 
           {/* Always show icon */}
           <Image src={InfusiveLogo} className="logo_icon" boxSize={14}/>

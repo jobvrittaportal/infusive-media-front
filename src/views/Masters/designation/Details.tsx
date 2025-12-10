@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
-  DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex
+  DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex,
+  Box
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -59,20 +60,20 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, designations, loadDesi
           </Text>
         </DrawerHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DrawerBody>
-            <SimpleGrid columns={{ base: 1 }} spacing={6} mt={3}>
+       
+          <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
+           <Box>
               <FormInput isRequired control={control} name="designationName" type="string" label="Designation" placeholder="Enter Designation" errors={errors}/>
-            </SimpleGrid>
+           </Box>
           </DrawerBody>
 
           <DrawerFooter >
-            <Flex justify="center"  gap={4} w="100%">
+            <Flex justify="right" gap={4} w="100%">
               <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'/>
               <CustomButton type="submit" title={designations?.id ? "Update" : "Add"} leftIcon={<AddIcon />}  bg='green' color='white'/>
             </Flex>
           </DrawerFooter>
-        </form>
+       
       </DrawerContent>
     </Drawer>
   );

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import {
   Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
-  DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex
+  DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex,
+  Box,
+  Button
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -52,29 +54,25 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
-      <DrawerContent p={2}>
+      <DrawerContent p={2} >
         <DrawerCloseButton />
 
-        <DrawerHeader textAlign="left">
+        <DrawerHeader >
           <Text className="font-poppins font_dark text_semibold text_2xl">
             {industries?.id ? "Edit Industry" : "Add New Industry"}
           </Text>
         </DrawerHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DrawerBody>
-            <SimpleGrid columns={{ base: 1 }} spacing={6} mt={3}>
-              <FormInput isRequired control={control} name="industryName" type="string" label="Industry Name" placeholder="Enter Name" errors={errors}/>
-            </SimpleGrid>
-          </DrawerBody>
+        <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
 
-          <DrawerFooter >
-            <Flex justify="end"  gap={4} w="100%">
-              <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'/>
-              <CustomButton type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} isLoading={loading} bg='green' color='white'/>
-            </Flex>
-          </DrawerFooter>
-        </form>
+          <Box py={4}>
+            <FormInput isRequired control={control} name="industryName" type="string" label="Industry Name" placeholder="Enter Name" errors={errors} />
+          </Box>
+          <Flex justify="flex-end" mt={4} gap={2}>
+            <Button title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'>Cancel</Button>
+            <Button type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} isLoading={loading} bg='green' color='white'>Submit</Button>
+          </Flex>
+        </DrawerBody>
       </DrawerContent>
     </Drawer>
   );
