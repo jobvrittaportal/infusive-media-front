@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const MyDiv = styled.div`
-  background-color: #E6EEFA;
+  // background-color: #E6EEFA;
   width: 100%;
   height: 100%;
 
@@ -46,11 +46,19 @@ const MyDiv = styled.div`
 
 /* content area */
 .inner-children {
-  background: #f2f2f2;
+  background: #ffffff;
   padding: 20px;
   min-height: calc(100vh - 80px);
 }
 
+.parent_grid,
+.parent_grid_toggle {
+  background-color: #E6EEFA;    /* prevents white flash */
+}
+.children_grid,
+.children_grid_toggle {
+  background-color: #E6EEFA;
+}
 
 `;
 
