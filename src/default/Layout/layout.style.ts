@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
 const MyDiv = styled.div`
+  background-color: #E6EEFA;
+  width: 100%;
+  height: 100%;
+
 .parent_grid {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 237px 1fr;
     transition: 0.5s;
    
 
@@ -15,26 +19,38 @@ const MyDiv = styled.div`
   .parent_grid_toggle {
     display: grid;
    
-    grid-template-columns: 100px 1fr;
-    transition: 0.5s;
+    grid-template-columns: 90px 1fr;
+   
   }
 
-  .children_grid {
-   background-color: #E6EEFA; 
-    padding: 16px 0px 0px 0px;
-  }
-
-  .children_grid_toggle {
-   background-color: #E6EEFA; 
-    padding: 16px 0px 0px 0px;
-  }
-
-  .inner-children {
-  background-color: #f2f2f2; 
-  min-height: calc(100vh - 80px); 
-  max-width: calc(100vw - 250px);
-  padding: 20px;
+  .parent_grid,
+.parent_grid_toggle {
+  display: block; /* grid not needed */
 }
+
+/* expanded layout */
+.children_grid {
+  margin-left: 237px;
+  transition: 0.4s ease;
+  background: #E6EEFA;
+  min-height: 100vh;
+}
+
+/* collapsed layout */
+.children_grid_toggle {
+  margin-left: 90px;
+  transition: 0.4s ease;
+  background: #E6EEFA;
+  min-height: 100vh;
+}
+
+/* content area */
+.inner-children {
+  background: #f2f2f2;
+  padding: 20px;
+  min-height: calc(100vh - 80px);
+}
+
 
 `;
 
