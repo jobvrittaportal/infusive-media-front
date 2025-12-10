@@ -30,8 +30,8 @@ export const Dropdown = ({ name, label, control, errors, options, valueKey, labe
 
     return (
         <Controller name={name} control={control} render={({ field }) => (
-            <FormControl isInvalid={!!errors[name]}>
-                {label && <FormLabel>
+            <FormControl isInvalid={!!errors[name]} mt={2}>
+                {label && <FormLabel className='font-poppins'>
                     {label}{" "}
                     {isRequired && <Text as="span" color="red.500">*</Text>}
                 </FormLabel>}

@@ -141,7 +141,7 @@ const Sidebar = (props: SidebarProps) => {
         <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"}>
 
           {/* Always show icon */}
-          <Image src={InfusiveLogo} className="logo_icon" />
+          <Image src={InfusiveLogo} className="logo_icon" boxSize={14}/>
 
           {/* Show text ONLY when expanded */}
           {!props.toggleSidebar && (

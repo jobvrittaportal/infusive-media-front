@@ -35,7 +35,7 @@ interface InputProps {
       name={name}
       control={control}
       render={({ field }) => (
-        <FormControl isRequired={isRequired} isInvalid={!!errors?.[name]}>
+        <FormControl isRequired={isRequired} isInvalid={!!errors?.[name]} mt={2}>
           <FormLabel className='font-poppins'>
             {label}
           </FormLabel>
