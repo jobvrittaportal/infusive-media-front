@@ -3,33 +3,39 @@ export interface ICompany {
   industryTypeID: number;
   industryTypeName?: string;
   phoneCountryCode: string;
-  companyPhone: string;    
+  companyPhone: string;
   companyEmail: string;
   websiteUrl: string;
-  countryCode: string;       
-  feidOrGst: string;
-  companyAddress: string;   
+  postalZipCode: string;
+  feid: string;
+  status: boolean;
+  countryId: number;
+  stateId: number;
+  cityId: number;
 }
 export interface IIndustryTypeOption {
   IndustryId: number;
   IndustryName: string;
 }
-
-
+ 
+ 
 export const defaultCompany: ICompany = {
   companyName: '',
   industryTypeID: 0,
-  industryTypeName:'',
+  industryTypeName: '',
   phoneCountryCode: '',
   companyPhone: '',
   companyEmail: '',
   websiteUrl: '',
-  countryCode: '',
-  feidOrGst: '',
-  companyAddress: '',
+  // countryCode: '',
+  feid: '',
+  postalZipCode: '',
+  status: true,
+  //companyAddress: '',
+  countryId: 0,
+  stateId: 0,
+  cityId: 0,
 };
-
-
 export interface ICompanyInfo {
   company: ICompany[];
   totalCount: number;
@@ -60,4 +66,11 @@ export const countryPhoneOptions = [
     iso2: 'au',
     flagUrl: 'https://flagcdn.com/au.svg',
   },
+];
+
+export const cards = [
+  { label: "Total Companies", value: 128, percent: "+2%" },
+  { label: "Active Companies", value: 250, percent: "+12%" },
+  { label: "New Companies", value: 250, percent: "+10%" },
+  { label: "Top Companies", value: 472, percent: "+11%" },
 ];

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Input, InputGroup, Text } from "@chakra-ui/react";
 import UserDiv from './company.style';
 import Detail from './Detail';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
@@ -8,23 +8,8 @@ import { Column } from '../../../components/customTable/CustomTable';
 import CustomButton from '../../../components/CustomButton';
 import { CustomToast } from '../../../components';
 import { useFetch } from '../../../hooks/useFetch';
-import { ICompanyInfo, ICompany, IIndustryTypeOption } from './model';
+import { ICompanyInfo, ICompany, cards } from './model';
 import useDebounce from '../../../hooks/useDebounce'
-
-const data: ICompany[] = [
-  {
-    companyName: "ABC Pvt Ltd",
-    industryTypeID: 2,
-    industryTypeName: "IT Services",
-    phoneCountryCode: "+91",
-    companyPhone: "+91-9999999999",
-    companyEmail: "info@abc.com",
-    websiteUrl: "https://abc.com",
-    countryCode: "IN",
-    feidOrGst: "22AAAAA0000A1Z5",
-    companyAddress: "Some Street, Some City, 123456",
-  },
-];
 
 const Company = () => {
   const [companyData, setCompanyData] = useState<ICompanyInfo>({ company: [], totalCount: 0 });
@@ -44,6 +29,7 @@ const Company = () => {
   const handleAddNew = () => {
     setSelectedCompany(null);
     setShowForm(true);
+
   };
 
   function pageChangeFunction(e: { skip: number; limit: number }) {
@@ -51,11 +37,20 @@ const Company = () => {
   }
 
   const loadCompany = async () => {
-    // const res = await fetchApi("User", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
-    // if (res) {
-    //     setUsersData(res);
-    // }
-    setCompanyData({ company: data, totalCount: data.length });
+    const res = await fetchApi("Company", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
+    if (res) {
+      setCompanyData(res);
+    }
+  }
+
+  const companyAddress = (rowData: any) => {
+    return (
+      rowData.cityName ?
+        <span>{rowData.cityName}, {rowData.stateName}, {rowData.countryName}</span> :
+        rowData.stateName ?
+          <span>{rowData.stateName}, {rowData.countryName}</span> :
+          <span>{rowData.countryName}</span>
+    );
   }
 
   useEffect(() => {
@@ -64,20 +59,52 @@ const Company = () => {
 
   return (
     <UserDiv>
-      <div className="top-section">
-        <Box className="search-box">
-          <Input bg="#fff" type="text" placeholder="Search companies..." value={search} onChange={(e) => setSearch(e.target.value)} />
+      <Box className="top-section">
+        <Text className='font-poppins text_xxl text_semibold'>Company</Text>
+        <CustomButton title="Add New Company" onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme' />
+      </Box>
+      <Grid className="grid_container grid_gap_sm" p={4}>
+        {cards.map((card, index) => (
+          <GridItem
+            key={index}
+            colSpan={{ base: 12, sm: 6, md: 3 }}
+            className="card_box"
+          >
+            <Flex align="center" gap={3} mb={3}>
+              <Text className="font-poppins text_md text_semibold">
+                {card.label}
+              </Text>
+            </Flex>
+
+            <Flex align="center" gap={2}>
+              <Text className="font-poppins text_xxl text_bold">{card.value}
+              </Text>
+            </Flex>
+
+            <Flex align="center" gap={2}>
+              <Text fontSize="sm" color="green.500">
+                {card.percent} <Text as="span" style={{ color: "#667085" }}>since last month</Text>
+              </Text>
+            </Flex>
+          </GridItem>
+        ))}
+      </Grid>
+
+      <Flex justify='space-between' mt={6}>
+        <Text className='font-poppins text_xxl text_semibold'>Company List</Text>
+        <Box className="search-box" >
+          <InputGroup>
+            <Input type="text" placeholder="Search companies..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          </InputGroup>
         </Box>
-        <CustomButton title="Add New Company" onClick={handleAddNew} leftIcon={<AddIcon />} bg='#317fedff' color='white'/>
-      </div>
+      </Flex>
 
       <CustomTable
         value={companyData.company}
         onPageChange={pageChangeFunction}
         rowsPerPage={pagination.limit}
         totalRecords={companyData.totalCount}
-        title="Company List"
-        headerBg="#E6F0FF"
+        headerBg="#0050C826"
         headerTextColor="#1A202C"
         emptyMessage="No Data Found"
       >
@@ -86,8 +113,9 @@ const Company = () => {
         <Column header="Industry Type" field="industryTypeName" />
         <Column header="Phone" field="companyPhone" />
         <Column header="Email" field="companyEmail" />
-        <Column header="Country" field="countryCode" />
-        <Column header="FEID / GST" field="feidOrGst" />
+        <Column header="Country" field="countryName" />
+        <Column header="Address" field="countryCode" body={companyAddress} />
+        <Column header="FEID / GST" field="feid" />
         <Column
           header="Action"
           body={(row: ICompany) => (
@@ -98,7 +126,7 @@ const Company = () => {
         />
       </CustomTable>
 
-      <Detail isOpen={showForm} onClose={() => setShowForm(false)} company={selectedCompany} loadCompany={loadCompany} />
+      <Detail isOpen={showForm} onClose={() => { setShowForm(false); setSelectedCompany(null); }} company={selectedCompany} loadCompany={loadCompany} />
     </UserDiv>
   );
 };
