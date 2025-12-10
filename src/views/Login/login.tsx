@@ -8,7 +8,7 @@ import * as routesNames from "../../constant/routes";
 import { useForm } from "react-hook-form";
 import { ILoginForm, emptyLoginForm, schema } from "./model";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CustomToast, FormInput } from "../../components";
+import { CustomButton, CustomToast, FormInput } from "../../components";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useFetch } from "../../hooks/useFetch";
 import { ILogin, useAuth } from "../../hooks/useAuth";
@@ -19,6 +19,7 @@ const Login = () => {
   const { fetchApi } = useFetch(addToast);
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { handleSubmit, control, formState: { errors } } = useForm<ILoginForm>({
     resolver: yupResolver(schema),
@@ -31,7 +32,9 @@ const Login = () => {
   };
 
   const onSubmit = async (datas: ILoginForm) => {
+    setLoading(true);
     const result = await fetchApi<ILogin>('user/login', 'POST', datas, null, 'Loggedin Successfully');
+    setLoading(false);
     if (result) login(result);
   };
 
@@ -81,9 +84,7 @@ const Login = () => {
                         Forgot Password?
                       </Link>
                     </Flex>
-                    <Button type="submit" className="login-btn"  color="white">
-                      Login
-                    </Button>
+                    <CustomButton className="login-btn" type="submit" title="Submit" color="white" isLoading={loading}/>
                   </Flex>
                 </form>
               </Box>

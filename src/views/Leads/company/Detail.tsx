@@ -6,12 +6,14 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ICompany, defaultCompany, IIndustryTypeOption, countryPhoneOptions } from './model';
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { ICompany, defaultCompany, IIndustryTypeOption } from './model';
+import { AddIcon } from '@chakra-ui/icons';
 import CustomButton from '../../../components/CustomButton';
 import FormInput from '../../../components/FormInput/FormInput';
 import { useFetch } from '../../../hooks/useFetch';
 import { CustomToast, Dropdown } from '../../../components';
+import { createGlobalStyle } from 'styled-components';
+import { FlagDropdown } from '../../../components/flagPhoneDropdown/FlagPhoneDropdown';
 
 interface DetailProps {
   isOpen: boolean;
@@ -25,53 +27,47 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
   const { fetchApi } = useFetch(addToast);
   const [loading, setLoading] = useState(false);
   const [industryTypes, setIndustryTypes] = useState<IIndustryTypeOption[]>([]);
+  const [countryData, setCountryData] = useState<[]>([]);
+  const [stateData, setStateTypes] = useState<[]>([]);
+  const [cityData, setCityData] = useState<[]>([]);
+  const [dailcode, setDailcode] = useState<any[]>([]);
 
   const schema = yup.object({
     companyName: yup.string().required('Company Name is required'),
     industryTypeID: yup.number().typeError('Industry Type is required').moreThan(0, 'Industry Type is required').required(),
-    companyPhoneCode: yup.string().required('Phone country code is required'),
+    phoneCountryCode: yup.string().required('Phone country code is required'),
     companyPhone: yup.string().required('Company Phone is required'),
     companyEmail: yup.string().email('Invalid email format').required('Company Email is required'),
     websiteUrl: yup.string().url('Invalid Website URL').required('Website URL is required'),
-    countryCode: yup.string().required('Country Code is required'),
-    feidOrGst: yup.string().required('FEID / GST is required'),
-    companyAddress: yup.string().required('Company Address is required'),
+    postalZipCode: yup.string().required('Postal Code is required'),
+    feid: yup.string().required('FEID / GST is required'),
+    countryId: yup.number().typeError('Country is required').moreThan(0, 'Country is required').required(),
+    stateId: yup.number().typeError('State is required').moreThan(0, 'State is required').required(),
+    cityId: yup.number().typeError('City is required').moreThan(0, 'City is required').required(),
   });
 
   type FormSchema = yup.InferType<typeof schema>;
 
-  const { handleSubmit, control, reset, setValue, watch, formState: { errors },} = useForm<FormSchema>({
+  const { handleSubmit, control, reset, setValue, watch, formState: { errors }, } = useForm<FormSchema>({
     defaultValues: {
-      ...(defaultCompany as any),
-      companyPhoneCode: '+91',
-      companyPhone: '',
+      ...defaultCompany
     },
     resolver: yupResolver(schema) as any,
   });
 
+  const countryIdWatch = watch('countryId');
+  const stateIDWatch = watch('stateId');
+
   const onSubmit = async (formData: FormSchema) => {
     setLoading(true);
-    const { companyPhoneCode, companyPhone, ...rest } = formData;
 
-    const payload: ICompany = {
-      ...rest,
-      companyPhone: (companyPhone || '').trim(),
-      phoneCountryCode: companyPhoneCode || '+91',
-    };
-
-    const res = await fetchApi('Company', company ? 'PUT' : 'POST', payload, null, 'Submitted');
+    const res = await fetchApi('Company', company ? 'PUT' : 'POST', formData, null, 'Submitted');
     setLoading(false);
     if (res) {
       onClose();
       loadCompany();
     }
   };
-
-  const phoneCodeValue = watch('companyPhoneCode') || '+91';
-  const selectedPhoneOption =
-    countryPhoneOptions.find((opt) => opt.code === phoneCodeValue) ||
-    countryPhoneOptions[1]; // default India
-
 
   const loadIndustryTypes = async () => {
     const res = await fetchApi('Dropdown/IndustryType', 'GET');
@@ -80,44 +76,97 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
     }
   };
 
-  // 🔹 Reset form + split existing phone into code + number
+  const loadCountryDropDown = async () => {
+    const res = await fetchApi('Dropdown/country', 'GET');
+    if (res) {
+      setCountryData(res);
+    }
+  };
+
+  const loadStateDropDown = async (countryId: number) => {
+    const res = await fetchApi(`Dropdown/state/${countryId}`, 'GET');
+    if (res) {
+      setStateTypes(res);
+    }
+  };
+
+  const loadCityDropDown = async (stateId: number) => {
+    const res = await fetchApi(`Dropdown/city/${stateId}`, 'GET');
+    if (res) {
+      setCityData(res);
+    }
+  };
+
+  const LoadCompanyCode = async () => {
+    const res = await fetchApi("Dropdown/countrycodedropdown", "GET");
+
+    if (res) {
+      const formatted = (res as any[]).map((x) => ({
+        ...x,
+        companyCountrycode: `${x.code} (${x.dialCode})`,
+        displayOnlyFlagCode: `${x.dialCode}`,
+      }));
+
+      setDailcode(formatted);
+    }
+  };
+
   useEffect(() => {
-    if (company) {
-      let phoneCode = '+91';
-      let phoneNum = '';
+    if (!company || !isOpen) return;
 
-      if (company.companyPhone) {
-        const match = company.companyPhone.match(/^(\+\d+)\s*(.*)$/);
-        phoneCode = match?.[1] || '+91';
-        phoneNum = match?.[2] || '';
-      }
-
-      reset({
-        companyName: company.companyName,
-        industryTypeID: company.industryTypeID,
-        companyPhoneCode: phoneCode,
-        companyPhone: phoneNum,
-        companyEmail: company.companyEmail,
-        websiteUrl: company.websiteUrl,
-        countryCode: company.countryCode,
-        feidOrGst: company.feidOrGst,
-        companyAddress: company.companyAddress,
-      });
-    } else {
-      reset({
-        ...(defaultCompany as any),
-        companyPhoneCode: '+91',
-        companyPhone: '',
+    reset(company);
+    if (company.countryId) {
+      loadStateDropDown(company.countryId).then((res) => {
+        setValue("stateId", company.stateId);
+        if (company.stateId) {
+          loadCityDropDown(company.stateId).then(() => {
+            setValue("cityId", company.cityId);
+          });
+        }
       });
     }
-  }, [isOpen, company, reset]);
+  }, [company, isOpen]);
 
   useEffect(() => {
     loadIndustryTypes();
+    loadCountryDropDown();
+    LoadCompanyCode();
   }, []);
 
+  useEffect(() => {
+    if (!countryIdWatch) return;
+
+    setValue("stateId", 0);
+    setValue("cityId", 0);
+    setStateTypes([]);
+    setCityData([]);
+
+    loadStateDropDown(countryIdWatch);
+
+  }, [countryIdWatch]);
+
+  useEffect(() => {
+    if (!stateIDWatch) return;
+
+    setValue('cityId', 0);
+    setCityData([]);
+    loadCityDropDown(stateIDWatch);
+
+  }, [stateIDWatch]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (company) {
+      reset(company);
+    } else {
+      reset(defaultCompany);
+    }
+  }, [isOpen, company, reset]);
+
+
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="lg">
+    <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="md">
       <DrawerContent borderRadius="xl" p={2}>
         <DrawerCloseButton />
 
@@ -128,83 +177,29 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
         </DrawerHeader>
 
         <form id="company-form" onSubmit={handleSubmit(onSubmit)} >
-          <DrawerBody>
+          <DrawerBody overflowY="auto" maxH="80vh" pr={2}>
             <SimpleGrid columns={1} spacing={6} mt={2}>
               <FormInput isRequired control={control} name="companyName" type="string" label="Company Name" placeholder="Enter Company Name" errors={errors} />
 
               <Dropdown isRequired control={control} name='industryTypeID' label="Industry Type" options={industryTypes} valueKey='industryId' labelKey='industryName' errors={errors} />
 
-              {/* Phone Country Code + Phone Number */}
-              <FormControl isInvalid={!!errors.companyPhone || !!errors.companyPhoneCode}>
-                <FormLabel>Company Phone (with country code)</FormLabel>
-                <Flex gap={2}>
-                  <Controller
-                    name="companyPhoneCode"
-                    control={control}
-                    render={({ field }) => (
-                      <Menu>
-                        <MenuButton
-                          as={Button}
-                          variant="outline"
-                          minW="170px"
-                          rightIcon={<ChevronDownIcon />}
-                          justifyContent="flex-start"
-                        >
-                          <HStack spacing={2}>
-                            <Image
-                              src={selectedPhoneOption.flagUrl}
-                              alt={selectedPhoneOption.country}
-                              boxSize="20px"
-                              borderRadius="full"
-                            />
-                            <Text>{phoneCodeValue}</Text>
-                          </HStack>
-                        </MenuButton>
+              <FlagDropdown name="phoneCountryCode" label='Code' control={control} errors={errors} options={dailcode} placeholder="Select Code" isRequired />
 
-                        <MenuList maxH="250px" overflowY="auto">
-                          {countryPhoneOptions.map((opt) => (
-                            <MenuItem key={opt.code} onClick={() => field.onChange(opt.code)}>
-                              <HStack spacing={3}>
-                                <Image
-                                  src={opt.flagUrl}
-                                  alt={opt.country}
-                                  boxSize="20px"
-                                  borderRadius="full"
-                                />
-                                <Text>
-                                  {opt.country} ({opt.code})
-                                </Text>
-                              </HStack>
-                            </MenuItem>
-                          ))}
-                        </MenuList>
-                      </Menu>
-                    )}
-                  />
-
-                  <Controller
-                    name="companyPhone"
-                    control={control}
-                    render={({ field }) => (
-                      <Input flex="1" placeholder="Enter phone number" {...field} />
-                    )}
-                  />
-                </Flex>
-
-                <FormErrorMessage>
-                  {errors.companyPhone?.message || errors.companyPhoneCode?.message}
-                </FormErrorMessage>
-              </FormControl>
+              <FormInput isRequired control={control} name="companyPhone" type="string" label="Phone No." placeholder="Enter Phone" errors={errors} />
 
               <FormInput isRequired control={control} name="companyEmail" type="string" label="Company Email" placeholder="Enter Company Email" errors={errors} />
 
               <FormInput isRequired control={control} name="websiteUrl" type="string" label="Website URL" placeholder="https://example.com" errors={errors} />
 
-              <FormInput isRequired control={control} name="countryCode" type="string" label="Country Code" placeholder="US / IN" errors={errors} />
+              <FormInput isRequired control={control} name="postalZipCode" type="string" label="Postal Code" placeholder="Enter Postal Code" errors={errors} />
 
-              <FormInput isRequired control={control} name="feidOrGst" type="string" label="FEID / GST" placeholder="Enter FEID / GST" errors={errors} />
+              <FormInput isRequired control={control} name="feid" type="string" label="FEID / GST" placeholder="Enter FEID / GST" errors={errors} />
 
-              <FormInput isRequired control={control} name="companyAddress" type="string" label="Company Address" placeholder="Address with Postal / Zip Code" errors={errors} />
+              <Dropdown isRequired control={control} name='countryId' label='Country' options={countryData} valueKey='countryId' labelKey='countryName' errors={errors} />
+
+              <Dropdown isRequired control={control} name='stateId' label='State' options={stateData} valueKey='stateId' labelKey='stateName' errors={errors} />
+
+              <Dropdown isRequired control={control} name='cityId' label='City' options={cityData} valueKey='cityId' labelKey='cityName' errors={errors} />
             </SimpleGrid>
           </DrawerBody>
 
