@@ -15,3 +15,6 @@ export const COMPANY = '/company'
 
 export const INDUSTRYTYPES = '/master/industry-types'
 export const DESIGNATION = '/master/designation'
+export const COUNTRY = '/master/country'
+export const STATE = '/master/state'
+export const CITY = '/master/city'
