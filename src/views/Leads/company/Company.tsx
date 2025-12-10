@@ -8,9 +8,8 @@ import { Column } from '../../../components/customTable/CustomTable';
 import CustomButton from '../../../components/CustomButton';
 import { CustomToast } from '../../../components';
 import { useFetch } from '../../../hooks/useFetch';
-import { ICompanyInfo, ICompany ,IIndustryTypeOption} from './model';
+import { ICompanyInfo, ICompany, IIndustryTypeOption } from './model';
 import useDebounce from '../../../hooks/useDebounce'
-
 
 const data: ICompany[] = [
   {
@@ -27,12 +26,8 @@ const data: ICompany[] = [
   },
 ];
 
-
 const Company = () => {
-  const [companyData, setCompanyData] = useState<ICompanyInfo>({
-    company: [],
-    totalCount: 0,
-  });
+  const [companyData, setCompanyData] = useState<ICompanyInfo>({ company: [], totalCount: 0 });
   const [search, setSearch] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
@@ -73,15 +68,8 @@ const Company = () => {
         <Box className="search-box">
           <Input bg="#fff" type="text" placeholder="Search companies..." value={search} onChange={(e) => setSearch(e.target.value)} />
         </Box>
-        <CustomButton
-          title="Add New Company"
-          onClick={handleAddNew}
-          leftIcon={<AddIcon />}
-        />
+        <CustomButton title="Add New Company" onClick={handleAddNew} leftIcon={<AddIcon />} bg='#317fedff' color='white'/>
       </div>
-
-      <Flex justify="flex-end" align="center" mr={4}>
-      </Flex>
 
       <CustomTable
         value={companyData.company}
@@ -103,17 +91,14 @@ const Company = () => {
         <Column
           header="Action"
           body={(row: ICompany) => (
-            <EditIcon
-              cursor="pointer"
-              color="blue.500"
+            <EditIcon cursor="pointer" color="blue.500"
               onClick={() => handleEdit(row)}
             />
           )}
         />
       </CustomTable>
 
-      <Detail isOpen={showForm} onClose={() => setShowForm(false)} company={selectedCompany}
-        loadCompany={loadCompany} />
+      <Detail isOpen={showForm} onClose={() => setShowForm(false)} company={selectedCompany} loadCompany={loadCompany} />
     </UserDiv>
   );
 };

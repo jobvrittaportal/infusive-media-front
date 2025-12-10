@@ -37,7 +37,7 @@ const Designation = () => {
     }
 
     const loadDesignation = async () => {
-        const res = await fetchApi("", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
+        const res = await fetchApi("Designation", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
         if (res) {
             setDesignationsData(res);
         }
@@ -58,9 +58,9 @@ const Designation = () => {
         <DesignationDiv>
             <div className="top-section">
                 <Box className="search-box">
-                    <Input bg="#fff" type="text" placeholder="Search industries..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <Input bg="#fff" type="text" placeholder="Search designations..." value={search} onChange={(e) => setSearch(e.target.value)} />
                 </Box>
-                <CustomButton title='Add New Industry Type' onClick={handleAddNew} leftIcon={<AddIcon />} />
+                <CustomButton title='Add New Designation' onClick={handleAddNew} leftIcon={<AddIcon />} />
             </div>
 
             <Flex justify="flex-end" align="center" mr={4}>
@@ -76,7 +76,7 @@ const Designation = () => {
                 emptyMessage='No Data Found'
             >
                 <Column header="S.No" body={(_, index) => index + 1} />
-                <Column header="Industry Type" field='industryName' />
+                <Column header="Designation" field='designationName' />
                 <Column
                     header="Status"
                     body={(row: any) => (

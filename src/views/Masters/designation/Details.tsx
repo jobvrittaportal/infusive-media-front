@@ -34,7 +34,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, designations, loadDesi
   });
 
   const onSubmit = async (formData: IDesignation) => {
-    const res = await fetchApi("IndustryType", designations?.id ? "PUT" : "POST", formData, null, "Submitted");
+    const res = await fetchApi("Designation", designations?.id ? "PUT" : "POST", formData, null, "Submitted");
     if (res) {
       onClose();
       loadDesignation();

@@ -33,7 +33,8 @@ export default function CustomButton(props: Props) {
       ref={props.ref}
       colorScheme={props.colorScheme} 
       bg={props.bg}                
-      color={props.color}         
+      color={props.color}   
+      _hover={{ bg: props.bg }}      
     >
       {props.title}
     </Button>

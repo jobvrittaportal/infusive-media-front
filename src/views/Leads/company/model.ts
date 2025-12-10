@@ -11,8 +11,8 @@ export interface ICompany {
   companyAddress: string;   
 }
 export interface IIndustryTypeOption {
-  id: number;
-  name: string;
+  IndustryId: number;
+  IndustryName: string;
 }
 
 
@@ -35,3 +35,29 @@ export interface ICompanyInfo {
   totalCount: number;
 }
 
+export const countryPhoneOptions = [
+  {
+    code: '+1',
+    country: 'United States',
+    iso2: 'us',
+    flagUrl: 'https://flagcdn.com/us.svg',
+  },
+  {
+    code: '+91',
+    country: 'India',
+    iso2: 'in',
+    flagUrl: 'https://flagcdn.com/in.svg',
+  },
+  {
+    code: '+44',
+    country: 'United Kingdom',
+    iso2: 'gb',
+    flagUrl: 'https://flagcdn.com/gb.svg',
+  },
+  {
+    code: '+61',
+    country: 'Australia',
+    iso2: 'au',
+    flagUrl: 'https://flagcdn.com/au.svg',
+  },
+];
