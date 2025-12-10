@@ -40,10 +40,10 @@ const Sidebar = (props: SidebarProps) => {
   const { hasPermission } = useAuth();
   const Menus: MenuItem[] = [];
 
-  if (hasPermission('Dashboard')){
+  if (hasPermission('Dashboard')) {
     Menus.push({ id: 1, menuName: "Dashboard", menuLogo: dashboardIcon, link: routesNames.DASHBOARD });
   }
-  
+
   if (hasPermission('LeadLists')) {
     const subMenu: SubMenuItem[] = [];
     if (hasPermission('LeadLists'))
@@ -61,7 +61,7 @@ const Sidebar = (props: SidebarProps) => {
       subMenu.push({ id: 32, label: "Pages", link: routesNames.PAGES })
     if (hasPermission('Users'))
       subMenu.push({ id: 33, label: "Users", link: routesNames.USERS })
-    
+
     Menus.push({ id: 3, menuName: "Admin Controller", menuLogo: AdminControllIcon, subMenu: subMenu });
   }
 
@@ -69,7 +69,7 @@ const Sidebar = (props: SidebarProps) => {
     const subMenu: SubMenuItem[] = [];
     if (hasPermission('RaiseTickets'))
       subMenu.push({ id: 21, label: "Raise Ticket", link: routesNames.SUPPORT });
-    
+
     Menus.push({ id: 2, menuName: "Support", menuLogo: SupportIcon, subMenu: subMenu });
   }
 
@@ -79,6 +79,12 @@ const Sidebar = (props: SidebarProps) => {
       subMenu.push({ id: 51, label: "Industy Type", link: routesNames.INDUSTRYTYPES });
     if (hasPermission('Designation'))
       subMenu.push({ id: 52, label: "Designation", link: routesNames.DESIGNATION });
+    if (hasPermission('Country'))
+      subMenu.push({ id: 54, label: "Country", link: routesNames.COUNTRY });
+    if (hasPermission('City'))
+      subMenu.push({ id: 54, label: "City", link: routesNames.CITY });
+    if (hasPermission('State'))
+      subMenu.push({ id: 55, label: "State", link: routesNames.STATE });
 
     Menus.push({ id: 5, menuName: "Masters", menuLogo: SupportIcon, subMenu: subMenu });
   }
@@ -97,16 +103,16 @@ const Sidebar = (props: SidebarProps) => {
     }
   }, [location.pathname]);
 
- const handleMenu = (itemId: number) => {
+  const handleMenu = (itemId: number) => {
     const selectedItem = Menus.find(item => item.id === itemId);
     if (!selectedItem) return;
- 
+
     if (selectedItem.link) {
       navigate(selectedItem.link);
       setMenuId(itemId);
       return;
     }
- 
+
     if (selectedItem.subMenu?.length) {
       setMenuId(itemId);
       const firstSub = selectedItem.subMenu[0];
@@ -116,8 +122,8 @@ const Sidebar = (props: SidebarProps) => {
 
   return (
     <MyDiv>
-       <Box className={props.toggleSidebar ? "sidebar_collapse" : "sidebar_wrapper"}>
- 
+      <Box className={props.toggleSidebar ? "sidebar_collapse" : "sidebar_wrapper"}>
+
         {/* COLLAPSE BUTTON */}
         <Box className="collapse-button">
           <IconButton
@@ -126,71 +132,71 @@ const Sidebar = (props: SidebarProps) => {
             icon={<Image src={CollapseIcon} />}
             aria-label=""
             bg="white"
-           
+
           />
         </Box>
- 
-       
+
+
         {/* LOGO */}
-           <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"}>
-            
-             {/* Always show icon */}
-             <Image src={InfusiveLogo} className="logo_icon" />
-            
-             {/* Show text ONLY when expanded */}
-             {!props.toggleSidebar && (
-               <Image src={InfusiveMedia} className="logo_text" />
-             )}
-            
-           </Flex>
-          <Box className={props.toggleSidebar ? 'sidebar_box_toggle' : 'sidebar_box'}>
-            <Stack spacing="3" className="menu_box">
-              {ActiveMenu.map((item) => {
-                const isActiveMenu = item.id === menuId;
-                const hasSubMenu = item.subMenu?.length;
-                const isExpanded = isActiveMenu && hasSubMenu;
+        <Flex className="logo_wrapper" justifyContent={props.toggleSidebar ? "center" : "flex-start"}>
 
-                return (
-                  <Box key={item.id}>
-                    <Flex
-                      className={isActiveMenu ? 'active_menu menu_item' : 'menu_item'}
-                      onClick={() => handleMenu(item.id)}
+          {/* Always show icon */}
+          <Image src={InfusiveLogo} className="logo_icon" />
+
+          {/* Show text ONLY when expanded */}
+          {!props.toggleSidebar && (
+            <Image src={InfusiveMedia} className="logo_text" />
+          )}
+
+        </Flex>
+        <Box className={props.toggleSidebar ? 'sidebar_box_toggle' : 'sidebar_box'}>
+          <Stack spacing="3" className="menu_box">
+            {ActiveMenu.map((item) => {
+              const isActiveMenu = item.id === menuId;
+              const hasSubMenu = item.subMenu?.length;
+              const isExpanded = isActiveMenu && hasSubMenu;
+
+              return (
+                <Box key={item.id}>
+                  <Flex
+                    className={isActiveMenu ? 'active_menu menu_item' : 'menu_item'}
+                    onClick={() => handleMenu(item.id)}
+                  >
+                    <NavLink
+                      to={item.link ?? ''}
+                      className="font-poppins text_lg font_dark"
+                      style={{ justifyContent: props.toggleSidebar ? 'center' : '' }}
                     >
-                      <NavLink
-                        to={item.link ?? ''}
-                        className="font-poppins text_lg font_dark"
-                        style={{ justifyContent: props.toggleSidebar ? 'center' : '' }}
-                      >
-                        <Image src={item.menuLogo} className="icon_size" />
-                        {!props.toggleSidebar && item.menuName}
-                      </NavLink>
-                    </Flex>
+                      <Image src={item.menuLogo} className="icon_size" />
+                      {!props.toggleSidebar && item.menuName}
+                    </NavLink>
+                  </Flex>
 
-                    {isExpanded && !props.toggleSidebar && (
-                      <Box className="submenu_wrapper">
-                        {item.subMenu?.map((subItem) => {
-                          const isSubActive = location.pathname === subItem.link;
-                          return (
-                            <NavLink
-                              key={subItem.id}
-                              to={subItem.link}
-                              className={
-                                isSubActive ? 'active_submenu submenu_item' : 'submenu_item'
-                              }
-                            >
-                              • {subItem.label}
-                            </NavLink>
-                          );
-                        })}
-                      </Box>
-                    )}
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Box>
+                  {isExpanded && !props.toggleSidebar && (
+                    <Box className="submenu_wrapper">
+                      {item.subMenu?.map((subItem) => {
+                        const isSubActive = location.pathname === subItem.link;
+                        return (
+                          <NavLink
+                            key={subItem.id}
+                            to={subItem.link}
+                            className={
+                              isSubActive ? 'active_submenu submenu_item' : 'submenu_item'
+                            }
+                          >
+                            • {subItem.label}
+                          </NavLink>
+                        );
+                      })}
+                    </Box>
+                  )}
+                </Box>
+              );
+            })}
+          </Stack>
         </Box>
- 
+      </Box>
+
     </MyDiv>
   );
 };
