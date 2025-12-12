@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {
     Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody,
     ModalCloseButton, ModalFooter, Text, SimpleGrid, Flex,
-    Box
+    Box,
+    Drawer,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerHeader,
+    DrawerCloseButton,
+    DrawerBody,
+    DrawerFooter,
+    FormLabel
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -105,65 +113,69 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, user, loadUser }) => {
 
     return (
         <Box alignContent="center" justifyContent="center">
-            <Modal isOpen={isOpen} onClose={onClose} size="3xl" isCentered>
-                <ModalOverlay />
-                <ModalContent borderRadius="xl" p={2}>
-                    <ModalHeader textAlign="center">
+            <Drawer isOpen={isOpen} onClose={onClose} size="md" >
+                <DrawerOverlay />
+                <DrawerContent borderRadius="xl" p={2}>
+                    <DrawerHeader borderBottom={5}>
                         <Text className="font-poppins font_dark text_semibold text_2xl">
                             Add New User
                         </Text>
-                    </ModalHeader>
-                    <ModalCloseButton />
+                    </DrawerHeader>
+                    <DrawerCloseButton />
 
-                    <form id="user-form" onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
-                        <ModalBody>
+                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)} id="user-form" autoComplete="off" justifyContent="space-between"  display="flex" flexDirection="column">
+                        {/* form inputs here */}
 
-                            <Flex align="end" gap={4} mt={2}>
-                                <FormInput disable={!!user} isRequired control={control} name='userId' type='string' label='User Id' placeholder='Enter User Id' errors={errors} />
+                        <Flex gap={4} >
+                            <FormInput disable={!!user} isRequired control={control} name='userId' type='string' label='User Id' placeholder='Enter User Id' errors={errors} />
+                            {!user && (
+                                <Box alignContent="center" mt={10}>
+                                    <CustomButton title='Submit' onClick={checkUserId} bg='#f2f2f2' />
+                                </Box>
+                            )}
+                        </Flex>
+
+                        {showForm && (
+                            <>
+
+                                <FormInput isRequired control={control} name="name" type="string" label="Name" placeholder="Enter Name" errors={errors} />
+                                <FormInput isRequired control={control} name="email" type="string" label="Email" placeholder="Enter Email" errors={errors} />
                                 {!user && (
-                                    <CustomButton title='Submit' onClick={checkUserId} />
+                                    <FormInput isRequired control={control} name="password" type="string" label="Password" placeholder="Enter Password" errors={errors} />
                                 )}
-                            </Flex>
+                                <FormInput isRequired control={control} name="mobile" type="string" label="Mobile" placeholder="Enter Mobile Number" errors={errors} />
 
+
+                                <Flex direction="column" gap={2}>
+                                    <FormLabel className='font-poppins'>Role</FormLabel>
+                                    <MultiSelectTypeaHeads
+                                        name="roles"
+                                        control={control}
+                                        options={roles}
+                                        onCompletion={(query) => setRolesText(query || '')}
+                                        loading={loading}
+                                        optionValue="id"
+                                        optionLabel="name"
+                                        placeholder="Search Roles..."
+                                    />
+                                </Flex>
+                            </>
+                        )}
+                        <Flex justify="flex-end" gap={4} mb={4} mt={39}>
                             {showForm && (
                                 <>
-                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mt={5}>
-                                        <FormInput isRequired control={control} name="name" type="string" label="Name" placeholder="Enter Name" errors={errors} />
-                                        <FormInput isRequired control={control} name="email" type="string" label="Email" placeholder="Enter Email" errors={errors} />
-                                        {!user && (
-                                            <FormInput isRequired control={control} name="password" type="string" label="Password" placeholder="Enter Password" errors={errors} />
-                                        )}
-                                        <FormInput isRequired control={control} name="mobile" type="string" label="Mobile" placeholder="Enter Mobile Number" errors={errors} />
-                                    </SimpleGrid>
-
-                                    <Flex direction="column" mt={4} gap={2}>
-                                        <Text>Role</Text>
-                                        <MultiSelectTypeaHeads
-                                            name="roles"
-                                            control={control}
-                                            options={roles}
-                                            onCompletion={(query) => setRolesText(query || '')}
-                                            loading={loading}
-                                            optionValue="id"
-                                            optionLabel="name"
-                                            placeholder="Search Roles..."
-                                        />
-                                    </Flex>
+                                    <CustomButton title='Cancel' variant="secondary" bg='#f2f2f2' onClick={onClose} />
+                                    <CustomButton type='submit' title='Add' leftIcon={<AddIcon />} className='btn_theme' />
                                 </>
                             )}
-                        </ModalBody>
+                        </Flex>
+                    </DrawerBody>
 
-                        <ModalFooter>
-                            <Flex justify="center" gap={4} mb={4}>
-                                <CustomButton title='Cancel' variant="secondary" onClick={onClose} />
-                                {showForm && (
-                                    <CustomButton type='submit' title='Add' leftIcon={<AddIcon />} />
-                                )}
-                            </Flex>
-                        </ModalFooter>
-                    </form>
-                </ModalContent>
-            </Modal>
+
+
+
+                </DrawerContent>
+            </Drawer>
         </Box>
     );
 };

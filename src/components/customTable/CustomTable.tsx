@@ -114,7 +114,7 @@ export function CustomTable<T extends Record<string, any>>({
   return (
     <MyDiv>
       {/* Table Section */}
-      <Box position="relative" minH="" bg="white" borderRadius="12px " boxShadow="sm" mt={3} border="2px solid #0050C826">
+      <Box position="relative" minH="400px" bg="white">
         {loading ? (
           <Center position="absolute" inset={0}>
             <Spinner thickness="4px" speed="0.65s" color="#0052CC" size="xl" />
@@ -125,10 +125,10 @@ export function CustomTable<T extends Record<string, any>>({
             <Text fontSize="15px">{emptyMessage}</Text>
           </Flex>
         ) : (
-          <TableContainer borderRadius="12px" overflowX="auto">
+          <TableContainer borderRadius="12px" overflowX="auto"  boxShadow="sm" mt={3} border="2px solid #0050C826">
             <Table variant="simple" size="md">
-              <Thead bg={headerBg} h="50px" borderBottom="2px solid #0050C826">
-                <Tr>
+              <Thead bg={headerBg} h="50px" borderBottom="2px solid #0050C826" className='table_header font-poppins text_medium text_sm'>
+                <Tr className="font-poppins text_regular text_md">
                   {resolvedColumns.map((col, idx) => (
                     <Th
                       key={idx}
@@ -154,9 +154,9 @@ export function CustomTable<T extends Record<string, any>>({
 
               <Tbody>
                 {sortedData.map((row, rowIndex) => (
-                  <Tr key={rowIndex} _hover={{ bg: striped ? '#F4F7FB' : 'transparent' }}>
+                  <Tr key={rowIndex} _hover={{ bg: striped ? '#F4F7FB' : 'transparent' }} className="font-poppins text_regular text_md">
                     {resolvedColumns.map((col, colIndex) => (
-                      <Td key={colIndex} fontSize="14px" color="#1D2939">
+                      <Td key={colIndex} fontSize="14px" color="#1D2939" className="font-poppins text_regular text_sm">
                         {col.body ? col.body(row, rowIndex) : (row as any)[col.field as string]}
                       </Td>
                     ))}
