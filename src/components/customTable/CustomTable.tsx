@@ -114,7 +114,7 @@ export function CustomTable<T extends Record<string, any>>({
   return (
     <MyDiv>
       {/* Table Section */}
-      <Box position="relative" minH="300px" bg="white" borderRadius="12px " boxShadow="sm" mt={3} border="2px solid #0050C826">
+      <Box position="relative" minH="" bg="white" borderRadius="12px " boxShadow="sm" mt={3} border="2px solid #0050C826">
         {loading ? (
           <Center position="absolute" inset={0}>
             <Spinner thickness="4px" speed="0.65s" color="#0052CC" size="xl" />

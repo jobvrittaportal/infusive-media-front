@@ -12,7 +12,6 @@ import CustomButton from '../../../components/CustomButton';
 import FormInput from '../../../components/FormInput/FormInput';
 import { useFetch } from '../../../hooks/useFetch';
 import { CustomToast, Dropdown } from '../../../components';
-import { createGlobalStyle } from 'styled-components';
 import { FlagDropdown } from '../../../components/flagPhoneDropdown/FlagPhoneDropdown';
 
 interface DetailProps {
@@ -182,11 +181,14 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
               <FormInput isRequired control={control} name="companyName" type="string" label="Company Name" placeholder="Enter Company Name" errors={errors} />
 
               <Dropdown isRequired control={control} name='industryTypeID' label="Industry Type" options={industryTypes} valueKey='industryId' labelKey='industryName' errors={errors} />
-
-              <FlagDropdown name="phoneCountryCode" label='Code' control={control} errors={errors} options={dailcode} placeholder="Select Code" isRequired />
-
-              <FormInput isRequired control={control} name="companyPhone" type="string" label="Phone No." placeholder="Enter Phone" errors={errors} />
-
+              <Flex gap={3}>
+                <Box flex="0.4" mb="-6px">
+                  <FlagDropdown isRequired name="phoneCountryCode" label='Phone No.' control={control} errors={errors} options={dailcode} placeholder="Select Code"  />
+                </Box>
+                <Box flex="1" mt="24px">
+                  <FormInput  control={control} name="companyPhone" type="string" label="" placeholder="Enter Phone" errors={errors} />
+                </Box>
+              </Flex>
               <FormInput isRequired control={control} name="companyEmail" type="string" label="Company Email" placeholder="Enter Company Email" errors={errors} />
 
               <FormInput isRequired control={control} name="websiteUrl" type="string" label="Website URL" placeholder="https://example.com" errors={errors} />

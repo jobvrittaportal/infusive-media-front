@@ -213,7 +213,7 @@ const MyDiv = styled.div`
    7. SUBMENU
 ======================================= */
 .submenu_wrapper {
-  padding-left: 60px;       /* consistent indent */
+  padding-left: 65px;       /* consistent indent */
   margin-top: 8px;
   margin-bottom: 8px;
   display: flex;
