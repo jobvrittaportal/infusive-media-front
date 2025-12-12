@@ -90,16 +90,11 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, cities, loadcities }) 
                 </DrawerHeader>
                 
                     <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                        <GridItem>
-                            <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
-                        </GridItem>
-
-                        <GridItem>
-                            <Dropdown isRequired label='State' name='stateId' control={control} options={state} labelKey='name' valueKey='id' errors={errors} />
-                        </GridItem>
-                        <SimpleGrid columns={{ base: 1 }} spacing={6} mt={3}>
-                            <FormInput isRequired control={control} name="name" type="string" label="City Name" placeholder="Enter Name" errors={errors} />
-                        </SimpleGrid>
+                        
+                    <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
+                    <Dropdown isRequired label='State' name='stateId' control={control} options={state} labelKey='name' valueKey='id' errors={errors} />
+                    <FormInput isRequired control={control} name="name" type="string" label="City Name" placeholder="Enter Name" errors={errors} />
+                        
                     </DrawerBody>
 
                     <DrawerFooter >

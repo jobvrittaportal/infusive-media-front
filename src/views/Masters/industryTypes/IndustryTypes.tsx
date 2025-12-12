@@ -8,12 +8,16 @@ import { Column } from '../../../components/customTable/CustomTable';
 import CustomButton from '../../../components/CustomButton';
 import { CustomToast } from '../../../components';
 import { useFetch } from '../../../hooks/useFetch';
-import { IIndustrtyType, IIndustryTable } from './model';
-import useDebounce from '../../../hooks/useDebounce'
-
+import { IIndustryTable } from './model';
+import useDebounce from '../../../hooks/useDebounce';
 
 const IndustryType = () => {
-    const [indusrtiesData, setindusrtiesData] = useState<IIndustryTable>({ indusrties: [], totalCount: 0 });
+
+    const [indusrtiesData, setindusrtiesData] = useState<IIndustryTable>({
+        indusrties: [],
+        totalCount: 0
+    });
+
     const [search, setSearch] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [selectedIndusrties, setSelectedIndusrties] = useState<any | null>(null);
@@ -21,6 +25,9 @@ const IndustryType = () => {
     const { addToast } = CustomToast();
     const { fetchApi } = useFetch(addToast);
     const debounceSearch = useDebounce(search, 700);
+
+
+    const [loading, setLoading] = useState(false);
 
     const handleEdit = (row: any) => {
         setSelectedIndusrties(row);
@@ -30,25 +37,44 @@ const IndustryType = () => {
     const handleAddNew = () => {
         setSelectedIndusrties(null);
         setShowForm(true);
-    }
+    };
 
     function pageChangeFunction(e: { skip: number; limit: number }) {
         setPagination(e);
     }
 
+
     const loadIndustries = async () => {
-        const res = await fetchApi("IndustryType", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
+        setLoading(true);
+
+        const res = await fetchApi(
+            "IndustryType",
+            "GET",
+            null,
+            `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`,
+            ""
+        );
+
         if (res) {
             setindusrtiesData(res);
         }
-    }
 
-    const handelEditStatus = async(row: any) =>{
-        const res = await fetchApi(`IndustryType/toggleStatus/${row.id}`, "PUT", {id: row.id, status: !row.status} , null, "Status Changed");
-        if(res){
+        setLoading(false);
+    };
+
+    const handelEditStatus = async (row: any) => {
+        const res = await fetchApi(
+            `IndustryType/toggleStatus/${row.id}`,
+            "PUT",
+            { id: row.id, status: !row.status },
+            null,
+            "Status Changed"
+        );
+
+        if (res) {
             loadIndustries();
         }
-    }
+    };
 
     useEffect(() => {
         loadIndustries();
@@ -56,56 +82,87 @@ const IndustryType = () => {
 
     return (
         <IndustryDiv>
-             
-                <Flex justify="space-between">
-                 <Box className="top-section">
-                        <Text className='font-poppins text_xxl text_semibold'>Industry Types</Text>
-                       
-                      </Box>
-                <Box display="flex" gap={3}>
-                    
-                <Box className="search-box">
-                    
-                    <Input bg="#fff" type="text" placeholder="Search Industry Types..." value={search} onChange={(e) => setSearch(e.target.value)} />
-                </Box>
-                <CustomButton title="Add New Industry " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
-                
-                </Box>
-                </Flex>
-              
 
-            <Flex justify="flex-end" align="center" mr={4}>
+            <Flex justify="space-between">
+                <Box className="top-section">
+                    <Text className='font-poppins text_xxl text_semibold'>
+                        Industry Types
+                    </Text>
+                </Box>
+
+                <Box display="flex" gap={3}>
+                    <Box className="search-box">
+                        <Input
+                            bg="#fff"
+                            type="text"
+                            placeholder="Search Industry Types..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </Box>
+
+                    <CustomButton
+                        title="Add New Industry"
+                        onClick={handleAddNew}
+                        leftIcon={<AddIcon />}
+                        className='btn_theme'
+                    />
+                </Box>
             </Flex>
 
-            <CustomTable value={indusrtiesData.indusrties}
+            <CustomTable
+                value={indusrtiesData.indusrties}
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={indusrtiesData.totalCount}
-              
-                headerBg='#E6F0FF'
-                headerTextColor='#1A202C'
-                emptyMessage='No Data Found'
+                loading={loading}
+                headerBg="#E6F0FF"
+                headerTextColor="#1A202C"
+                emptyMessage="No Data Found"
             >
                 <Column header="S.No" body={(_, index) => index + 1} />
-                <Column header="Industry Type" field='industryName' />
+
+                <Column header="Industry Type" field="industryName" />
+
                 <Column
                     header="Status"
                     body={(row: any) => (
-                        <span onClick={() => handelEditStatus(row)} style={{ cursor: "pointer" }}>
+                        <span
+                            onClick={() => handelEditStatus(row)}
+                            style={{ cursor: "pointer" }}
+                        >
                             {row.status ? (
-                                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>Active</Badge>
+                                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>
+                                    Active
+                                </Badge>
                             ) : (
-                                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>Inactive</Badge>
+                                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>
+                                    Inactive
+                                </Badge>
                             )}
                         </span>
                     )}
                 />
 
-
-                <Column header="Action" body={(row: any) => (<EditIcon cursor="pointer" color="blue.500" onClick={() => handleEdit(row)} />)} />
+                <Column
+                    header="Action"
+                    body={(row: any) => (
+                        <EditIcon
+                            cursor="pointer"
+                            color="blue.500"
+                            onClick={() => handleEdit(row)}
+                        />
+                    )}
+                />
             </CustomTable>
 
-            <Detail isOpen={showForm} onClose={() => setShowForm(false)} industries={selectedIndusrties} loadIndustries={loadIndustries} />
+            <Detail
+                isOpen={showForm}
+                onClose={() => setShowForm(false)}
+                industries={selectedIndusrties}
+                loadIndustries={loadIndustries}
+            />
+
         </IndustryDiv>
     );
 };
