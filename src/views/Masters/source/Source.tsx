@@ -91,7 +91,8 @@ const Source = () => {
 
       {/* TABLE */}
       <CustomTable
-        value={sourceData.sources}
+       value={sourceData?.sources ?? []}
+
         onPageChange={pageChange}
         rowsPerPage={pagination.limit}
         totalRecords={sourceData.totalCount}

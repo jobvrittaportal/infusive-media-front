@@ -36,7 +36,7 @@ interface InputProps {
       control={control}
       render={({ field }) => (
         <FormControl isRequired={isRequired} isInvalid={!!errors?.[name]} mt={2}>
-          <FormLabel className='font-poppins'>
+          <FormLabel className='font-poppins text_lg text_medium'>
             {label}
           </FormLabel>
           <Input {...field} type={type} placeholder={placeholder} min={min} max={max} maxLength={maxLength} disabled={disable} readOnly={readOnly} />

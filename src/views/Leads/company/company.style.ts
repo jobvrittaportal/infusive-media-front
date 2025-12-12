@@ -16,6 +16,16 @@ const MyDiv = styled.div`
  
   }
  
+
+.btn {
+    background: #3d8be4ff;
+    color:white;
+    &:hover{
+    background: #4A90E2;
+    color:white;
+  }
+}
+  
   .add-btn {
     background-color: #1565d8;
     color: #fff;

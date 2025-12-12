@@ -177,7 +177,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
 
         <form id="company-form" onSubmit={handleSubmit(onSubmit)} >
           <DrawerBody overflowY="auto" maxH="80vh" pr={2}>
-            <SimpleGrid columns={1} spacing={6} mt={2}>
+           
               <FormInput isRequired control={control} name="companyName" type="string" label="Company Name" placeholder="Enter Company Name" errors={errors} />
 
               <Dropdown isRequired control={control} name='industryTypeID' label="Industry Type" options={industryTypes} valueKey='industryId' labelKey='industryName' errors={errors} />
@@ -202,7 +202,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, company, loadCompany }
               <Dropdown isRequired control={control} name='stateId' label='State' options={stateData} valueKey='stateId' labelKey='stateName' errors={errors} />
 
               <Dropdown isRequired control={control} name='cityId' label='City' options={cityData} valueKey='cityId' labelKey='cityName' errors={errors} />
-            </SimpleGrid>
+           
           </DrawerBody>
 
           <DrawerFooter>

@@ -62,7 +62,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, countries, loadCountri
                     </Text>
                 </DrawerHeader>
                     <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                        <Box py={4}>
+                        <Box >
                             <FormInput isRequired control={control} name="name" type="string" label="Country Name" placeholder="Enter Name" errors={errors} />
                             <FormInput isRequired control={control} name="code" type="string" label="Country Code" placeholder="Enter Country Code" errors={errors} />
                             <FormInput isRequired control={control} name="dialCode" type="string" label="Dial Code" placeholder="Enter Dial Code" errors={errors} />

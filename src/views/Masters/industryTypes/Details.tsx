@@ -65,7 +65,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
 
         <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
 
-          <Box py={4}>
+          <Box >
             <FormInput isRequired control={control} name="industryName" type="string" label="Industry Name" placeholder="Enter Name" errors={errors} />
           </Box>
           <Flex justify="flex-end" mt={4} gap={2}>
