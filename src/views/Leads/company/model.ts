@@ -1,4 +1,7 @@
+import * as yup from 'yup';
+
 export interface ICompany {
+  id?: number;
   companyName: string;
   industryTypeID: number;
   industryTypeName?: string;
@@ -10,14 +13,50 @@ export interface ICompany {
   feid: string;
   status: boolean;
   countryId: number;
+  countryName?: string;
   stateId: number;
   cityId: number;
 }
+
+export interface ICompanyPOC {
+  name: string;
+  companyId: number;
+  email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
+  whatsapp: string;
+  designationId: number;
+  linkedinUrl?: string;
+}
+
 export interface IIndustryTypeOption {
   IndustryId: number;
   IndustryName: string;
 }
- 
+
+export interface IDesignationDropDown {
+  designationId: number;
+  designationName: string;
+}
+
+export interface ILeadGenerate {
+  id?: number;
+  userId: number;
+  sourceId: number;
+  statusId: number;
+};
+
+export const defaultLeadGenerate: ILeadGenerate = {
+  userId: 0,
+  sourceId: 0,
+  statusId: 0,
+};
+
+export const LeadSchema = yup.object({
+  userId: yup.number().typeError('User is required').min(1, 'User is required').required(),
+  sourceId: yup.number().typeError('Source is required').min(1, 'Source is required').required(),
+  statusId: yup.number().typeError('Status is required').min(1, 'Status is required').required(),
+});
  
 export const defaultCompany: ICompany = {
   companyName: '',
@@ -27,46 +66,27 @@ export const defaultCompany: ICompany = {
   companyPhone: '',
   companyEmail: '',
   websiteUrl: '',
-  // countryCode: '',
   feid: '',
   postalZipCode: '',
   status: true,
-  //companyAddress: '',
   countryId: 0,
   stateId: 0,
   cityId: 0,
 };
+
+export const defaultCompanyPOC: ICompanyPOC = {
+  name: '',
+  companyId: 0,
+  email: '',
+  phoneCountryCode: '',
+  phoneNumber: '',
+  designationId: 0,
+  whatsapp: '',
+}
 export interface ICompanyInfo {
   company: ICompany[];
   totalCount: number;
 }
-
-export const countryPhoneOptions = [
-  {
-    code: '+1',
-    country: 'United States',
-    iso2: 'us',
-    flagUrl: 'https://flagcdn.com/us.svg',
-  },
-  {
-    code: '+91',
-    country: 'India',
-    iso2: 'in',
-    flagUrl: 'https://flagcdn.com/in.svg',
-  },
-  {
-    code: '+44',
-    country: 'United Kingdom',
-    iso2: 'gb',
-    flagUrl: 'https://flagcdn.com/gb.svg',
-  },
-  {
-    code: '+61',
-    country: 'Australia',
-    iso2: 'au',
-    flagUrl: 'https://flagcdn.com/au.svg',
-  },
-];
 
 export const cards = [
   { label: "Total Companies", value: 128, percent: "+2%" },
