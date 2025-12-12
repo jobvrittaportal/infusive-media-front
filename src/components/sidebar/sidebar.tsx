@@ -85,6 +85,10 @@ const Sidebar = (props: SidebarProps) => {
       subMenu.push({ id: 54, label: "City", link: routesNames.CITY });
     if (hasPermission('State'))
       subMenu.push({ id: 55, label: "State", link: routesNames.STATE });
+     if (hasPermission('Source'))
+      subMenu.push({ id: 56, label: "Source", link: routesNames.SOURCE });
+     if (hasPermission('Status'))
+      subMenu.push({ id: 57, label: "Status", link: routesNames.STATUS });
 
     Menus.push({ id: 5, menuName: "Masters", menuLogo: SupportIcon, subMenu: subMenu });
   }

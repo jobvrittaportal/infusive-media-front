@@ -54,7 +54,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
-      <DrawerContent p={2} >
+      <DrawerContent >
         <DrawerCloseButton />
 
         <DrawerHeader >
@@ -70,7 +70,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, industries, loadIndust
           </Box>
           <Flex justify="flex-end" mt={4} gap={2}>
             <Button title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'>Cancel</Button>
-            <Button type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} isLoading={loading} bg='green' color='white'>Submit</Button>
+            <Button type="submit" title={industries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} isLoading={loading} className='btn_theme'>Submit</Button>
           </Flex>
         </DrawerBody>
       </DrawerContent>

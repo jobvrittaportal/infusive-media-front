@@ -53,16 +53,14 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, countries, loadCountri
     return (
         <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
             <DrawerOverlay />
-            <DrawerContent p={2}>
+            <DrawerContent >
                 <DrawerCloseButton />
 
-                <DrawerHeader textAlign="left">
+                <DrawerHeader>
                     <Text className="font-poppins font_dark text_semibold text_2xl">
                         {countries?.id ? "Edit Country" : "Add New Country"}
                     </Text>
                 </DrawerHeader>
-
-               
                     <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
                         <Box py={4}>
                             <FormInput isRequired control={control} name="name" type="string" label="Country Name" placeholder="Enter Name" errors={errors} />
@@ -76,7 +74,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, countries, loadCountri
                     <DrawerFooter >
                         <Flex justify="right" gap={4} w="100%">
                             <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
-                            <CustomButton type="submit" title={countries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} bg='green' color='white' />
+                            <CustomButton type="submit" title={countries?.id ? "Update" : "Add"} leftIcon={<AddIcon />} className='btn_theme' />
                         </Flex>
                     </DrawerFooter>
                

@@ -51,7 +51,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, designations, loadDesi
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
       <DrawerOverlay />
-      <DrawerContent p={2}>
+      <DrawerContent >
         <DrawerCloseButton />
 
         <DrawerHeader textAlign="left">
@@ -70,7 +70,7 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, designations, loadDesi
           <DrawerFooter >
             <Flex justify="right" gap={4} w="100%">
               <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white'/>
-              <CustomButton type="submit" title={designations?.id ? "Update" : "Add"} leftIcon={<AddIcon />}  bg='green' color='white'/>
+              <CustomButton type="submit" title={designations?.id ? "Update" : "Add"} leftIcon={<AddIcon />} className='btn_theme'/>
             </Flex>
           </DrawerFooter>
        

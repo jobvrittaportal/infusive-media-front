@@ -9,9 +9,13 @@ import { Column } from '../../../components/customTable/CustomTable';
 import { IStateTable } from './model';
 import StateDiv from './state.style';
 
-
 const State = () => {
-    const [statesData, setStateData] = useState<IStateTable>({ states: [], totalCount: 0 });
+
+    const [statesData, setStateData] = useState<IStateTable>({
+        states: [],
+        totalCount: 0
+    });
+
     const [search, setSearch] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [selectedStates, setselectedStates] = useState<any | null>(null);
@@ -19,6 +23,7 @@ const State = () => {
     const { addToast } = CustomToast();
     const { fetchApi } = useFetch(addToast);
     const debounceSearch = useDebounce(search, 700);
+    const [loading, setLoading] = useState(false);
 
     const handleEdit = (row: any) => {
         setselectedStates(row);
@@ -28,25 +33,43 @@ const State = () => {
     const handleAddNew = () => {
         setselectedStates(null);
         setShowForm(true);
-    }
+    };
 
     function pageChangeFunction(e: { skip: number; limit: number }) {
         setPagination(e);
     }
 
     const loadStates = async () => {
-        const res = await fetchApi("State", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
+        setLoading(true);
+
+        const res = await fetchApi(
+            "State",
+            "GET",
+            null,
+            `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`,
+            ""
+        );
+
         if (res) {
             setStateData(res);
         }
-    }
+
+        setLoading(false);
+    };
 
     const handelEditStatus = async (row: any) => {
-        const res = await fetchApi(`State/toggleStatus/${row.id}`, "PUT", { id: row.id, status: !row.status }, null, "Status Changed");
+        const res = await fetchApi(
+            `State/toggleStatus/${row.id}`,
+            "PUT",
+            { id: row.id, status: !row.status },
+            null,
+            "Status Changed"
+        );
+
         if (res) {
             loadStates();
         }
-    }
+    };
 
     useEffect(() => {
         loadStates();
@@ -54,28 +77,37 @@ const State = () => {
 
     return (
         <StateDiv>
-             <Flex justify="space-between">
-                 <Box className="top-section">
-                        <Text className='font-poppins text_xxl text_semibold'>State</Text>
-                       
-                      </Box>
+            <Flex justify="space-between">
+                <Box className="top-section">
+                    <Text className='font-poppins text_xxl text_semibold'>State</Text>
+                </Box>
+
                 <Box display="flex" gap={3}>
-                    
-                <Box className="search-box">
-                    
-                    <Input bg="#fff" type="text" placeholder="Search State..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <Box className="search-box">
+                        <Input
+                            bg="#fff"
+                            type="text"
+                            placeholder="Search State..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </Box>
+
+                    <CustomButton
+                        title="Add New State "
+                        onClick={handleAddNew}
+                        leftIcon={<AddIcon />}
+                        className='btn_theme'
+                    />
                 </Box>
-                <CustomButton title="Add New State " onClick={handleAddNew} leftIcon={<AddIcon />} className='btn_theme'/>
-                
-                </Box>
-                </Flex>
-            <Flex justify="flex-end" align="center" mr={4}>
             </Flex>
 
-            <CustomTable value={statesData.states}
+            <CustomTable
+                value={statesData.states}
                 onPageChange={pageChangeFunction}
                 rowsPerPage={pagination.limit}
                 totalRecords={statesData.totalCount}
+                loading={loading}               
                 headerBg='#E6F0FF'
                 headerTextColor='#1A202C'
                 emptyMessage='No Data Found'
@@ -83,9 +115,25 @@ const State = () => {
                 <Column header="S.No" body={(_, index) => index + 1} />
                 <Column header="State Name" field='name' />
                 <Column header="Country" field='countryName' />
-                <Column header="Action" body={(row: any) => (<EditIcon cursor="pointer" color="blue.500" onClick={() => handleEdit(row)} />)} />
+
+                <Column
+                    header="Action"
+                    body={(row: any) => (
+                        <EditIcon
+                            cursor="pointer"
+                            color="blue.500"
+                            onClick={() => handleEdit(row)}
+                        />
+                    )}
+                />
             </CustomTable>
-            <Detail isOpen={showForm} onClose={() => setShowForm(false)} states={selectedStates} loadstates={loadStates} />
+
+            <Detail
+                isOpen={showForm}
+                onClose={() => setShowForm(false)}
+                states={selectedStates}
+                loadstates={loadStates}
+            />
         </StateDiv>
     );
 };

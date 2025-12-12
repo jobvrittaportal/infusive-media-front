@@ -26,6 +26,8 @@ const Designation = lazy(() => import('../Masters/designation'));
 const Country = lazy(() => import('../Masters/country'));
 const City = lazy(() => import('../Masters/city'))
 const State = lazy(() => import('../Masters/state'))
+const Source = lazy(() => import('../Masters/source'))
+const Status = lazy(() => import('../Masters/status'))
 
 
 const AppRoutes = () => {
@@ -58,6 +60,8 @@ const AppRoutes = () => {
             {hasPermission('Country') && (<Route path={routesNames.COUNTRY} element={<Suspense fallback={<Loader />}><Layout><Country /></Layout></Suspense>} />)}
             {hasPermission('City') && (<Route path={routesNames.CITY} element={<Suspense fallback={<Loader />}><Layout><City /></Layout></Suspense>} />)}
             {hasPermission('State') && (<Route path={routesNames.STATE} element={<Suspense fallback={<Loader />}><Layout><State /></Layout></Suspense>} />)}
+            {hasPermission('Source') && (<Route path={routesNames.SOURCE} element={<Suspense fallback={<Loader />}><Layout><Source /></Layout></Suspense>} />)}
+            {hasPermission('Status') && (<Route path={routesNames.STATUS} element={<Suspense fallback={<Loader />}><Layout><Status /></Layout></Suspense>} />)}
 
             {/* Default Route */}
             <Route path="*" element={<Navigate to={routesNames.DASHBOARD} />} />
