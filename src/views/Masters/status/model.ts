@@ -1,13 +1,14 @@
 export interface IStatus {
   id?: number;
-  name: string;
+  statusName: string;
+  status?: boolean;
 }
 
 export interface IStateTable {
-  states: IStatus[];
+  status: IStatus[];
   totalCount: number;
 }
 
 export const defaultStatus: IStatus = {
-  name: "",
+  statusName: "",
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Flex, Input, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
 
 import { CustomButton, CustomTable, CustomToast } from "../../../components";
@@ -13,7 +13,7 @@ import { IStateTable, IStatus } from "./model";
 
 const Status = () => {
   const [statusData, setStatusData] = useState<IStateTable>({
-    states: [],
+    status: [],
     totalCount: 0,
   });
 
@@ -53,6 +53,22 @@ const Status = () => {
     setLoading(false);
   };
 
+
+   const handelEditStatus = async (row: any) => {
+        const res = await fetchApi(
+            `Status/toggleStatus/${row.id}`,
+            "PUT",
+            { id: row.id, status: !row.status },
+            null,
+            "Status Changed"
+        );
+
+        if (res) {
+            loadStatuses();
+        }
+    };
+
+
   useEffect(() => {
     loadStatuses();
   }, [pagination, debounceSearch]);
@@ -85,7 +101,7 @@ const Status = () => {
       </Flex>
 
       <CustomTable
-        value={statusData.states}
+        value={statusData.status}
         onPageChange={setPagination}
         rowsPerPage={pagination.limit}
         totalRecords={statusData.totalCount}
@@ -95,7 +111,27 @@ const Status = () => {
         emptyMessage="No Data Found"
       >
         <Column header="S.No" body={(_, index) => index + 1} />
-        <Column header="Status Name" field="name" />
+        <Column header="Status Name" field="statusName" />
+        <Column
+                                    header="Status"
+                                    body={(row: IStatus) => (
+                                        <span
+                                            onClick={() => handelEditStatus(row)}
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            {row.status ? (
+                                                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>
+                                                    Active
+                                                </Badge>
+                                            ) : (
+                                                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>
+                                                    Inactive
+                                                </Badge>
+                                            )}
+                                        </span>
+                                    )}
+                                />
+           
         <Column
           header="Action"
           body={(row: IStatus) => (

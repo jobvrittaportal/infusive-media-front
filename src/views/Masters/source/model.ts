@@ -1,16 +1,17 @@
 export interface ISource {
   id?: number;
-  name: string;
+  SourceName: string;
+  status?: boolean;
  
 }
 
 export interface ISourceTable {
-  sources: ISource[];
+  source: ISource[];
   totalCount: number;
 }
 
 export const defaultSource: ISource = {
-  name: "",
+  SourceName: "",
   
 };
 

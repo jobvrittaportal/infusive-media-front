@@ -29,7 +29,7 @@ const Detail: React.FC<DetailProps> = ({
   const { fetchApi } = useFetch(addToast);
 
   const schema = yup.object({
-    name: yup.string().required("Status Name is required"),
+    statusName: yup.string().required("Status Name is required"),
   });
 
   const { handleSubmit, control, reset, formState: { errors } } =
@@ -75,14 +75,14 @@ const Detail: React.FC<DetailProps> = ({
           <FormInput
             isRequired
             control={control}
-            name="name"
+            name="statusName"
             label="Status Name"
             placeholder="Enter Status Name"
             errors={errors}
           />
         </DrawerBody>
 
-        <DrawerFooter>
+        <DrawerFooter as="form" onSubmit={handleSubmit(onSubmit)}>
           <Flex justify="right" gap={4} w="100%">
             <CustomButton title="Cancel" variant="secondary" onClick={onClose} />
             <CustomButton
