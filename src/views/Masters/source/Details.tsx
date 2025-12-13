@@ -44,7 +44,7 @@ const Detail: React.FC<DetailProps> = ({
   const { fetchApi } = useFetch(addToast);
 
   const schema = yup.object({
-    name: yup.string().required("Name is required"),
+    SourceName: yup.string().required("Name is required"),
   
   });
 
@@ -62,7 +62,7 @@ const Detail: React.FC<DetailProps> = ({
     const method = states?.id ? "PUT" : "POST";
 
     const res = await fetchApi(
-      "State",
+      "Source",
       method,
       formData,
       null,
@@ -75,19 +75,13 @@ const Detail: React.FC<DetailProps> = ({
     }
   };
 
-  const loadCountry = async () => {
-    const res = await fetchApi("Country/dropdown", "GET", null, null, "");
-    
-  };
+
 
   useEffect(() => {
     if (states?.id) reset(states);
     else reset(defaultSource);
   }, [isOpen, states]);
 
-  useEffect(() => {
-    loadCountry();
-  }, []);
 
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
@@ -108,7 +102,7 @@ const Detail: React.FC<DetailProps> = ({
             <FormInput
               isRequired
               control={control}
-              name="name"
+              name="sourceName"
               label="Source"
               placeholder="Enter Source"
               errors={errors}
