@@ -54,19 +54,19 @@ const Status = () => {
   };
 
 
-   const handelEditStatus = async (row: any) => {
-        const res = await fetchApi(
-            `Status/toggleStatus/${row.id}`,
-            "PUT",
-            { id: row.id, status: !row.status },
-            null,
-            "Status Changed"
-        );
+  const handelEditStatus = async (row: any) => {
+    const res = await fetchApi(
+      `Status/toggleStatus/${row.id}`,
+      "PUT",
+      { id: row.id, status: !row.status },
+      null,
+      "Status Changed"
+    );
 
-        if (res) {
-            loadStatuses();
-        }
-    };
+    if (res) {
+      loadStatuses();
+    }
+  };
 
 
   useEffect(() => {
@@ -113,25 +113,25 @@ const Status = () => {
         <Column header="S.No" body={(_, index) => index + 1} />
         <Column header="Status Name" field="statusName" />
         <Column
-                                    header="Status"
-                                    body={(row: IStatus) => (
-                                        <span
-                                            onClick={() => handelEditStatus(row)}
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            {row.status ? (
-                                                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>
-                                                    Active
-                                                </Badge>
-                                            ) : (
-                                                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>
-                                                    Inactive
-                                                </Badge>
-                                            )}
-                                        </span>
-                                    )}
-                                />
-           
+          header="Status"
+          body={(row: IStatus) => (
+            <span
+              onClick={() => handelEditStatus(row)}
+              style={{ cursor: "pointer" }}
+            >
+              {row.status ? (
+                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>
+                  Active
+                </Badge>
+              ) : (
+                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>
+                  Inactive
+                </Badge>
+              )}
+            </span>
+          )}
+        />
+
         <Column
           header="Action"
           body={(row: IStatus) => (

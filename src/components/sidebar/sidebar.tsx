@@ -44,12 +44,16 @@ const Sidebar = (props: SidebarProps) => {
     Menus.push({ id: 1, menuName: "Dashboard", menuLogo: dashboardIcon, link: routesNames.DASHBOARD });
   }
 
-  if (hasPermission('LeadLists')) {
+  if (hasPermission('LeadLists') || hasPermission('Compnay') || hasPermission('MyLeads') || hasPermission('Poc')) {
     const subMenu: SubMenuItem[] = [];
-    if (hasPermission('LeadLists'))
-      subMenu.push({ id: 41, label: "Lead Lists", link: routesNames.LEADLIST })
     if (hasPermission('Company'))
-      subMenu.push({ id: 42, label: "Company", link: routesNames.COMPANY })
+      subMenu.push({ id: 41, label: "Company", link: routesNames.COMPANY })
+    if (hasPermission('LeadLists'))
+      subMenu.push({ id: 42, label: "Leads", link: routesNames.LEADLIST })
+    if (hasPermission('MyLeads'))
+      subMenu.push({ id: 43, label: "My Leads", link: routesNames.MYLEADS })
+    if (hasPermission('Poc'))
+      subMenu.push({ id: 43, label: "Poc", link: routesNames.POC })
     Menus.push({ id: 4, menuName: "Lead", menuLogo: LeadsIcon, subMenu: subMenu });
   }
 

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box, Flex, Grid, GridItem, HStack, Input, InputGroup,
-  Text, Table, Thead, Tbody, Tr, Th, Td, Checkbox,
-  Button,
-  Image,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, HStack, Input, InputGroup, Text, Table, Thead, Tbody, Tr, Th, Td, Checkbox, Button, Image, Spinner, } from "@chakra-ui/react";
 import UserDiv from './company.style';
 import Detail from './Detail';
 import DetailPOC from './DetailPOC';
@@ -32,18 +26,21 @@ const Company = () => {
   const [selectedPOCs, setSelectedPOCs] = useState<number[]>([]);
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [selectAllInPOC, setSelectAllInPOC] = useState(false);
-  const [pagination] = useState({ skip: 0, limit: 10 });
   const debounceSearch = useDebounce(search, 700);
   const [isLoadingPOC, setIsLoadingPOC] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  const skip = (page - 1) * limit;
 
   const loadCompany = async () => {
-    const res = await fetchApi("Company", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&search=${search}`, "");
+    const res = await fetchApi("Company", "GET", null, `skip=${skip}&limit=${limit}&search=${search}`, "");
     if (res) setCompanyData(res);
   };
 
   const loadCompanyPOC = async (companyId: number) => {
     setIsLoadingPOC(true);
-    const res = await fetchApi("CompanyPOC", "GET", null, `skip=${pagination.skip}&limit=${pagination.limit}&companyId=${companyId}`, "");
+    const res = await fetchApi("CompanyPOC", "GET", null, `skip=${skip}&limit=${limit}&companyId=${companyId}`, "");
     if (res) setCompanyPOCData(res);
 
     if (res.totalCount === 0)
@@ -100,7 +97,11 @@ const Company = () => {
     }
   }
 
-  useEffect(() => { loadCompany(); }, [pagination, debounceSearch]);
+  useEffect(() => { loadCompany(); }, [page, debounceSearch]);
+  useEffect(() => {
+    setPage(1);
+  }, [debounceSearch]);
+
 
   return (
     <UserDiv>
@@ -132,7 +133,6 @@ const Company = () => {
 
         <Flex align="center" gap={3}>
           {/* <CustomButton title="Generate Lead" onClick={() => setIsAssignModalOpen(true)} leftIcon={<AddIcon />} className='btn_theme' isDisabled={selectedPOCs.length === 0} /> */}
-
           <Box className="search-box">
             <InputGroup>
               <Input placeholder="Search companies..." value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -141,7 +141,8 @@ const Company = () => {
         </Flex>
       </Flex>
 
-      <Box mt={4} overflowX="auto"  boxShadow="sm" borderRadius="12px" border="2px solid #0050C826" >
+      <Box mt={4} overflowX="auto" boxShadow="sm" borderRadius="12px" border="2px solid #0050C826" >
+        {/* COMPANY TABLE */}
         <Table variant="simple" size="md"  >
           <Thead h="50px" borderBottom="2px solid #0050C826" bg="#E6F0FF" className='table_header font-poppins text_medium text_sm'>
             <Tr className="font-poppins text_regular text_md">
@@ -161,7 +162,7 @@ const Company = () => {
             {companyData.company.map((row, index) => (
               <React.Fragment key={row.id}>
                 <Tr>
-                  <Td className="font-poppins text_regular text_sm">{index + 1}</Td>
+                  <Td className="font-poppins text_regular text_sm">{skip + index + 1}</Td>
                   <Td className="font-poppins text_regular text_sm">{row.companyName}</Td>
                   <Td className="font-poppins text_regular text_sm">{row.industryTypeName}</Td>
                   <Td className="font-poppins text_regular text_sm">{row.companyPhone}</Td>
@@ -175,48 +176,27 @@ const Company = () => {
                       <EditIcon color="blue.500" cursor="pointer" onClick={() => { setSelectedCompany(row); setShowForm(true); }} />
                       {/* <AddIcon color="green.500" cursor="pointer" onClick={() => { setSelectedCompany(row); setSelectedCompanyPOC(null); setShowPOCForm(true); }} /> */}
                       <Image src={UserIcon} cursor="pointer" onClick={() => handleView(row)} boxSize={4} filter=" invert(49%) sepia(66%) saturate(551%) hue-rotate(85deg) brightness(95%) contrast(88%)" />
-
                     </HStack>
                   </Td>
                 </Tr>
 
+                {/* POC TABLE */}
                 {(expandedRowId === row.id) && (
-                  <Tr bg="#F0F6FF"> {/* light blue background */}
+                  <Tr bg="#F0F6FF">
                     <Td colSpan={12}>
                       <Box border="1px solid #C7DBFF" borderRadius="12px" overflow="hidden">
-
-                        {/* Header Section */}
                         <Box bg="#D8E7FF" p={1} px={2} borderBottom="1px solid #C7DBFF" maxH="43px">
                           <Flex justify="space-between" align="center">
-                            <Button
-                              leftIcon={<AddIcon />}
-                              onClick={() => { setIsAssignModalOpen(true); setSelectedCompany(row); }}
-                              isDisabled={selectedPOCs.length === 0}
-                              className='btn'
-                              height="30px"
-
-                            >
-                              Generate Lead
-                            </Button>
-
-                            <Text className="font-poppins text_xl text_semibold" textAlign="center" flex="1">
-                              {row.companyName} — POCs List
-                            </Text>
-
-                            <Button
-                              className='btn'
-                              leftIcon={<AddIcon />}
+                            <Button leftIcon={<AddIcon />} onClick={() => { setIsAssignModalOpen(true); setSelectedCompany(row); }} isDisabled={selectedPOCs.length === 0} className='btn' height="30px">
+                              Generate Lead </Button>
+                            <Text className="font-poppins text_xl text_semibold" textAlign="center" flex="1"
+                            > {row.companyName} — POCs List </Text>
+                            <Button className='btn' leftIcon={<AddIcon />} height="30px"
                               onClick={() => { setSelectedCompany(row); setSelectedCompanyPOC(null); setShowPOCForm(true); }}
-                              // isDisabled={selectedPOCs.length === 0}
-                              // className="btn_theme"
-                              height="30px"
-
                             > Add POc</Button>
-                            {/* <Box width="110px" /> */}
                           </Flex>
                         </Box>
 
-                        {/* Table */}
                         <Box p={2}>
                           {isLoadingPOC ? (
                             <Box py={10} textAlign="center">
@@ -248,11 +228,7 @@ const Company = () => {
                                   {companyPOCData.pocs.map((poc: any) => (
                                     <Tr key={poc.id}>
                                       <Td>
-                                        <Checkbox
-                                          border="#b7b3b3ff"
-                                          isChecked={selectedPOCs.includes(poc.id)}
-                                          onChange={() => toggleSelectPoc(poc.id)}
-                                        />
+                                        <Checkbox border="#b7b3b3ff" isChecked={selectedPOCs.includes(poc.id)} onChange={() => toggleSelectPoc(poc.id)} />
                                       </Td>
                                       <Td className="font-poppins text_regular text_sm">{poc.name}</Td>
                                       <Td className="font-poppins text_regular text_sm">{poc.phoneNumber}</Td>
@@ -261,13 +237,10 @@ const Company = () => {
                                       <Td className="font-poppins text_regular text_sm">{poc.email}</Td>
                                       <Td className="font-poppins text_regular text_sm">{poc.linkedinUrl}</Td>
                                       <Td>
-                                        <EditIcon
-                                          color="blue.500"
-                                          cursor="pointer"
-                                          onClick={() => {
-                                            setSelectedCompanyPOC(poc);
-                                            setShowPOCForm(true);
-                                          }}
+                                        <EditIcon color="blue.500" cursor="pointer" onClick={() => {
+                                          setSelectedCompanyPOC(poc);
+                                          setShowPOCForm(true);
+                                        }}
                                         />
                                       </Td>
                                     </Tr>
@@ -277,17 +250,30 @@ const Company = () => {
                             </>
                           )}
                         </Box>
-
                       </Box>
                     </Td>
                   </Tr>
                 )}
-
               </React.Fragment>
             ))}
           </Tbody>
         </Table>
       </Box>
+
+      {/* PAGINATION */}
+      <Flex justify="center" align="center" mt={3} mb={3}>
+        <HStack spacing={3}>
+          <Button size="sm" onClick={() => setPage((p) => Math.max(p - 1, 1))} isDisabled={page === 1}
+          > Previous </Button>
+
+          <Text className="font-poppins text_sm"> Page {page} of {Math.ceil(companyData.totalCount / limit)} </Text>
+
+          <Button size="sm"
+            onClick={() => setPage((p) => p < Math.ceil(companyData.totalCount / limit) ? p + 1 : p) }
+            isDisabled={page >= Math.ceil(companyData.totalCount / limit)}
+          > Next </Button>
+        </HStack>
+      </Flex>
 
       <Detail isOpen={showForm} company={selectedCompany} loadCompany={loadCompany} onClose={() => { setShowForm(false); setSelectedCompany(null); }} />
 

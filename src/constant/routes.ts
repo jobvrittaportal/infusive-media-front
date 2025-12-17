@@ -12,6 +12,9 @@ export const PROFILE = '/profile'
 export const SUPPORT = '/support'
 export const TICKETDETAIL = '/ticket-detail'
 export const COMPANY = '/company'
+export const MYLEADS = '/my-leads'
+export const POC = '/poc'
+
 
 export const INDUSTRYTYPES = '/master/industry-types'
 export const DESIGNATION = '/master/designation'
