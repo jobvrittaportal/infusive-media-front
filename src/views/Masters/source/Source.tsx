@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Flex, Input, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, Input, Text } from "@chakra-ui/react";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
 
 import { CustomButton, CustomTable, CustomToast } from "../../../components";
@@ -12,7 +12,7 @@ import MyDiv from "./Source.style";
 
 const Source = () => {
   const [sourceData, setSourceData] = useState<ISourceTable>({
-    sources: [],
+    source: [],
     totalCount: 0,
   });
 
@@ -61,6 +61,21 @@ const Source = () => {
     setShowForm(true);
   };
 
+  const handelEditStatus = async (row: any) => {
+    const res = await fetchApi(
+      `Source/toggleStatus/${row.id}`,
+      "PUT",
+      { id: row.id, status: !row.status },
+      null,
+      "Status Changed"
+    );
+
+    if (res) {
+      loadSources();
+    }
+  };
+
+
   return (
     <MyDiv>
       {/* HEADER */}
@@ -91,8 +106,7 @@ const Source = () => {
 
       {/* TABLE */}
       <CustomTable
-       value={sourceData?.sources ?? []}
-
+        value={sourceData.source}
         onPageChange={pageChange}
         rowsPerPage={pagination.limit}
         totalRecords={sourceData.totalCount}
@@ -102,7 +116,26 @@ const Source = () => {
         emptyMessage="No Data Found"
       >
         <Column header="S.No" body={(_, index) => index + 1} />
-        <Column header="Source Name" field="name" />
+        <Column header="Source Name" field="sourceName" />
+        <Column
+          header="Status"
+          body={(row: ISource) => (
+            <span
+              onClick={() => handelEditStatus(row)}
+              style={{ cursor: "pointer" }}
+            >
+              {row.status ? (
+                <Badge colorScheme="green" px={2} py={1} borderRadius={4}>
+                  Active
+                </Badge>
+              ) : (
+                <Badge colorScheme="red" px={2} py={1} borderRadius={4}>
+                  Inactive
+                </Badge>
+              )}
+            </span>
+          )}
+        />
 
         <Column
           header="Action"

@@ -24,7 +24,7 @@ import {
   FormInput,
 } from "../../../components";
 import { useFetch } from "../../../hooks/useFetch";
-import { defaultSource,  ISource } from "./model";
+import { defaultSource, ISource } from "./model";
 
 interface DetailProps {
   isOpen: boolean;
@@ -45,7 +45,7 @@ const Detail: React.FC<DetailProps> = ({
 
   const schema = yup.object({
     SourceName: yup.string().required("Name is required"),
-  
+
   });
 
   const {
@@ -55,7 +55,7 @@ const Detail: React.FC<DetailProps> = ({
     formState: { errors },
   } = useForm<ISource>({
     defaultValues: defaultSource,
-    
+
   });
 
   const onSubmit = async (formData: ISource) => {
@@ -96,7 +96,7 @@ const Detail: React.FC<DetailProps> = ({
         </DrawerHeader>
 
         <DrawerBody>
-          
+
 
           <Box mt={4}>
             <FormInput

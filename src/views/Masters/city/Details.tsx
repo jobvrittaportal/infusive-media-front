@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
     Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
     DrawerCloseButton, DrawerFooter, Text, SimpleGrid, Flex,
-    GridItem
+    GridItem,
+    Box
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -88,22 +89,19 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, cities, loadcities }) 
                         {cities?.id ? "Edit City" : "Add New City"}
                     </Text>
                 </DrawerHeader>
-                
-                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                        
-                    <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
-                    <Dropdown isRequired label='State' name='stateId' control={control} options={state} labelKey='name' valueKey='id' errors={errors} />
-                    <FormInput isRequired control={control} name="name" type="string" label="City Name" placeholder="Enter Name" errors={errors} />
-                        
-                    </DrawerBody>
 
-                    <DrawerFooter >
-                        <Flex justify="right" gap={4} w="100%">
-                            <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
-                            <CustomButton type="submit" title={cities?.id ? "Update" : "Add"} leftIcon={<AddIcon />} bg='green' color='white' />
-                        </Flex>
-                    </DrawerFooter>
-              
+                <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
+                    <Box py={4}>
+                        <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
+                        <Dropdown isRequired label='State' name='stateId' control={control} options={state} labelKey='name' valueKey='id' errors={errors} />
+                        <FormInput isRequired control={control} name="name" type="string" label="City Name" placeholder="Enter Name" errors={errors} />
+                    </Box>
+                    <Flex justify="right" gap={4} w="100%">
+                        <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
+                        <CustomButton type="submit" title={cities?.id ? "Update" : "Add"} leftIcon={<AddIcon />} className='btn_theme'  />
+                    </Flex>
+                </DrawerBody>
+
             </DrawerContent>
         </Drawer>
     );

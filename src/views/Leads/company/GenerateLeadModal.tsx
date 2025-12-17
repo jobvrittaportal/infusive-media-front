@@ -55,13 +55,12 @@ const GenerateLeadModal = ({ isOpen, onClose, selectedPOCs, selectedCompany }: P
     const onSubmit = async (data: ILeadGenerate) => {
         const payload = {
             ...data,
-            pocIds: selectedPOCs,
+            pocId: selectedPOCs,
             companyId: selectedCompany?.id,
         };
 
-        const res = await fetchApi("Lead/Generate", "POST", payload, null, "Lead Generated");
+        const res = await fetchApi("Lead", "POST", payload, null, "Lead Generated");
         if (res) {
-            addToast({ message: "Lead generated successfully!", status: "success" });
             onClose();
         }
     };

@@ -1,2 +1,2 @@
-import LeadList from "./LeadList";
+import LeadList from "./lead";
 export {LeadList}

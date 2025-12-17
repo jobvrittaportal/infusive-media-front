@@ -73,25 +73,17 @@ const Detail: React.FC<DetailProps> = ({ isOpen, onClose, states, loadstates }) 
                     </Text>
                 </DrawerHeader>
 
-              
-                    <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)}>
-                        <GridItem>
-                            <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
-                        </GridItem>
-                       <Box>
-                            <FormInput isRequired control={control} name="name" type="string" label="State Name" placeholder="Enter Name" errors={errors} />
-                        </Box>
+                <DrawerBody as="form" onSubmit={handleSubmit(onSubmit)} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
+                    <Box py={4}>
+                        <Dropdown isRequired label='Country' name='countryId' control={control} options={country} labelKey='name' valueKey='id' errors={errors} />
+                        <FormInput isRequired control={control} name="name" type="string" label="State Name" placeholder="Enter Name" errors={errors} />
+                    </Box>
+                    <Flex justify="right" gap={4} w="100%">
+                        <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
+                        <CustomButton type="submit" title={states?.id ? "Update" : "Add"} leftIcon={<AddIcon />} className='btn_theme' />
+                    </Flex>
+                </DrawerBody>
 
-
-                    </DrawerBody>
-
-                    <DrawerFooter >
-                        <Flex justify="right" gap={4} w="100%">
-                            <CustomButton title="Cancel" variant="secondary" onClick={onClose} bg='red' color='white' />
-                            <CustomButton type="submit" title={states?.id ? "Update" : "Add"} leftIcon={<AddIcon />} className='btn_theme' />
-                        </Flex>
-                    </DrawerFooter>
-              
             </DrawerContent>
         </Drawer>
     );

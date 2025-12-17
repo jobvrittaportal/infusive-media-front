@@ -4,15 +4,13 @@ export interface ISource {
   status?: boolean;
  
 }
-
+ 
 export interface ISourceTable {
   source: ISource[];
   totalCount: number;
 }
-
+ 
 export const defaultSource: ISource = {
   SourceName: "",
-  
+ 
 };
-
-
